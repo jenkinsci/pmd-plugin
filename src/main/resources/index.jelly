@@ -1,0 +1,4 @@
+<div>
+  This plugin collects the <a href="http://pmd.sourceforge.net/">PMD</a> analysis
+  results of the project modules and counts the number of warnings.
+</div>
