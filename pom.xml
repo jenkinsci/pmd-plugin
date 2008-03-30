@@ -10,7 +10,7 @@
   <artifactId>pmd</artifactId>
   <packaging>hpi</packaging>
   <name>Hudson PMD Plug-in</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <url>http://hudson.gotdns.com/wiki/display/HUDSON/PMD+Plugin</url>
 
   <licenses>
@@ -87,4 +87,8 @@
       </snapshots>
     </repository>
   </repositories>
+
+  <scm>
+    <tag>pmd-1_0</tag>
+  </scm>
 </project>
