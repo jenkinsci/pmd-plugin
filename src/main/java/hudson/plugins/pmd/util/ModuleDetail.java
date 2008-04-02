@@ -1,7 +1,6 @@
-package hudson.plugins.pmd;
+package hudson.plugins.pmd.util;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.pmd.util.SourceDetail;
 import hudson.plugins.pmd.util.model.JavaPackage;
 import hudson.plugins.pmd.util.model.MavenModule;
 
@@ -14,11 +13,13 @@ import org.kohsuke.stapler.StaplerResponse;
 /**
  * Result object to visualize the package statistics of a module.
  */
-public class ModuleDetail extends AbstractWarningsDetail {
+public class ModuleDetail extends AbstractAnnotationsDetail {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = -1854984151887397361L;
     /** The module to show the details for. */
     private final MavenModule module;
+    /** Header in jelly script. */
+    private final String header;
 
     /**
      * Creates a new instance of <code>ModuleDetail</code>.
@@ -27,10 +28,22 @@ public class ModuleDetail extends AbstractWarningsDetail {
      *            current build as owner of this action.
      * @param module
      *            the module to show the details for
+     * @param header
+     *            header to be shown on detail page
      */
-    public ModuleDetail(final AbstractBuild<?, ?> owner, final MavenModule module) {
+    public ModuleDetail(final AbstractBuild<?, ?> owner, final MavenModule module, final String header) {
         super(owner, module.getAnnotations());
         this.module = module;
+        this.header = header;
+    }
+
+    /**
+     * Returns the header for the detail screen.
+     *
+     * @return the header
+     */
+    public String getHeader() {
+        return header + " - " + Messages.ModuleDetail_header(module.getName());
     }
 
     /** {@inheritDoc} */
@@ -82,7 +95,7 @@ public class ModuleDetail extends AbstractWarningsDetail {
     }
 
     /**
-     * Returns the dynamic result of this PMD detail view. Depending on the
+     * Returns the dynamic result of this module detail view. Depending on the
      * number of packages, one of the following detail objects is returned:
      * <ul>
      * <li>A detail object for a single workspace file (if the module contains
@@ -96,15 +109,14 @@ public class ModuleDetail extends AbstractWarningsDetail {
      *            Stapler request
      * @param response
      *            Stapler response
-     * @return the dynamic result of the PMD analysis (detail page for a
-     *         package).
+     * @return the dynamic result of this module detail view
      */
     public Object getDynamic(final String link, final StaplerRequest request, final StaplerResponse response) {
         if (isSinglePackageModule()) {
             return new SourceDetail(getOwner(), getAnnotation(link));
         }
         else {
-            return new PackageDetail(getOwner(), module.getPackage(link));
+            return new PackageDetail(getOwner(), module.getPackage(link), header);
         }
     }
 

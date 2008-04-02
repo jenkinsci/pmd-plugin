@@ -6,6 +6,8 @@ import hudson.model.ModelObject;
 import hudson.plugins.pmd.parser.Bug;
 import hudson.plugins.pmd.util.ChartRenderer;
 import hudson.plugins.pmd.util.ErrorDetail;
+import hudson.plugins.pmd.util.ModuleDetail;
+import hudson.plugins.pmd.util.PackageDetail;
 import hudson.plugins.pmd.util.SourceDetail;
 import hudson.plugins.pmd.util.model.AnnotationStream;
 import hudson.plugins.pmd.util.model.FileAnnotation;
@@ -499,11 +501,11 @@ public class PmdResult implements ModelObject, Serializable {
                     return new SourceDetail(getOwner(), getProject().getAnnotation(link));
                 }
                 else {
-                    return new PackageDetail(getOwner(), getModules().iterator().next().getPackage(link));
+                    return new PackageDetail(getOwner(), getModules().iterator().next().getPackage(link), Messages.PMD_Detail_header());
                 }
             }
             else {
-                return new ModuleDetail(getOwner(), getModule(link));
+                return new ModuleDetail(getOwner(), getModule(link), Messages.PMD_Detail_header());
             }
         }
     }
