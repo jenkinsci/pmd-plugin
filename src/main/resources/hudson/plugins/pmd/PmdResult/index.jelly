@@ -71,7 +71,7 @@
 				</j:if>
 
 				<j:if test="${it.isSinglePackageProject()}">
-					<st:include page="/warningsTable.jelly" />
+					<st:include page="/annotationsTable.jelly" />
 				</j:if>
 			</j:if>
 

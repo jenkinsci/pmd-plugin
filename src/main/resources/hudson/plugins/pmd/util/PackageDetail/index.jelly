@@ -4,11 +4,11 @@
 	<l:layout>
 		<st:include it="${it.owner}" page="sidepanel.jelly" />
 		<l:main-panel>
-			<h1>${%package.header(it.displayName)}</h1>
+			<h1>${it.header}</h1>
 
 		    <st:include page="/summaryTable.jelly" />
 
-			<st:include page="/warningsTable.jelly" />
+			<st:include page="/annotationsTable.jelly" />
 
 		</l:main-panel>
 	</l:layout>
