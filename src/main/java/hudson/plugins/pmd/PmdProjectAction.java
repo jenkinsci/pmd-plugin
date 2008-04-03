@@ -21,7 +21,7 @@ public class PmdProjectAction extends AbstractProjectAction<PmdResultAction> {
      *            the project that owns this action
      */
     public PmdProjectAction(final AbstractProject<?, ?> project) {
-        super(project, PmdResultAction.class, PmdDescriptor.PMD_ACTION_LOGO, "../lastBuild/pmdResult");
+        super(project, PmdResultAction.class, PmdDescriptor.PMD_ACTION_LOGO, PmdDescriptor.PLUGIN_NAME);
     }
 
     /** {@inheritDoc} */
@@ -31,7 +31,7 @@ public class PmdProjectAction extends AbstractProjectAction<PmdResultAction> {
 
     /** {@inheritDoc} */
     public String getUrlName() {
-        return "pmd";
+        return PmdDescriptor.PLUGIN_NAME;
     }
 
     /** {@inheritDoc} */

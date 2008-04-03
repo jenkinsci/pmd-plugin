@@ -1,18 +1,8 @@
 package hudson.plugins.pmd;
 
-import hudson.maven.AbstractMavenProject;
-import hudson.model.AbstractProject;
-import hudson.plugins.pmd.util.ThresholdValidator;
-import hudson.tasks.BuildStepDescriptor;
-import hudson.tasks.Publisher;
-import hudson.util.FormFieldValidator;
-
-import java.io.IOException;
-
-import javax.servlet.ServletException;
+import hudson.plugins.pmd.util.PluginDescriptor;
 
 import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
 
 /**
  * Descriptor for the class {@link PmdPublisher}. Used as a singleton. The
@@ -20,9 +10,11 @@ import org.kohsuke.stapler.StaplerResponse;
  *
  * @author Ulli Hafner
  */
-public final class PmdDescriptor extends BuildStepDescriptor<Publisher> {
+public final class PmdDescriptor extends PluginDescriptor {
+    /** Plug-in name. */
+    static final String PLUGIN_NAME = "pmd";
     /** Icon to use for the result and project action. */
-    public static final String PMD_ACTION_LOGO = "/plugin/pmd/icons/pmd-24x24.gif";
+    static final String PMD_ACTION_LOGO = "/plugin/pmd/icons/pmd-24x24.gif";
 
     /**
      * Instantiates a new find bugs descriptor.
@@ -39,45 +31,13 @@ public final class PmdDescriptor extends BuildStepDescriptor<Publisher> {
 
     /** {@inheritDoc} */
     @Override
-    public String getHelpFile() {
-        return "/plugin/pmd/help.html";
-    }
-
-    /**
-     * Performs on-the-fly validation on the file mask.
-     *
-     * @param request
-     *            Stapler request
-     * @param response
-     *            Stapler response
-     */
-    public void doCheckPattern(final StaplerRequest request, final StaplerResponse response)
-            throws IOException, ServletException {
-        new FormFieldValidator.WorkspaceFileMask(request, response).process();
-    }
-
-    /**
-     * Performs on-the-fly validation on the bugs threshold.
-     *
-     * @param request
-     *            Stapler request
-     * @param response
-     *            Stapler response
-     */
-    public void doCheckThreshold(final StaplerRequest request, final StaplerResponse response)
-            throws IOException, ServletException {
-        new ThresholdValidator(request, response).process();
+    protected String getPluginName() {
+        return PLUGIN_NAME;
     }
 
     /** {@inheritDoc} */
     @Override
     public PmdPublisher newInstance(final StaplerRequest request) throws FormException {
-        return request.bindParameters(PmdPublisher.class, "pmd_");
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean isApplicable(final Class<? extends AbstractProject> jobType) {
-        return !AbstractMavenProject.class.isAssignableFrom(jobType);
+        return request.bindParameters(PmdPublisher.class, PLUGIN_NAME + "_");
     }
 }

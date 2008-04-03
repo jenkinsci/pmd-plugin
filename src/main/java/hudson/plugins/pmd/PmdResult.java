@@ -4,6 +4,7 @@ import hudson.XmlFile;
 import hudson.model.AbstractBuild;
 import hudson.model.ModelObject;
 import hudson.plugins.pmd.parser.Bug;
+import hudson.plugins.pmd.util.AnnotationDifferencer;
 import hudson.plugins.pmd.util.ChartRenderer;
 import hudson.plugins.pmd.util.ErrorDetail;
 import hudson.plugins.pmd.util.ModuleDetail;
@@ -133,11 +134,11 @@ public class PmdResult implements ModelObject, Serializable {
 
         Collection<FileAnnotation> allWarnings = project.getAnnotations();
 
-        Set<FileAnnotation> warnings = WarningDifferencer.getNewWarnings(allWarnings, previousProject.getAnnotations());
+        Set<FileAnnotation> warnings = AnnotationDifferencer.getNewWarnings(allWarnings, previousProject.getAnnotations());
         numberOfNewWarnings = warnings.size();
         newWarnings = new WeakReference<Set<FileAnnotation>>(warnings);
 
-        warnings = WarningDifferencer.getFixedWarnings(allWarnings, previousProject.getAnnotations());
+        warnings = AnnotationDifferencer.getFixedWarnings(allWarnings, previousProject.getAnnotations());
         numberOfFixedWarnings = warnings.size();
         fixedWarnings = new WeakReference<Set<FileAnnotation>>(warnings);
 
@@ -457,14 +458,14 @@ public class PmdResult implements ModelObject, Serializable {
 
         if (hasPreviousResult()) {
             newWarnings = new WeakReference<Set<FileAnnotation>>(
-                    WarningDifferencer.getNewWarnings(getProject().getAnnotations(), getPreviousResult().getAnnotations()));
+                    AnnotationDifferencer.getNewWarnings(getProject().getAnnotations(), getPreviousResult().getAnnotations()));
         }
         else {
             newWarnings = new WeakReference<Set<FileAnnotation>>(new HashSet<FileAnnotation>(getProject().getAnnotations()));
         }
         if (hasPreviousResult()) {
             fixedWarnings = new WeakReference<Set<FileAnnotation>>(
-                    WarningDifferencer.getFixedWarnings(getProject().getAnnotations(), getPreviousResult().getAnnotations()));
+                    AnnotationDifferencer.getFixedWarnings(getProject().getAnnotations(), getPreviousResult().getAnnotations()));
         }
         else {
             fixedWarnings = new WeakReference<Set<FileAnnotation>>(Collections.EMPTY_SET);

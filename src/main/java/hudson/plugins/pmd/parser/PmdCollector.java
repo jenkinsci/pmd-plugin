@@ -3,6 +3,7 @@ package hudson.plugins.pmd.parser;
 import hudson.FilePath;
 import hudson.FilePath.FileCallable;
 import hudson.plugins.pmd.Messages;
+import hudson.plugins.pmd.util.MavenModuleDetector;
 import hudson.plugins.pmd.util.model.JavaProject;
 import hudson.plugins.pmd.util.model.MavenModule;
 import hudson.remoting.VirtualChannel;
@@ -11,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.tools.ant.types.FileSet;
 import org.xml.sax.SAXException;
@@ -66,7 +66,7 @@ public class PmdCollector implements FileCallable<JavaProject> {
             for (String file : pmdFiles) {
                 File pmdFile = new File(workspace, file);
 
-                String moduleName = guessModuleName(pmdFile.getAbsolutePath());
+                String moduleName = MavenModuleDetector.guessModuleName(pmdFile.getAbsolutePath());
                 MavenModule module = new MavenModule(moduleName);
 
                 if (SKIP_OLD_FILES && pmdFile.lastModified() < buildTime) {
@@ -135,34 +135,6 @@ public class PmdCollector implements FileCallable<JavaProject> {
             module.setError(errorMessage);
         }
         return module;
-    }
-
-    /**
-     * Guesses the module name based on the specified file name. Actually works
-     * only for maven projects.
-     *
-     * @param fileName
-     *            the filename to guess the module name from
-     * @return the module name
-     */
-    public static String guessModuleName(final String fileName) {
-        String separator;
-        if (fileName.contains(SLASH)) {
-            separator = SLASH;
-        }
-        else {
-            separator = "\\";
-        }
-        String path = StringUtils.substringBefore(fileName, separator + "target");
-        if (fileName.equals(path)) {
-            return "";
-        }
-        if (path.contains(separator)) {
-            return StringUtils.substringAfterLast(path, separator);
-        }
-        else {
-            return path;
-        }
     }
 
     /**
