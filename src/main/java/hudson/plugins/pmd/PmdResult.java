@@ -7,7 +7,9 @@ import hudson.plugins.pmd.parser.Bug;
 import hudson.plugins.pmd.util.AnnotationDifferencer;
 import hudson.plugins.pmd.util.ChartRenderer;
 import hudson.plugins.pmd.util.ErrorDetail;
+import hudson.plugins.pmd.util.FixedWarningsDetail;
 import hudson.plugins.pmd.util.ModuleDetail;
+import hudson.plugins.pmd.util.NewWarningsDetail;
 import hudson.plugins.pmd.util.PackageDetail;
 import hudson.plugins.pmd.util.SourceDetail;
 import hudson.plugins.pmd.util.model.AnnotationStream;
@@ -488,10 +490,10 @@ public class PmdResult implements ModelObject, Serializable {
      */
     public Object getDynamic(final String link, final StaplerRequest request, final StaplerResponse response) {
         if ("fixed".equals(link)) {
-            return new FixedWarningsDetail(getOwner(), getFixedWarnings());
+            return new FixedWarningsDetail(getOwner(), getFixedWarnings(), Messages.PMD_FixedWarnings_Detail_header());
         }
         else if ("new".equals(link)) {
-            return new NewWarningsDetail(getOwner(), getNewWarnings());
+            return new NewWarningsDetail(getOwner(), getNewWarnings(), Messages.PMD_NewWarnings_Detail_header());
         }
         else if ("error".equals(link)) {
             return new ErrorDetail(getOwner(), "PMD", errors);
