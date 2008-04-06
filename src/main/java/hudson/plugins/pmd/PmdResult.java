@@ -11,6 +11,7 @@ import hudson.plugins.pmd.util.FixedWarningsDetail;
 import hudson.plugins.pmd.util.ModuleDetail;
 import hudson.plugins.pmd.util.NewWarningsDetail;
 import hudson.plugins.pmd.util.PackageDetail;
+import hudson.plugins.pmd.util.PriorityDetailFactory;
 import hudson.plugins.pmd.util.SourceDetail;
 import hudson.plugins.pmd.util.model.AnnotationStream;
 import hudson.plugins.pmd.util.model.FileAnnotation;
@@ -489,7 +490,11 @@ public class PmdResult implements ModelObject, Serializable {
      *         package).
      */
     public Object getDynamic(final String link, final StaplerRequest request, final StaplerResponse response) {
-        if ("fixed".equals(link)) {
+        PriorityDetailFactory factory = new PriorityDetailFactory();
+        if (factory.isPriority(link)) {
+            return factory.create(link, owner, getProject(), Messages.PMD_Detail_header());
+        }
+        else if ("fixed".equals(link)) {
             return new FixedWarningsDetail(getOwner(), getFixedWarnings(), Messages.PMD_FixedWarnings_Detail_header());
         }
         else if ("new".equals(link)) {
@@ -661,5 +666,14 @@ public class PmdResult implements ModelObject, Serializable {
         else {
             return getModule(name).getToolTip();
         }
+    }
+
+    /**
+     * Returns all possible priorities.
+     *
+     * @return all priorities
+     */
+    public Priority[] getPriorities() {
+        return Priority.values();
     }
 }
