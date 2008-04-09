@@ -63,10 +63,11 @@ public class PmdCollector implements FileCallable<JavaProject> {
         }
 
         try {
+            MavenModuleDetector detector = new MavenModuleDetector();
             for (String file : pmdFiles) {
                 File pmdFile = new File(workspace, file);
 
-                String moduleName = MavenModuleDetector.guessModuleName(pmdFile.getAbsolutePath());
+                String moduleName = detector.guessModuleName(pmdFile.getAbsolutePath());
                 MavenModule module = new MavenModule(moduleName);
 
                 if (SKIP_OLD_FILES && pmdFile.lastModified() < buildTime) {
