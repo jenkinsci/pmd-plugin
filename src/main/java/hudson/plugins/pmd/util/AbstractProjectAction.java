@@ -216,6 +216,13 @@ public abstract class AbstractProjectAction<T extends ResultAction<?>> implement
     }
 
     /**
+     * Returns the title of the trend graph.
+     *
+     * @return the title of the trend graph.
+     */
+    public abstract String getTrendName();
+
+    /**
      * Changes the trend graph display mode.
      *
      * @param request
@@ -254,5 +261,5 @@ public abstract class AbstractProjectAction<T extends ResultAction<?>> implement
      *
      * @return the flip trend cookie name.
      */
-    protected abstract String getCookieName();
+    public abstract String getCookieName();
 }
