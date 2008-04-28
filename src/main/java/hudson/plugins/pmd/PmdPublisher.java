@@ -60,8 +60,7 @@ public class PmdPublisher extends HealthAwarePublisher {
         logger.println("Collecting pmd analysis files...");
 
         JavaProject project = parseAllWorkspaceFiles(build, logger);
-        PmdResult result = createResult(build, project);
-
+        PmdResult result = new PmdResultBuilder().build(build, project);
         HealthReportBuilder healthReportBuilder = createHealthReporter(
                 Messages.PMD_ResultAction_HealthReportSingleItem(),
                 Messages.PMD_ResultAction_HealthReportMultipleItem("%d"));
@@ -90,36 +89,6 @@ public class PmdPublisher extends HealthAwarePublisher {
                         StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN));
 
         return build.getProject().getWorkspace().act(pmdCollector);
-    }
-
-    /**
-     * Creates a result that persists the PMD information for the
-     * specified build.
-     *
-     * @param build
-     *            the build to create the action for
-     * @param project
-     *            the project containing the annotations
-     * @return the result action
-     */
-    private PmdResult createResult(final AbstractBuild<?, ?> build, final JavaProject project) {
-        Object previous = build.getPreviousBuild();
-        PmdResult result;
-        if (previous instanceof AbstractBuild<?, ?>) {
-            AbstractBuild<?, ?> previousBuild = (AbstractBuild<?, ?>)previous;
-            PmdResultAction previousAction = previousBuild.getAction(PmdResultAction.class);
-            if (previousAction == null) {
-                result = new PmdResult(build, project);
-            }
-            else {
-                result = new PmdResult(build, project, previousAction.getResult().getProject(),
-                        previousAction.getResult().getZeroWarningsHighScore());
-            }
-        }
-        else {
-            result = new PmdResult(build, project);
-        }
-        return result;
     }
 
     /** {@inheritDoc} */

@@ -8,7 +8,6 @@ import hudson.maven.MavenReporter;
 import hudson.maven.MavenReporterDescriptor;
 import hudson.maven.MojoInfo;
 import hudson.maven.MavenBuildProxy.BuildCallable;
-import hudson.model.AbstractBuild;
 import hudson.model.Action;
 import hudson.model.BuildListener;
 import hudson.model.Result;
@@ -146,23 +145,7 @@ public class PmdReporter extends MavenReporter {
 
         build.execute(new BuildCallable<Void, IOException>() {
             public Void call(final MavenBuild build) throws IOException, InterruptedException {
-                Object previous = build.getPreviousBuild();
-                PmdResult result;
-                if (previous instanceof AbstractBuild<?, ?>) {
-                    AbstractBuild<?, ?> previousBuild = (AbstractBuild<?, ?>)previous;
-                    PmdResultAction previousAction = previousBuild.getAction(PmdResultAction.class);
-                    if (previousAction == null) {
-                        result = new PmdResult(build, project);
-                    }
-                    else {
-                        result = new PmdResult(build, project, previousAction.getResult().getProject(),
-                                previousAction.getResult().getZeroWarningsHighScore());
-                    }
-                }
-                else {
-                    result = new PmdResult(build, project);
-                }
-
+                PmdResult result = new PmdResultBuilder().build(build, project);
                 HealthReportBuilder healthReportBuilder = new HealthReportBuilder(thresholdEnabled, minimumAnnotations,
                         healthyReportEnabled, healthyAnnotations, unHealthyAnnotations,
                         Messages.PMD_ResultAction_HealthReportSingleItem(),
