@@ -5,9 +5,7 @@ import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.BuildListener;
 import hudson.model.Descriptor;
-import hudson.model.Result;
 import hudson.plugins.pmd.parser.PmdCollector;
-import hudson.plugins.pmd.util.AbortException;
 import hudson.plugins.pmd.util.HealthAwarePublisher;
 import hudson.plugins.pmd.util.HealthReportBuilder;
 import hudson.plugins.pmd.util.model.JavaProject;
@@ -55,70 +53,21 @@ public class PmdPublisher extends HealthAwarePublisher {
         return new PmdProjectAction(project);
     }
 
-    /**
-     * Scans the workspace and parses all found PMD XML files. Then, the
-     * annotations of all files are merged and persisted for a build. Finally,
-     * the number of bugs are counted and the result of the build is set
-     * accordingly ({@link #getThreshold()}.
-     *
-     * @param build
-     *            the build
-     * @param listener
-     *            the build listener
-     * @return <code>true</code> if the build could continue
-     * @throws IOException
-     *             if the files could not be copied
-     * @throws InterruptedException
-     *             if user cancels the operation
-     */
+    /** {@inheritDoc} */
     @Override
-    public boolean perform(final AbstractBuild<?, ?> build, final BuildListener listener) throws InterruptedException, IOException {
+    public JavaProject perform(final AbstractBuild<?, ?> build, final BuildListener listener) throws InterruptedException, IOException {
         PrintStream logger = listener.getLogger();
-        try {
-            logger.println("Collecting pmd analysis files...");
+        logger.println("Collecting pmd analysis files...");
 
-            JavaProject project = parseAllWorkspaceFiles(build, logger);
-            PmdResult result = createResult(build, project);
+        JavaProject project = parseAllWorkspaceFiles(build, logger);
+        PmdResult result = createResult(build, project);
 
-            HealthReportBuilder healthReportBuilder = createHealthReporter(
-                    Messages.PMD_ResultAction_HealthReportSingleItem(),
-                    Messages.PMD_ResultAction_HealthReportMultipleItem("%d"));
-            build.getActions().add(new PmdResultAction(build, result, healthReportBuilder));
+        HealthReportBuilder healthReportBuilder = createHealthReporter(
+                Messages.PMD_ResultAction_HealthReportSingleItem(),
+                Messages.PMD_ResultAction_HealthReportMultipleItem("%d"));
+        build.getActions().add(new PmdResultAction(build, result, healthReportBuilder));
 
-            evaluateBuildResult(build, logger, project);
-
-            return true;
-        }
-        catch (AbortException exception) {
-            logger.println(exception.getMessage());
-            build.setResult(Result.FAILURE);
-            return false;
-        }
-    }
-
-    /**
-     * Evaluates the build result. The build is marked as unstable if the
-     * threshold has been exceeded.
-     *
-     * @param build
-     *            the build to create the action for
-     * @param logger
-     *            the logger
-     * @param project
-     *            the project with the annotations
-     */
-    private void evaluateBuildResult(final AbstractBuild<?, ?> build, final PrintStream logger, final JavaProject project) {
-        int warnings = project.getNumberOfAnnotations();
-        if (warnings > 0) {
-            logger.println(
-                    "A total of " + warnings + " warnings have been found.");
-            if (isThresholdEnabled() && warnings >= getMinimumAnnotations()) {
-                build.setResult(Result.UNSTABLE);
-            }
-        }
-        else {
-            logger.println("No warnings have been found.");
-        }
+        return project;
     }
 
     /**
