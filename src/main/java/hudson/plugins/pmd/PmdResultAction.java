@@ -3,17 +3,11 @@ package hudson.plugins.pmd;
 import hudson.model.AbstractBuild;
 import hudson.plugins.pmd.util.AbstractResultAction;
 import hudson.plugins.pmd.util.HealthReportBuilder;
-import hudson.plugins.pmd.util.model.Priority;
-import hudson.util.DataSetBuilder;
-import hudson.util.ChartUtil.NumberOnlyBuildLabel;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.lang.StringUtils;
 import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.CategoryDataset;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
@@ -49,12 +43,6 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
     }
 
     /** {@inheritDoc} */
-    @Override
-    protected int getHealthCounter() {
-        return getResult().getNumberOfAnnotations();
-    }
-
-    /** {@inheritDoc} */
     public String getDisplayName() {
         return Messages.PMD_ProjectAction_Name();
     }
@@ -78,35 +66,11 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
      *             if there is no previous build for this action
      */
     public PmdResultAction getPreviousResultAction() {
-        PmdResultAction previousBuild = getPreviousBuild();
-        if (previousBuild == null) {
-            throw new NoSuchElementException("There is no previous build for action " + this);
+        AbstractResultAction<PmdResult> previousBuild = getPreviousBuild();
+        if (previousBuild instanceof PmdResultAction) {
+            return (PmdResultAction)previousBuild;
         }
-        return previousBuild;
-    }
-
-    /**
-     * Gets the test result of a previous build, if it's recorded, or <code>null</code> if not.
-     *
-     * @return the test result of a previous build, or <code>null</code>
-     */
-    private PmdResultAction getPreviousBuild() {
-        AbstractBuild<?, ?> build = getOwner();
-        while (true) {
-            build = build.getPreviousBuild();
-            if (build == null) {
-                return null;
-            }
-            PmdResultAction action = build.getAction(PmdResultAction.class);
-            if (action != null) {
-                return action;
-            }
-        }
-    }
-
-    /** {@inheritDoc} */
-    public boolean hasPreviousResultAction() {
-        return getPreviousBuild() != null;
+        throw new NoSuchElementException("There is no previous build for action " + this);
     }
 
     /**
@@ -125,39 +89,5 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
         return getHealthReportBuilder().createGraph(useHealthBuilder, PMD_RESULT_URL, buildDataSet(useHealthBuilder),
                 Messages.PMD_ResultAction_OneWarning(),
                 Messages.PMD_ResultAction_MultipleWarnings("%d"));
-    }
-
-    /**
-     * Returns the data set that represents the result. For each build, the
-     * number of warnings is used as result value.
-     *
-     * @param useHealthBuilder
-     *            determines whether the health builder should be used to create
-     *            the data set
-     * @return the data set
-     */
-    private CategoryDataset buildDataSet(final boolean useHealthBuilder) {
-        DataSetBuilder<Integer, NumberOnlyBuildLabel> builder = new DataSetBuilder<Integer, NumberOnlyBuildLabel>();
-        for (PmdResultAction action = this; action != null; action = action.getPreviousBuild()) {
-            PmdResult current = action.getResult();
-            if (current != null) {
-                List<Integer> series;
-                if (useHealthBuilder && getHealthReportBuilder().isEnabled()) {
-                    series = getHealthReportBuilder().createSeries(current.getNumberOfAnnotations());
-                }
-                else {
-                    series = new ArrayList<Integer>();
-                    series.add(current.getNumberOfAnnotations(Priority.LOW));
-                    series.add(current.getNumberOfAnnotations(Priority.NORMAL));
-                    series.add(current.getNumberOfAnnotations(Priority.HIGH));
-                }
-                int level = 0;
-                for (Integer integer : series) {
-                    builder.add(integer, level, new NumberOnlyBuildLabel(action.getOwner()));
-                    level++;
-                }
-            }
-        }
-        return builder.build();
     }
 }

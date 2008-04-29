@@ -163,6 +163,13 @@ public abstract class AbstractProjectAction<T extends ResultAction<?>> implement
     }
 
     /**
+     * Returns the title of the trend graph.
+     *
+     * @return the title of the trend graph.
+     */
+    public abstract String getTrendName();
+
+    /**
      * Display the trend map. Delegates to the the associated
      * {@link ResultAction}.
      *
@@ -214,13 +221,6 @@ public abstract class AbstractProjectAction<T extends ResultAction<?>> implement
         }
         return lastBuild;
     }
-
-    /**
-     * Returns the title of the trend graph.
-     *
-     * @return the title of the trend graph.
-     */
-    public abstract String getTrendName();
 
     /**
      * Changes the trend graph display mode.

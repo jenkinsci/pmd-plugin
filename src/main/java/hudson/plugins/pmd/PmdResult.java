@@ -13,6 +13,7 @@ import hudson.plugins.pmd.util.NewWarningsDetail;
 import hudson.plugins.pmd.util.PackageDetail;
 import hudson.plugins.pmd.util.PriorityDetailFactory;
 import hudson.plugins.pmd.util.SourceDetail;
+import hudson.plugins.pmd.util.model.AnnotationProvider;
 import hudson.plugins.pmd.util.model.AnnotationStream;
 import hudson.plugins.pmd.util.model.FileAnnotation;
 import hudson.plugins.pmd.util.model.JavaPackage;
@@ -48,7 +49,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  *
  * @author Ulli Hafner
  */
-public class PmdResult implements ModelObject, Serializable {
+public class PmdResult implements ModelObject, Serializable, AnnotationProvider {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 2768250056765266658L;
     /** Logger. */
@@ -324,35 +325,6 @@ public class PmdResult implements ModelObject, Serializable {
         else {
             return low;
         }
-    }
-
-    /**
-     * Returns whether we have annotations in this project.
-     *
-     * @return <code>true</code> if we have annotations in this project
-     */
-    public final boolean hasAnnotations() {
-        return getProject().hasAnnotations();
-    }
-
-    /**
-     * Returns the annotations of this project.
-     *
-     * @return the annotations for this project.
-     */
-    public Collection<FileAnnotation> getAnnotations() {
-        return getProject().getAnnotations();
-    }
-
-    /**
-     * Returns the annotations of the specified priority for this object.
-     *
-     * @param priority
-     *            the priority as a string object
-     * @return annotations of the specified priority for this object
-     */
-    public int getNumberOfAnnotations(final String priority) {
-        return getNumberOfAnnotations(Priority.fromString(priority));
     }
 
     /**
@@ -675,5 +647,50 @@ public class PmdResult implements ModelObject, Serializable {
      */
     public Priority[] getPriorities() {
         return Priority.values();
+    }
+
+    /** {@inheritDoc} */
+    public FileAnnotation getAnnotation(final long key) {
+        return getProject().getAnnotation(key);
+    }
+
+    /** {@inheritDoc} */
+    public FileAnnotation getAnnotation(final String key) {
+        return getProject().getAnnotation(key);
+    }
+
+    /** {@inheritDoc} */
+    public Collection<FileAnnotation> getAnnotations(final Priority priority) {
+        return getProject().getAnnotations(priority);
+    }
+
+    /** {@inheritDoc} */
+    public Collection<FileAnnotation> getAnnotations(final String priority) {
+        return getProject().getAnnotations(priority);
+    }
+
+    /** {@inheritDoc} */
+    public boolean hasAnnotations(final Priority priority) {
+        return getProject().hasAnnotations(priority);
+    }
+
+    /** {@inheritDoc} */
+    public boolean hasAnnotations(final String priority) {
+        return getProject().hasAnnotations(priority);
+    }
+
+    /** {@inheritDoc} */
+    public final boolean hasAnnotations() {
+        return getProject().hasAnnotations();
+    }
+
+    /** {@inheritDoc} */
+    public Collection<FileAnnotation> getAnnotations() {
+        return getProject().getAnnotations();
+    }
+
+    /** {@inheritDoc} */
+    public int getNumberOfAnnotations(final String priority) {
+        return getNumberOfAnnotations(Priority.fromString(priority));
     }
 }
