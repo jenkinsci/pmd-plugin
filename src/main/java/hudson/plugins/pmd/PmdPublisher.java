@@ -41,16 +41,18 @@ public class PmdPublisher extends HealthAwarePublisher {
      * @param unHealthy
      *            Report health as 0% when the number of warnings is greater
      *            than this value
+     * @param height
+     *            the height of the trend graph
      * @stapler-constructor
      */
-    public PmdPublisher(final String pattern, final String threshold, final String healthy, final String unHealthy) {
-        super(pattern, threshold, healthy, unHealthy);
+    public PmdPublisher(final String pattern, final String threshold, final String healthy, final String unHealthy, final String height) {
+        super(pattern, threshold, healthy, unHealthy, height);
     }
 
     /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final AbstractProject<?, ?> project) {
-        return new PmdProjectAction(project);
+        return new PmdProjectAction(project, getTrendHeight());
     }
 
     /** {@inheritDoc} */

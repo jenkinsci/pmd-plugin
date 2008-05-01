@@ -22,6 +22,8 @@ import org.apache.maven.project.MavenProject;
 
 // FIXME: this class more or less is a copy of the PmdPublisher, we should find a way to generalize portions of this class
 public class PmdReporter extends MavenReporter {
+    /** Default height of the graph. */
+    private static final int HEIGHT = 200;
     /** Descriptor of this publisher. */
     public static final PmdReporterDescriptor PMD_SCANNER_DESCRIPTOR = new PmdReporterDescriptor(PmdPublisher.PMD_DESCRIPTOR);
     /** Default PMD pattern. */
@@ -44,6 +46,8 @@ public class PmdReporter extends MavenReporter {
     private int unHealthyAnnotations;
     /** Determines whether to use the provided healthy thresholds. */
     private boolean healthyReportEnabled;
+    /** Determines the height of the trend graph. */
+    private final String height;
 
     /**
      * Creates a new instance of <code>PmdReporter</code>.
@@ -59,14 +63,17 @@ public class PmdReporter extends MavenReporter {
      * @param unHealthy
      *            Report health as 0% when the number of warnings is greater
      *            than this value
+     * @param height
+     *            the height of the trend graph
      * @stapler-constructor
      */
-    public PmdReporter(final String pattern, final String threshold, final String healthy, final String unHealthy) {
+    public PmdReporter(final String pattern, final String threshold, final String healthy, final String unHealthy, final String height) {
         super();
         this.threshold = threshold;
         this.healthy = healthy;
         this.unHealthy = unHealthy;
         this.pattern = pattern;
+        this.height = height;
 
         if (!StringUtils.isEmpty(threshold)) {
             try {
@@ -175,13 +182,39 @@ public class PmdReporter extends MavenReporter {
     /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final MavenModule module) {
-        return new PmdProjectAction(module);
+        return new PmdProjectAction(module, getTrendHeight());
     }
 
     /** {@inheritDoc} */
     @Override
     public MavenReporterDescriptor getDescriptor() {
         return PMD_SCANNER_DESCRIPTOR;
+    }
+
+    /**
+     * Returns the height of the trend graph.
+     *
+     * @return the height of the trend graph
+     */
+    public String getHeight() {
+        return height;
+    }
+
+    /**
+     * Returns the height of the trend graph.
+     *
+     * @return the height of the trend graph
+     */
+    public int getTrendHeight() {
+        if (!StringUtils.isEmpty(height)) {
+            try {
+                return Math.max(50, Integer.valueOf(height));
+            }
+            catch (NumberFormatException exception) {
+                // nothing to do, we use the default value
+            }
+        }
+        return HEIGHT;
     }
 }
 
