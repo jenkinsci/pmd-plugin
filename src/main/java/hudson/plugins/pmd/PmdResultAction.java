@@ -3,13 +3,9 @@ package hudson.plugins.pmd;
 import hudson.model.AbstractBuild;
 import hudson.plugins.pmd.util.AbstractResultAction;
 import hudson.plugins.pmd.util.HealthReportBuilder;
+import hudson.plugins.pmd.util.PluginDescriptor;
 
 import java.util.NoSuchElementException;
-
-import org.apache.commons.lang.StringUtils;
-import org.jfree.chart.JFreeChart;
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
 
 /**
  * Controls the live cycle of the PMD results. This action persists the
@@ -25,8 +21,6 @@ import org.kohsuke.stapler.StaplerResponse;
 public class PmdResultAction extends AbstractResultAction<PmdResult> {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = -5329651349674842873L;
-    /** URL to results. */
-    private static final String PMD_RESULT_URL = "pmdResult";
 
     /**
      * Creates a new instance of <code>PmdBuildAction</code>.
@@ -49,13 +43,8 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
 
     /** {@inheritDoc} */
     @Override
-    public String getIconUrl() {
-        return PmdDescriptor.PMD_ACTION_LOGO;
-    }
-
-    /** {@inheritDoc} */
-    public String getUrlName() {
-        return PMD_RESULT_URL;
+    protected PluginDescriptor getDescriptor() {
+        return PmdPublisher.PMD_DESCRIPTOR;
     }
 
     /**
@@ -73,21 +62,13 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
         throw new NoSuchElementException("There is no previous build for action " + this);
     }
 
-    /**
-     * Creates the chart for this action.
-     *
-     * @param request
-     *            Stapler request
-     * @param response
-     *            Stapler response
-     * @return the chart for this action.
-     */
-    @Override
-    protected JFreeChart createChart(final StaplerRequest request, final StaplerResponse response) {
-        String parameter = request.getParameter("useHealthBuilder");
-        boolean useHealthBuilder = Boolean.valueOf(StringUtils.defaultIfEmpty(parameter, "true"));
-        return getHealthReportBuilder().createGraph(useHealthBuilder, PMD_RESULT_URL, buildDataSet(useHealthBuilder),
-                Messages.PMD_ResultAction_OneWarning(),
-                Messages.PMD_ResultAction_MultipleWarnings("%d"));
+    /** {@inheritDoc} */
+    public String getMultipleItemsTooltip(final int numberOfItems) {
+        return Messages.PMD_ResultAction_MultipleWarnings(numberOfItems);
+    }
+
+    /** {@inheritDoc} */
+    public String getSingleItemTooltip() {
+        return Messages.PMD_ResultAction_OneWarning();
     }
 }

@@ -23,7 +23,7 @@ import org.apache.maven.project.MavenProject;
 // FIXME: this class more or less is a copy of the PmdPublisher, we should find a way to generalize portions of this class
 public class PmdReporter extends MavenReporter {
     /** Descriptor of this publisher. */
-    public static final PmdReporterDescriptor PMD_SCANNER_DESCRIPTOR = new PmdReporterDescriptor();
+    public static final PmdReporterDescriptor PMD_SCANNER_DESCRIPTOR = new PmdReporterDescriptor(PmdPublisher.PMD_DESCRIPTOR);
     /** Default PMD pattern. */
     private static final String DEFAULT_PATTERN = "**/pmd.xml";
     /** Ant file-set pattern of files to work with. */

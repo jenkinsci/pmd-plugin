@@ -21,17 +21,12 @@ public class PmdProjectAction extends AbstractProjectAction<PmdResultAction> {
      *            the project that owns this action
      */
     public PmdProjectAction(final AbstractProject<?, ?> project) {
-        super(project, PmdResultAction.class, PmdDescriptor.PMD_ACTION_LOGO, PmdDescriptor.PLUGIN_NAME);
+        super(project, PmdResultAction.class, PmdPublisher.PMD_DESCRIPTOR);
     }
 
     /** {@inheritDoc} */
     public String getDisplayName() {
         return Messages.PMD_ProjectAction_Name();
-    }
-
-    /** {@inheritDoc} */
-    public String getUrlName() {
-        return PmdDescriptor.PLUGIN_NAME;
     }
 
     /** {@inheritDoc} */
