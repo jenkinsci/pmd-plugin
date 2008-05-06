@@ -27,13 +27,25 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
      *
      * @param owner
      *            the associated build of this action
+     * @param healthReportBuilder
+     *            health builder to use
      * @param result
      *            the result in this build
+     */
+    public PmdResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final PmdResult result) {
+        super(owner, healthReportBuilder, result);
+    }
+
+    /**
+     * Creates a new instance of <code>PmdBuildAction</code>.
+     *
+     * @param owner
+     *            the associated build of this action
      * @param healthReportBuilder
      *            health builder to use
      */
-    public PmdResultAction(final AbstractBuild<?, ?> owner, final PmdResult result, final HealthReportBuilder healthReportBuilder) {
-        super(owner, healthReportBuilder, result);
+    public PmdResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder) {
+        super(owner, healthReportBuilder);
     }
 
     /** {@inheritDoc} */

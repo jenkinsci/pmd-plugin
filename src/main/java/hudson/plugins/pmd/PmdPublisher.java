@@ -66,7 +66,7 @@ public class PmdPublisher extends HealthAwarePublisher {
         HealthReportBuilder healthReportBuilder = createHealthReporter(
                 Messages.PMD_ResultAction_HealthReportSingleItem(),
                 Messages.PMD_ResultAction_HealthReportMultipleItem("%d"));
-        build.getActions().add(new PmdResultAction(build, result, healthReportBuilder));
+        build.getActions().add(new PmdResultAction(build, healthReportBuilder, result));
 
         return project;
     }

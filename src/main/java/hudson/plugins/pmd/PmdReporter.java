@@ -13,6 +13,7 @@ import hudson.model.BuildListener;
 import hudson.model.Result;
 import hudson.plugins.pmd.parser.PmdCollector;
 import hudson.plugins.pmd.util.HealthReportBuilder;
+import hudson.plugins.pmd.util.TrendReportSize;
 import hudson.plugins.pmd.util.model.JavaProject;
 
 import java.io.IOException;
@@ -22,8 +23,6 @@ import org.apache.maven.project.MavenProject;
 
 // FIXME: this class more or less is a copy of the PmdPublisher, we should find a way to generalize portions of this class
 public class PmdReporter extends MavenReporter {
-    /** Default height of the graph. */
-    private static final int HEIGHT = 200;
     /** Descriptor of this publisher. */
     public static final PmdReporterDescriptor PMD_SCANNER_DESCRIPTOR = new PmdReporterDescriptor(PmdPublisher.PMD_DESCRIPTOR);
     /** Default PMD pattern. */
@@ -140,7 +139,11 @@ public class PmdReporter extends MavenReporter {
     @Override
     public boolean postExecute(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo,
             final BuildListener listener, final Throwable error) throws InterruptedException, IOException {
-        if (!"pmd".equals(mojo.getGoal())) {
+        if (!"pmd".equals(mojo.getGoal()) && !"site".equals(mojo.getGoal())) {
+            return true;
+        }
+        if (hasResultAction(build)) {
+            listener.getLogger().println("Scipping PMD plug-in: there is already a result available.");
             return true;
         }
 
@@ -157,7 +160,7 @@ public class PmdReporter extends MavenReporter {
                         healthyReportEnabled, healthyAnnotations, unHealthyAnnotations,
                         Messages.PMD_ResultAction_HealthReportSingleItem(),
                         Messages.PMD_ResultAction_HealthReportMultipleItem("%d"));
-                build.getActions().add(new PmdResultAction(build, result, healthReportBuilder));
+                build.getActions().add(new MavenPmdResultAction(build, healthReportBuilder, height, result));
                 build.registerAsProjectAction(PmdReporter.this);
 
                 return null;
@@ -177,6 +180,25 @@ public class PmdReporter extends MavenReporter {
         }
 
         return true;
+    }
+
+    /**
+     * Returns whether we already have a result for this build.
+     *
+     * @param build
+     *            the current build.
+     * @return <code>true</code> if we already have a task result action.
+     * @throws IOException
+     *             in case of an IO error
+     * @throws InterruptedException
+     *             if the call has been interrupted
+     */
+    private Boolean hasResultAction(final MavenBuildProxy build) throws IOException, InterruptedException {
+        return build.execute(new BuildCallable<Boolean, IOException>() {
+            public Boolean call(final MavenBuild mavenBuild) throws IOException, InterruptedException {
+                return mavenBuild.getAction(MavenPmdResultAction.class) != null;
+            }
+        });
     }
 
     /** {@inheritDoc} */
@@ -206,15 +228,7 @@ public class PmdReporter extends MavenReporter {
      * @return the height of the trend graph
      */
     public int getTrendHeight() {
-        if (!StringUtils.isEmpty(height)) {
-            try {
-                return Math.max(50, Integer.valueOf(height));
-            }
-            catch (NumberFormatException exception) {
-                // nothing to do, we use the default value
-            }
-        }
-        return HEIGHT;
+        return new TrendReportSize(height).getHeight();
     }
 }
 
