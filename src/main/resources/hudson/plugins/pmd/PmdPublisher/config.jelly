@@ -1,10 +1,11 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
 	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-	<f:entry title="${%PMD results}"
-		description="${%description.pattern}">
-		<f:textbox name="pmd_pattern" value="${instance.pattern}"
-			checkUrl="'${rootURL}/publisher/PmdPublisher/checkPattern?job=${it.fullName}&amp;value='+escape(this.value)" />
-	</f:entry>
+  <f:entry title="${%PMD results}"
+	description="${%description.pattern}">
+	<f:textbox name="pmd_pattern" value="${instance.pattern}"
+		checkUrl="'${rootURL}/publisher/PmdPublisher/checkPattern?job=${it.fullName}&amp;value='+escape(this.value)" />
+  </f:entry>
+  <f:advanced>
 	<f:entry title="${%Unstable threshold}" description="${%description.threshold}">
 		<f:textbox name="pmd_threshold" value="${instance.threshold}"
 			checkUrl="'${rootURL}/publisher/PmdPublisher/checkThreshold?job=${it.fullName}&amp;value='+escape(this.value)" />
@@ -40,4 +41,5 @@
 	<f:entry title="${%Trend report height}" description="${%Height of the trend report image. Leave this field empty to use the default height.}">
 		<f:textbox name="pmd_height" value="${instance.height}" />
 	</f:entry>
+  </f:advanced>
 </j:jelly>
