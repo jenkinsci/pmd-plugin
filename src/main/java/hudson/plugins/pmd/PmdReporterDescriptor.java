@@ -25,12 +25,6 @@ public class PmdReporterDescriptor extends ReporterDescriptor {
 
     /** {@inheritDoc} */
     @Override
-    public String getConfigPage() {
-        return getViewPage(PmdPublisher.class, "config.jelly");
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MavenReporter newInstance(final StaplerRequest request) throws FormException {
         return request.bindParameters(PmdReporter.class, getPublisherDescriptor().getPluginName() + "_");
     }
