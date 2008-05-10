@@ -19,6 +19,8 @@ public class PmdProjectAction extends AbstractProjectAction<PmdResultAction> {
      *
      * @param project
      *            the project that owns this action
+     * @param height
+     *            the height of the trend graph
      */
     public PmdProjectAction(final AbstractProject<?, ?> project, final int height) {
         super(project, PmdResultAction.class, PmdPublisher.PMD_DESCRIPTOR, height);

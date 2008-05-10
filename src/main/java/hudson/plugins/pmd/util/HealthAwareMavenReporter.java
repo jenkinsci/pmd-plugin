@@ -31,6 +31,8 @@ import org.apache.maven.project.MavenProject;
  * </ul>
  */
 public abstract class HealthAwareMavenReporter extends MavenReporter {
+    /** Unique identifier of this class. */
+    private static final long serialVersionUID = 3003791883748835331L;
     /** Annotation threshold to be reached if a build should be considered as unstable. */
     private final String threshold;
     /** Determines whether to use the provided threshold to mark a build as unstable. */
@@ -68,10 +70,9 @@ public abstract class HealthAwareMavenReporter extends MavenReporter {
      *            the height of the trend graph
      * @param pluginName
      *            the name of the plug-in
-     * @stapler-constructor
      */
-    public HealthAwareMavenReporter(final String threshold, final String healthy, final String unHealthy, final String height,
-            final String pluginName) {
+    public HealthAwareMavenReporter(final String threshold, final String healthy, final String unHealthy,
+            final String height, final String pluginName) {
         super();
         this.threshold = threshold;
         this.healthy = healthy;

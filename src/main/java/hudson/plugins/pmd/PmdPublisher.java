@@ -85,7 +85,7 @@ public class PmdPublisher extends HealthAwarePublisher {
      */
     private JavaProject parseAllWorkspaceFiles(final AbstractBuild<?, ?> build,
             final PrintStream logger) throws IOException, InterruptedException {
-        PmdCollector pmdCollector = new PmdCollector( logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN));
+        PmdCollector pmdCollector = new PmdCollector(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN));
 
         return build.getProject().getWorkspace().act(pmdCollector);
     }

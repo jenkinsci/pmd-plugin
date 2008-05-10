@@ -93,6 +93,7 @@ public class PmdResult implements ModelObject, Serializable, AnnotationProvider 
     private long zeroWarningsHighScore;
 
     /** Error messages. */
+    @SuppressWarnings("Se")
     private final List<String> errors;
 
     /** Current build as owner of this action. */
@@ -100,6 +101,7 @@ public class PmdResult implements ModelObject, Serializable, AnnotationProvider 
     private final AbstractBuild<?, ?> owner;
 
     /** The modules with no warnings. */
+    @SuppressWarnings("Se")
     private final Map<String, MavenModule> emptyModules;
     /** The total number of modules with or without warnings. */
     private final int numberOfModules;

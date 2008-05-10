@@ -22,6 +22,8 @@ import org.apache.maven.project.MavenProject;
  * @author Ulli Hafner
  */
 public class PmdReporter extends HealthAwareMavenReporter {
+    /** Unique identifier of this class. */
+    private static final long serialVersionUID = 2272875032054063496L;
     /** Descriptor of this publisher. */
     public static final PmdReporterDescriptor PMD_SCANNER_DESCRIPTOR = new PmdReporterDescriptor(PmdPublisher.PMD_DESCRIPTOR);
     /** Default PMD pattern. */
