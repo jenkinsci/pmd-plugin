@@ -3,7 +3,6 @@ package hudson.plugins.pmd;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
-import hudson.model.BuildListener;
 import hudson.model.Descriptor;
 import hudson.plugins.pmd.parser.PmdCollector;
 import hudson.plugins.pmd.util.HealthAwarePublisher;
@@ -17,7 +16,7 @@ import java.io.PrintStream;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * Publishes the results of the PMD analysis.
+ * Publishes the results of the PMD analysis  (freestyle project type).
  *
  * @author Ulli Hafner
  */
@@ -46,7 +45,7 @@ public class PmdPublisher extends HealthAwarePublisher {
      * @stapler-constructor
      */
     public PmdPublisher(final String pattern, final String threshold, final String healthy, final String unHealthy, final String height) {
-        super(pattern, threshold, healthy, unHealthy, height);
+        super(pattern, threshold, healthy, unHealthy, height, "PMD");
     }
 
     /** {@inheritDoc} */
@@ -57,9 +56,8 @@ public class PmdPublisher extends HealthAwarePublisher {
 
     /** {@inheritDoc} */
     @Override
-    public JavaProject perform(final AbstractBuild<?, ?> build, final BuildListener listener) throws InterruptedException, IOException {
-        PrintStream logger = listener.getLogger();
-        logger.println("Collecting pmd analysis files...");
+    public JavaProject perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
+        log(logger, "Collecting pmd analysis files...");
 
         JavaProject project = parseAllWorkspaceFiles(build, logger);
         PmdResult result = new PmdResultBuilder().build(build, project);
@@ -87,10 +85,7 @@ public class PmdPublisher extends HealthAwarePublisher {
      */
     private JavaProject parseAllWorkspaceFiles(final AbstractBuild<?, ?> build,
             final PrintStream logger) throws IOException, InterruptedException {
-        PmdCollector pmdCollector = new PmdCollector(
-                    logger,
-                    build.getTimestamp().getTimeInMillis(),
-                    StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN));
+        PmdCollector pmdCollector = new PmdCollector( logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN));
 
         return build.getProject().getWorkspace().act(pmdCollector);
     }

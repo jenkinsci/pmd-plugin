@@ -23,16 +23,10 @@ import org.xml.sax.SAXException;
  * @author Ulli Hafner
  */
 public class PmdCollector implements FileCallable<JavaProject> {
-    /** Slash separator on UNIX. */
-    private static final String SLASH = "/";
     /** Generated ID. */
     private static final long serialVersionUID = -6415863872891783891L;
-    /** Determines whether to skip old files. */
-    private static final boolean SKIP_OLD_FILES = false;
     /** Logger. */
-    private transient PrintStream logger;
-    /** Build time stamp, only newer files are considered. */
-    private final long buildTime;
+    private final transient PrintStream logger;
     /** Ant file-set pattern to scan for PMD files. */
     private final String filePattern;
 
@@ -41,15 +35,23 @@ public class PmdCollector implements FileCallable<JavaProject> {
      *
      * @param listener
      *            the Logger
-     * @param buildTime
-     *            build time stamp, only newer files are considered
      * @param filePattern
      *            ant file-set pattern to scan for PMD files
      */
-    public PmdCollector(final PrintStream listener, final long buildTime, final String filePattern) {
+    public PmdCollector(final PrintStream listener, final String filePattern) {
         logger = listener;
-        this.buildTime = buildTime;
         this.filePattern = filePattern;
+    }
+
+    /**
+     * Logs the specified message.
+     *
+     * @param message the message
+     */
+    protected void log(final String message) {
+        if (logger != null) {
+            logger.println("[PMD] " + message);
+        }
     }
 
     /** {@inheritDoc} */
@@ -74,21 +76,15 @@ public class PmdCollector implements FileCallable<JavaProject> {
                 }
                 MavenModule module = new MavenModule(moduleName);
 
-                if (SKIP_OLD_FILES && pmdFile.lastModified() < buildTime) {
-                    String message = Messages.PMD_PMDCollector_Error_FileNotUpToDate(pmdFile);
-                    getLogger().println(message);
-                    module.setError(message);
-                    continue;
-                }
                 if (!pmdFile.canRead()) {
                     String message = Messages.PMD_PMDCollector_Error_NoPermission(pmdFile);
-                    getLogger().println(message);
+                    log(message);
                     module.setError(message);
                     continue;
                 }
                 if (new FilePath(pmdFile).length() <= 0) {
                     String message = Messages.PMD_PMDCollector_Error_EmptyFile(pmdFile);
-                    getLogger().println(message);
+                    log(message);
                     module.setError(message);
                     continue;
                 }
@@ -98,7 +94,7 @@ public class PmdCollector implements FileCallable<JavaProject> {
             }
         }
         catch (InterruptedException exception) {
-            getLogger().println("Parsing has been canceled.");
+            log("Parsing has been canceled.");
         }
         return project;
     }
@@ -124,7 +120,7 @@ public class PmdCollector implements FileCallable<JavaProject> {
             FilePath filePath = new FilePath(pmdFile);
             PmdParser pmdParser = new PmdParser();
             module = pmdParser.parse(filePath.read(), emptyModule.getName());
-            getLogger().println("Successfully parsed PMD file " + pmdFile + " of module "
+            log("Successfully parsed PMD file " + pmdFile + " of module "
                     + module.getName() + " with " + module.getNumberOfAnnotations() + " warnings.");
         }
         catch (IOException e) {
@@ -136,7 +132,7 @@ public class PmdCollector implements FileCallable<JavaProject> {
         if (exception != null) {
             String errorMessage = Messages.PMD_PMDCollector_Error_Exception(pmdFile)
                     + "\n\n" + ExceptionUtils.getStackTrace(exception);
-            getLogger().println(errorMessage);
+            log(errorMessage);
             module.setError(errorMessage);
         }
         return module;
@@ -158,17 +154,5 @@ public class PmdCollector implements FileCallable<JavaProject> {
         fileSet.setIncludes(filePattern);
 
         return fileSet.getDirectoryScanner(project).getIncludedFiles();
-    }
-
-    /**
-     * Returns the logger.
-     *
-     * @return the logger
-     */
-    private PrintStream getLogger() {
-        if (logger == null) {
-            logger = System.out;
-        }
-        return logger;
     }
 }
