@@ -10,7 +10,7 @@ import org.apache.commons.digester.Digester;
 import org.xml.sax.SAXException;
 
 /**
- * A parser for the maven-pmd-plugin XML files.
+ * A parser for PMD XML files.
  */
 public class PmdParser {
     /**

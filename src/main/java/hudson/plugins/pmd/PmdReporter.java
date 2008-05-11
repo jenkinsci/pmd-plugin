@@ -35,8 +35,6 @@ public class PmdReporter extends HealthAwareMavenReporter {
     /**
      * Creates a new instance of <code>PmdReporter</code>.
      *
-     * @param pattern
-     *            Ant file-set pattern to scan for PMD files
      * @param threshold
      *            Bug threshold to be reached if a build should be considered as
      *            unstable.
@@ -50,7 +48,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
      *            the height of the trend graph
      * @stapler-constructor
      */
-    public PmdReporter(final String pattern, final String threshold, final String healthy, final String unHealthy, final String height) {
+    public PmdReporter(final String threshold, final String healthy, final String unHealthy, final String height) {
         super(threshold, healthy, unHealthy, height, "PMD");
     }
 

@@ -28,7 +28,7 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
     private final String height;
 
     /**
-     * Creates a new instance of <code>MavenFindBugsResultAction</code>.
+     * Creates a new instance of <code>MavenPmdResultAction</code>.
      *
      * @param owner
      *            the associated build of this action
@@ -43,7 +43,7 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
     }
 
     /**
-     * Creates a new instance of <code>MavenFindBugsResultAction</code>.
+     * Creates a new instance of <code>MavenPmdResultAction</code>.
      *
      * @param owner
      *            the associated build of this action

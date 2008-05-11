@@ -23,7 +23,7 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
     private static final long serialVersionUID = -5329651349674842873L;
 
     /**
-     * Creates a new instance of <code>PmdBuildAction</code>.
+     * Creates a new instance of <code>PmdResultAction</code>.
      *
      * @param owner
      *            the associated build of this action
@@ -37,7 +37,7 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
     }
 
     /**
-     * Creates a new instance of <code>PmdBuildAction</code>.
+     * Creates a new instance of <code>PmdResultAction</code>.
      *
      * @param owner
      *            the associated build of this action
