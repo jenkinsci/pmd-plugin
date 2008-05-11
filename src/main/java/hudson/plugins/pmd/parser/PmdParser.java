@@ -11,6 +11,8 @@ import org.xml.sax.SAXException;
 
 /**
  * A parser for PMD XML files.
+ *
+ * @author Ulli Hafner
  */
 public class PmdParser {
     /**

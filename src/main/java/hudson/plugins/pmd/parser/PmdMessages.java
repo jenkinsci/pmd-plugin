@@ -16,6 +16,8 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * Provides access to rule descriptions and examples.
+ *
+ * @author Ulli Hafner
  */
 public final class PmdMessages {
     /** Singleton instance. */

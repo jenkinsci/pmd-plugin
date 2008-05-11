@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * Java Bean class for a file of the PMD format.
+ *
+ * @author Ulli Hafner
  */
 public class File {
     /** Name of the file. */

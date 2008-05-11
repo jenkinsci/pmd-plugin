@@ -25,6 +25,8 @@ public class PmdPublisher extends HealthAwarePublisher {
     private static final String DEFAULT_PATTERN = "**/pmd.xml";
     /** Descriptor of this publisher. */
     public static final PmdDescriptor PMD_DESCRIPTOR = new PmdDescriptor();
+    /** Ant file-set pattern of files to work with. */
+    private final String pattern;
 
     /**
      * Creates a new instance of <code>PmdPublisher</code>.
@@ -45,7 +47,17 @@ public class PmdPublisher extends HealthAwarePublisher {
      * @stapler-constructor
      */
     public PmdPublisher(final String pattern, final String threshold, final String healthy, final String unHealthy, final String height) {
-        super(pattern, threshold, healthy, unHealthy, height, "PMD");
+        super(threshold, healthy, unHealthy, height, "PMD");
+        this.pattern = pattern;
+    }
+
+    /**
+     * Returns the Ant file-set pattern of files to work with.
+     *
+     * @return Ant file-set pattern of files to work with
+     */
+    public String getPattern() {
+        return pattern;
     }
 
     /** {@inheritDoc} */

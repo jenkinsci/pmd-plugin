@@ -1,8 +1,9 @@
 package hudson.plugins.pmd.parser;
 
-
 /**
  * Java Bean class for a violation of the PMD format.
+ *
+ * @author Ulli Hafner
  */
 @SuppressWarnings("PMD.CyclomaticComplexity")
 public class Violation {

@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * Java Bean class for a violations collection of the PMD format.
+ *
+ * @author Ulli Hafner
  */
 public class Pmd {
     /** All files of this violations collection. */

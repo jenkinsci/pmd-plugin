@@ -11,6 +11,8 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  *  A base class for annotations.
+ *
+ * @author Ulli Hafner
  */
 @SuppressWarnings("PMD.CyclomaticComplexity")
 public abstract class AbstractAnnotation implements FileAnnotation, Serializable {
