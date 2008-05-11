@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 import org.apache.maven.project.MavenProject;
+import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
  * Publishes the results of the PMD analysis  (maven 2 project type).
@@ -46,8 +47,8 @@ public class PmdReporter extends HealthAwareMavenReporter {
      *            than this value
      * @param height
      *            the height of the trend graph
-     * @stapler-constructor
      */
+    @DataBoundConstructor
     public PmdReporter(final String threshold, final String healthy, final String unHealthy, final String height) {
         super(threshold, healthy, unHealthy, height, "PMD");
     }

@@ -2,8 +2,6 @@ package hudson.plugins.pmd;
 
 import hudson.plugins.pmd.util.PluginDescriptor;
 
-import org.kohsuke.stapler.StaplerRequest;
-
 /**
  * Descriptor for the class {@link PmdPublisher}. Used as a singleton. The
  * class is marked as public so that it can be accessed from views.
@@ -39,11 +37,5 @@ public final class PmdDescriptor extends PluginDescriptor {
     @Override
     public String getIconUrl() {
         return ACTION_ICON;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public PmdPublisher newInstance(final StaplerRequest request) throws FormException {
-        return request.bindParameters(PmdPublisher.class, PLUGIN_NAME + "_");
     }
 }

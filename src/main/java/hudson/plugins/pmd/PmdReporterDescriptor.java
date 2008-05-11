@@ -1,10 +1,7 @@
 package hudson.plugins.pmd;
 
-import hudson.maven.MavenReporter;
 import hudson.plugins.pmd.util.PluginDescriptor;
 import hudson.plugins.pmd.util.ReporterDescriptor;
-
-import org.kohsuke.stapler.StaplerRequest;
 
 /**
  * Descriptor for the class {@link PmdReporter}. Used as a singleton. The
@@ -21,12 +18,6 @@ public class PmdReporterDescriptor extends ReporterDescriptor {
      */
     public PmdReporterDescriptor(final PluginDescriptor pluginDescriptor) {
         super(PmdReporter.class, pluginDescriptor);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public MavenReporter newInstance(final StaplerRequest request) throws FormException {
-        return request.bindParameters(PmdReporter.class, getPublisherDescriptor().getPluginName() + "_");
     }
 }
 
