@@ -4,7 +4,8 @@ import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.Descriptor;
-import hudson.plugins.pmd.parser.PmdCollector;
+import hudson.plugins.pmd.parser.PmdParser;
+import hudson.plugins.pmd.util.FilesParser;
 import hudson.plugins.pmd.util.HealthAwarePublisher;
 import hudson.plugins.pmd.util.HealthReportBuilder;
 import hudson.plugins.pmd.util.model.JavaProject;
@@ -71,8 +72,9 @@ public class PmdPublisher extends HealthAwarePublisher {
     @Override
     public JavaProject perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
         log(logger, "Collecting pmd analysis files...");
+        FilesParser pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new PmdParser());
 
-        JavaProject project = parseAllWorkspaceFiles(build, logger);
+        JavaProject project = build.getProject().getWorkspace().act(pmdCollector);
         PmdResult result = new PmdResultBuilder().build(build, project);
         HealthReportBuilder healthReportBuilder = createHealthReporter(
                 Messages.PMD_ResultAction_HealthReportSingleItem(),
@@ -80,27 +82,6 @@ public class PmdPublisher extends HealthAwarePublisher {
         build.getActions().add(new PmdResultAction(build, healthReportBuilder, result));
 
         return project;
-    }
-
-    /**
-     * Scans the workspace for PMD files matching the specified pattern and
-     * returns all found annotations merged in a project.
-     *
-     * @param build
-     *            the build to create the action for
-     * @param logger
-     *            the logger
-     * @return the project with the annotations
-     * @throws IOException
-     *             if the files could not be read
-     * @throws InterruptedException
-     *             if user cancels the operation
-     */
-    private JavaProject parseAllWorkspaceFiles(final AbstractBuild<?, ?> build,
-            final PrintStream logger) throws IOException, InterruptedException {
-        PmdCollector pmdCollector = new PmdCollector(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN));
-
-        return build.getProject().getWorkspace().act(pmdCollector);
     }
 
     /** {@inheritDoc} */

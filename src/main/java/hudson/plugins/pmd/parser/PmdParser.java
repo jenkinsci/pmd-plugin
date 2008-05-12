@@ -1,10 +1,12 @@
 package hudson.plugins.pmd.parser;
 
+import hudson.plugins.pmd.util.AnnotationParser;
 import hudson.plugins.pmd.util.model.MavenModule;
 import hudson.plugins.pmd.util.model.Priority;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.digester.Digester;
 import org.xml.sax.SAXException;
@@ -14,46 +16,42 @@ import org.xml.sax.SAXException;
  *
  * @author Ulli Hafner
  */
-public class PmdParser {
-    /**
-     * Returns the parsed PMD analysis file.
-     *
-     * @param file
-     *            the PMD analysis file
-     * @param moduleName
-     *            name of the maven module
-     * @return the parsed result (stored in the module instance)
-     * @throws IOException
-     *             if the file could not be parsed
-     * @throws SAXException
-     *             if the file is not in valid XML format
-     */
-    public MavenModule parse(final InputStream file, final String moduleName) throws IOException, SAXException {
-        Digester digester = new Digester();
-        digester.setValidating(false);
-        digester.setClassLoader(PmdParser.class.getClassLoader());
+public class PmdParser implements AnnotationParser {
+    /** {@inheritDoc} */
+    public MavenModule parse(final InputStream file, final String moduleName) throws InvocationTargetException {
+        try {
+            Digester digester = new Digester();
+            digester.setValidating(false);
+            digester.setClassLoader(PmdParser.class.getClassLoader());
 
-        String rootXPath = "pmd";
-        digester.addObjectCreate(rootXPath, Pmd.class);
-        digester.addSetProperties(rootXPath);
+            String rootXPath = "pmd";
+            digester.addObjectCreate(rootXPath, Pmd.class);
+            digester.addSetProperties(rootXPath);
 
-        String fileXPath = "pmd/file";
-        digester.addObjectCreate(fileXPath, hudson.plugins.pmd.parser.File.class);
-        digester.addSetProperties(fileXPath);
-        digester.addSetNext(fileXPath, "addFile", hudson.plugins.pmd.parser.File.class.getName());
+            String fileXPath = "pmd/file";
+            digester.addObjectCreate(fileXPath, hudson.plugins.pmd.parser.File.class);
+            digester.addSetProperties(fileXPath);
+            digester.addSetNext(fileXPath, "addFile", hudson.plugins.pmd.parser.File.class.getName());
 
-        String bugXPath = "pmd/file/violation";
-        digester.addObjectCreate(bugXPath, Violation.class);
-        digester.addSetProperties(bugXPath);
-        digester.addCallMethod(bugXPath, "setMessage", 0);
-        digester.addSetNext(bugXPath, "addViolation", Violation.class.getName());
+            String bugXPath = "pmd/file/violation";
+            digester.addObjectCreate(bugXPath, Violation.class);
+            digester.addSetProperties(bugXPath);
+            digester.addCallMethod(bugXPath, "setMessage", 0);
+            digester.addSetNext(bugXPath, "addViolation", Violation.class.getName());
 
-        Pmd module = (Pmd)digester.parse(file);
-        if (module == null) {
-            throw new SAXException("Input stream is not a PMD file.");
+            Pmd module = (Pmd)digester.parse(file);
+            if (module == null) {
+                throw new SAXException("Input stream is not a PMD file.");
+            }
+
+            return convert(module, moduleName);
         }
-
-        return convert(module, moduleName);
+        catch (IOException exception) {
+            throw new InvocationTargetException(exception);
+        }
+        catch (SAXException exception) {
+            throw new InvocationTargetException(exception);
+        }
     }
 
     /**
@@ -89,6 +87,11 @@ public class PmdParser {
             }
         }
         return module;
+    }
+
+    /** {@inheritDoc} */
+    public String getName() {
+        return "PMD";
     }
 }
 
