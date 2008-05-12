@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -12,7 +11,7 @@
   <artifactId>pmd</artifactId>
   <packaging>hpi</packaging>
   <name>Hudson PMD Plug-in</name>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.2</version>
   <url>http://hudson.gotdns.com/wiki/display/HUDSON/PMD+Plugin</url>
   <description>This plug-in generates the trend report for PMD, an
     open source static code analysis program.</description>
@@ -146,4 +145,10 @@
     </plugins>
   </reporting>
 
+
+  <scm>
+    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/pmd-1.2</connection>
+    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/pmd-1.2</developerConnection>
+    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/pmd/tags/pmd-1.2</url>
+  </scm>
 </project>
