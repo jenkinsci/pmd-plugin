@@ -4,10 +4,9 @@ import static org.junit.Assert.*;
 import hudson.plugins.pmd.util.model.MavenModule;
 import hudson.plugins.pmd.util.model.Priority;
 
-import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
 /**
  *  Tests the extraction of PMD analysis results.
@@ -23,12 +22,10 @@ public class PmdParserTest {
      *
      * @param fileName the file to read
      * @return the parsed module
-     * @throws IOException
-     *             in case of an error
-     * @throws SAXException
+     * @throws InvocationTargetException
      *             in case of an error
      */
-    private MavenModule parseFile(final String fileName) throws IOException, SAXException {
+    private MavenModule parseFile(final String fileName) throws InvocationTargetException {
         return new PmdParser().parse(PmdParserTest.class.getResourceAsStream(fileName), "module");
     }
 
@@ -36,7 +33,7 @@ public class PmdParserTest {
      * Checks whether we correctly detect all 669 warnings.
      */
     @Test
-    public void scanFileWithSeveralWarnings() throws IOException, SAXException {
+    public void scanFileWithSeveralWarnings() throws InvocationTargetException {
         String fileName = "pmd.xml";
         MavenModule module = parseFile(fileName);
 
@@ -47,7 +44,7 @@ public class PmdParserTest {
      * Checks whether we correctly detect an empty file.
      */
     @Test
-    public void scanFileWithNoBugs() throws IOException, SAXException {
+    public void scanFileWithNoBugs() throws InvocationTargetException {
         String fileName = "empty.xml";
         MavenModule module = parseFile(fileName);
 
@@ -58,7 +55,7 @@ public class PmdParserTest {
      * Checks whether we correctly parse a file with 4 warnings.
      */
     @Test
-    public void scanFileWith4Warnings() throws IOException, SAXException {
+    public void scanFileWith4Warnings() throws InvocationTargetException {
         String fileName = "4-pmd-warnings.xml";
         MavenModule module = parseFile(fileName);
 
@@ -105,7 +102,7 @@ public class PmdParserTest {
      * Checks whether we correctly parse a file with 4 warnings.
      */
     @Test
-    public void testEquals() throws IOException, SAXException {
+    public void testEquals() throws InvocationTargetException {
         String fileName = "equals-test.xml";
         MavenModule module = parseFile(fileName);
 
