@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 /**
- *  Tests the extraction of FindBugs analysis results.
+ *  Tests the extraction of PMD analysis results.
  */
 public class PmdParserTest {
     /** Error message. */
