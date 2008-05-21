@@ -22,13 +22,14 @@ public class PmdResultBuilder {
      */
     public PmdResult build(final AbstractBuild<?, ?> build, final JavaProject project) {
         Object previous = build.getPreviousBuild();
-        if (previous instanceof AbstractBuild<?, ?>) {
+        while (previous instanceof AbstractBuild<?, ?> && previous != null) {
             AbstractBuild<?, ?> previousBuild = (AbstractBuild<?, ?>)previous;
             PmdResultAction previousAction = previousBuild.getAction(PmdResultAction.class);
             if (previousAction != null) {
                 return new PmdResult(build, project, previousAction.getResult().getProject(),
                         previousAction.getResult().getZeroWarningsHighScore());
             }
+            previous = previousBuild.getPreviousBuild();
         }
         return new PmdResult(build, project);
     }
