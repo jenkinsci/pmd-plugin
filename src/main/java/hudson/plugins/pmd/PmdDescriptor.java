@@ -45,6 +45,6 @@ public final class PmdDescriptor extends PluginDescriptor {
     /** {@inheritDoc} */
     @Override
     public PmdPublisher newInstance(final StaplerRequest request, final JSONObject formData) throws FormException {
-        return request.bindParameters(PmdPublisher.class, PLUGIN_NAME + ".");
+        return request.bindJSON(PmdPublisher.class, formData);
     }
 }
