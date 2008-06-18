@@ -2,6 +2,7 @@ package hudson.plugins.pmd.util;
 
 import static org.junit.Assert.*;
 import hudson.model.HealthReport;
+import hudson.plugins.pmd.util.HealthReportBuilder;
 
 import java.util.List;
 

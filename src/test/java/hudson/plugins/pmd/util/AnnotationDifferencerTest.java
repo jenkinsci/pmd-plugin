@@ -1,6 +1,7 @@
 package hudson.plugins.pmd.util;
 
 import static org.junit.Assert.*;
+import hudson.plugins.pmd.util.AnnotationDifferencer;
 import hudson.plugins.pmd.util.model.FileAnnotation;
 import hudson.plugins.pmd.util.model.Priority;
 
