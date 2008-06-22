@@ -26,6 +26,10 @@
       <comments>The PMD images are Copyright (c) 2002-2005,
         InfoEther, Inc. All rights reserved.</comments>
     </license>
+    <license>
+      <name>BSD license</name>
+      <comments>All YUI source code is under the BSD license.</comments>
+    </license>
   </licenses>
 
   <dependencies>
