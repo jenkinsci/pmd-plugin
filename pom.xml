@@ -11,7 +11,7 @@
   <artifactId>pmd</artifactId>
   <packaging>hpi</packaging>
   <name>Hudson PMD Plug-in</name>
-  <version>1.7-SNAPSHOT</version>
+  <version>1.7</version>
   <url>http://hudson.gotdns.com/wiki/display/HUDSON/PMD+Plugin</url>
   <description>This plug-in generates the trend report for PMD, an
     open source static code analysis program.</description>
@@ -150,8 +150,8 @@
   </reporting>
 
   <scm>
-    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/pmd-1.4</connection>
-    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/pmd-1.4</developerConnection>
-    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/pmd/tags/pmd-1.4</url>
+    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/pmd-1.7</connection>
+    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/pmd-1.7</developerConnection>
+    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/pmd/tags/pmd-1.7</url>
   </scm>
 </project>
