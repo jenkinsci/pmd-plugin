@@ -63,7 +63,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
     /** {@inheritDoc} */
     @Override
     public JavaProject perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PrintStream logger) throws InterruptedException, IOException {
-        FilesParser pmdCollector = new FilesParser(logger, PMD_XML_FILE, new PmdParser());
+        FilesParser pmdCollector = new FilesParser(logger, PMD_XML_FILE, new PmdParser(), true, false);
 
         return getTargetPath(pom).act(pmdCollector);
     }

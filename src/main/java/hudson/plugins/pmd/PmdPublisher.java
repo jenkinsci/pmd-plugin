@@ -72,7 +72,8 @@ public class PmdPublisher extends HealthAwarePublisher {
     @Override
     public JavaProject perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
         log(logger, "Collecting pmd analysis files...");
-        FilesParser pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new PmdParser());
+        FilesParser pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new PmdParser(),
+                isMavenBuild(build), isAntBuild(build));
 
         JavaProject project = build.getProject().getWorkspace().act(pmdCollector);
         PmdResult result = new PmdResultBuilder().build(build, project);
