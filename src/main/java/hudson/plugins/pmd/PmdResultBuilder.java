@@ -26,8 +26,7 @@ public class PmdResultBuilder {
             AbstractBuild<?, ?> previousBuild = (AbstractBuild<?, ?>)previous;
             PmdResultAction previousAction = previousBuild.getAction(PmdResultAction.class);
             if (previousAction != null) {
-                return new PmdResult(build, project, previousAction.getResult().getProject(),
-                        previousAction.getResult().getZeroWarningsHighScore());
+                return new PmdResult(build, project, previousAction.getResult());
             }
             previous = previousBuild.getPreviousBuild();
         }
