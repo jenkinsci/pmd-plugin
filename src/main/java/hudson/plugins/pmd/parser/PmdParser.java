@@ -4,6 +4,9 @@ import hudson.plugins.pmd.util.AnnotationParser;
 import hudson.plugins.pmd.util.model.MavenModule;
 import hudson.plugins.pmd.util.model.Priority;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -17,6 +20,16 @@ import org.xml.sax.SAXException;
  * @author Ulli Hafner
  */
 public class PmdParser implements AnnotationParser {
+    /** {@inheritDoc} */
+    public MavenModule parse(final File file, final String moduleName) throws InvocationTargetException {
+        try {
+            return parse(new FileInputStream(file), moduleName);
+        }
+        catch (FileNotFoundException exception) {
+            throw new InvocationTargetException(exception);
+        }
+    }
+
     /** {@inheritDoc} */
     public MavenModule parse(final InputStream file, final String moduleName) throws InvocationTargetException {
         try {
