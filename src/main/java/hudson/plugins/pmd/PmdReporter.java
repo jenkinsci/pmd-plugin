@@ -10,7 +10,7 @@ import hudson.plugins.pmd.parser.PmdParser;
 import hudson.plugins.pmd.util.FilesParser;
 import hudson.plugins.pmd.util.HealthAwareMavenReporter;
 import hudson.plugins.pmd.util.HealthReportBuilder;
-import hudson.plugins.pmd.util.model.JavaProject;
+import hudson.plugins.pmd.util.ParserResult;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -62,7 +62,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
 
     /** {@inheritDoc} */
     @Override
-    public JavaProject perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PrintStream logger) throws InterruptedException, IOException {
+    public ParserResult perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PrintStream logger) throws InterruptedException, IOException {
         FilesParser pmdCollector = new FilesParser(logger, PMD_XML_FILE, new PmdParser(), true, false);
 
         return getTargetPath(pom).act(pmdCollector);
@@ -70,7 +70,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
 
     /** {@inheritDoc} */
     @Override
-    protected void persistResult(final JavaProject project, final MavenBuild build) {
+    protected void persistResult(final ParserResult project, final MavenBuild build) {
         PmdResult result = new PmdResultBuilder().build(build, project);
         HealthReportBuilder healthReportBuilder = createHealthBuilder(
                 Messages.PMD_ResultAction_HealthReportSingleItem(),

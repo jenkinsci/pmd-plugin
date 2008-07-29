@@ -1,10 +1,12 @@
 package hudson.plugins.pmd.parser;
 
 import static org.junit.Assert.*;
+import hudson.plugins.pmd.util.model.FileAnnotation;
 import hudson.plugins.pmd.util.model.MavenModule;
 import hudson.plugins.pmd.util.model.Priority;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 
 import org.junit.Test;
 
@@ -25,7 +27,7 @@ public class PmdParserTest {
      * @throws InvocationTargetException
      *             in case of an error
      */
-    private MavenModule parseFile(final String fileName) throws InvocationTargetException {
+    private Collection<FileAnnotation> parseFile(final String fileName) throws InvocationTargetException {
         return new PmdParser().parse(PmdParserTest.class.getResourceAsStream(fileName), "module");
     }
 
@@ -35,9 +37,9 @@ public class PmdParserTest {
     @Test
     public void scanFileWithSeveralWarnings() throws InvocationTargetException {
         String fileName = "pmd.xml";
-        MavenModule module = parseFile(fileName);
+        Collection<FileAnnotation> annotations = parseFile(fileName);
 
-        assertEquals(ERROR_MESSAGE, 669, module.getNumberOfAnnotations());
+        assertEquals(ERROR_MESSAGE, 669, annotations.size());
     }
 
     /**
@@ -46,9 +48,9 @@ public class PmdParserTest {
     @Test
     public void scanFileWithNoBugs() throws InvocationTargetException {
         String fileName = "empty.xml";
-        MavenModule module = parseFile(fileName);
+        Collection<FileAnnotation> annotations = parseFile(fileName);
 
-        assertEquals(ERROR_MESSAGE, 0, module.getNumberOfAnnotations());
+        assertEquals(ERROR_MESSAGE, 0, annotations.size());
     }
 
     /**
@@ -57,7 +59,9 @@ public class PmdParserTest {
     @Test
     public void scanFileWith4Warnings() throws InvocationTargetException {
         String fileName = "4-pmd-warnings.xml";
-        MavenModule module = parseFile(fileName);
+        Collection<FileAnnotation> annotations = parseFile(fileName);
+        MavenModule module = new MavenModule();
+        module.addAnnotations(annotations);
 
         assertEquals(ERROR_MESSAGE, 4, module.getNumberOfAnnotations());
 
@@ -104,7 +108,9 @@ public class PmdParserTest {
     @Test
     public void testEquals() throws InvocationTargetException {
         String fileName = "equals-test.xml";
-        MavenModule module = parseFile(fileName);
+        Collection<FileAnnotation> annotations = parseFile(fileName);
+        MavenModule module = new MavenModule();
+        module.addAnnotations(annotations);
 
         assertEquals(ERROR_MESSAGE, 4, module.getNumberOfAnnotations());
         assertEquals(ERROR_MESSAGE, 4, module.getPackage("com.avaloq.adt.env.core.db.plsqlCompletion").getNumberOfAnnotations());

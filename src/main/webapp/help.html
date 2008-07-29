@@ -1,9 +1,15 @@
 <div>
   <p>
     Hudson understands <a href="http://pmd.sourceforge.net/">PMD</a> analysis report XML format.
-    When this option is configured, Hudson can provide useful information about analysis results,
-    such as historical result trend, web UI for viewing analysis reports, and so on.
-    To use this feature, first set up your build to run PMD, then specify the path to PMD
-    XML files in the Ant glob syntax, such as **/target/pmd.xml.
+    When this option is configured you need to set up your build
+	to run PMD in order to use this feature! This plug-in does not perform the actual analysis;
+	it only displays useful information about analysis results, such as historical result trend,
+	module and package statistics, web UI for viewing analysis reports and
+	warnings, and so on.
+  </p>
+  <p><b>Note:</b> If you are using the maven-pmd-plugin to create the PMD analysis files please
+   make sure to specify the pattern <code>**/target/pmd.xml</code>. Otherwise
+   you will get a wrong warning count since the maven-pmd-plugin gererates
+   two identical output files.
   </p>
 </div>

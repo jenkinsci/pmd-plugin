@@ -1,7 +1,7 @@
 package hudson.plugins.pmd.parser;
 
 import hudson.plugins.pmd.util.AnnotationParser;
-import hudson.plugins.pmd.util.model.MavenModule;
+import hudson.plugins.pmd.util.model.FileAnnotation;
 import hudson.plugins.pmd.util.model.Priority;
 
 import java.io.File;
@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.apache.commons.digester.Digester;
 import org.xml.sax.SAXException;
@@ -21,7 +23,7 @@ import org.xml.sax.SAXException;
  */
 public class PmdParser implements AnnotationParser {
     /** {@inheritDoc} */
-    public MavenModule parse(final File file, final String moduleName) throws InvocationTargetException {
+    public Collection<FileAnnotation>  parse(final File file, final String moduleName) throws InvocationTargetException {
         try {
             return parse(new FileInputStream(file), moduleName);
         }
@@ -31,7 +33,7 @@ public class PmdParser implements AnnotationParser {
     }
 
     /** {@inheritDoc} */
-    public MavenModule parse(final InputStream file, final String moduleName) throws InvocationTargetException {
+    public Collection<FileAnnotation>  parse(final InputStream file, final String moduleName) throws InvocationTargetException {
         try {
             Digester digester = new Digester();
             digester.setValidating(false);
@@ -76,8 +78,9 @@ public class PmdParser implements AnnotationParser {
      *            name of the maven module
      * @return a maven module of the annotations API
      */
-    private MavenModule convert(final Pmd collection, final String moduleName) {
-        MavenModule module = new MavenModule(moduleName);
+    private Collection<FileAnnotation> convert(final Pmd collection, final String moduleName) {
+        ArrayList<FileAnnotation> annotations = new ArrayList<FileAnnotation>();
+
         for (hudson.plugins.pmd.parser.File file : collection.getFiles()) {
             for (Violation warning : file.getViolations()) {
                 Priority priority;
@@ -96,10 +99,10 @@ public class PmdParser implements AnnotationParser {
                 bug.setModuleName(moduleName);
                 bug.setFileName(file.getName());
 
-                module.addAnnotation(bug);
+                annotations.add(bug);
             }
         }
-        return module;
+        return annotations;
     }
 
     /** {@inheritDoc} */

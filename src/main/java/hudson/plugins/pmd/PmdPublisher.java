@@ -8,7 +8,7 @@ import hudson.plugins.pmd.parser.PmdParser;
 import hudson.plugins.pmd.util.FilesParser;
 import hudson.plugins.pmd.util.HealthAwarePublisher;
 import hudson.plugins.pmd.util.HealthReportBuilder;
-import hudson.plugins.pmd.util.model.JavaProject;
+import hudson.plugins.pmd.util.ParserResult;
 import hudson.tasks.Publisher;
 
 import java.io.IOException;
@@ -70,12 +70,12 @@ public class PmdPublisher extends HealthAwarePublisher {
 
     /** {@inheritDoc} */
     @Override
-    public JavaProject perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
+    public ParserResult perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
         log(logger, "Collecting pmd analysis files...");
         FilesParser pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new PmdParser(),
                 isMavenBuild(build), isAntBuild(build));
 
-        JavaProject project = build.getProject().getWorkspace().act(pmdCollector);
+        ParserResult project = build.getProject().getWorkspace().act(pmdCollector);
         PmdResult result = new PmdResultBuilder().build(build, project);
         HealthReportBuilder healthReportBuilder = createHealthReporter(
                 Messages.PMD_ResultAction_HealthReportSingleItem(),

@@ -3,6 +3,7 @@ package hudson.plugins.pmd;
 import hudson.model.AbstractBuild;
 import hudson.plugins.pmd.parser.Bug;
 import hudson.plugins.pmd.util.AnnotationsBuildResult;
+import hudson.plugins.pmd.util.ParserResult;
 import hudson.plugins.pmd.util.model.JavaProject;
 
 /**
@@ -23,11 +24,11 @@ public class PmdResult extends AnnotationsBuildResult {
      *
      * @param build
      *            the current build as owner of this action
-     * @param project
-     *            the parsed PMD result
+     * @param result
+     *            the parsed result with all annotations
      */
-    public PmdResult(final AbstractBuild<?, ?> build, final JavaProject project) {
-        super(build, project);
+    public PmdResult(final AbstractBuild<?, ?> build, final ParserResult result) {
+        super(build, result);
     }
 
     /**
@@ -35,13 +36,13 @@ public class PmdResult extends AnnotationsBuildResult {
      *
      * @param build
      *            the current build as owner of this action
-     * @param project
-     *            the parsed PMD result
+     * @param result
+     *            the parsed result with all annotations
      * @param previous
      *            the result of the previous build
      */
-    public PmdResult(final AbstractBuild<?, ?> build, final JavaProject project, final PmdResult previous) {
-        super(build, project, previous);
+    public PmdResult(final AbstractBuild<?, ?> build, final ParserResult result, final PmdResult previous) {
+        super(build, result, previous);
     }
 
     /**
