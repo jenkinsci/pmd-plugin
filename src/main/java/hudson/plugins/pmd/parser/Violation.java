@@ -5,7 +5,6 @@ package hudson.plugins.pmd.parser;
  *
  * @author Ulli Hafner
  */
-@SuppressWarnings("PMD.CyclomaticComplexity")
 public class Violation {
     /** Type of warning. */
     private String rule;
@@ -151,7 +150,5 @@ public class Violation {
     public void setEndline(final int endline) {
         this.endline = endline;
     }
-
-
 }
 

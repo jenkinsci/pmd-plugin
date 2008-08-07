@@ -13,12 +13,11 @@ import org.apache.commons.lang.StringUtils;
  *
  * @author Ulli Hafner
  */
-@SuppressWarnings("PMD.CyclomaticComplexity")
 public class Bug extends AbstractAnnotation {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 5171661552905752370L;
-    /** Bug HTML description. */
-    private String tooltip = StringUtils.EMPTY;
+    @SuppressWarnings("all")
+    private final String tooltip = StringUtils.EMPTY; // backward compatibility
 
     /**
      * Creates a new instance of <code>Bug</code>.
@@ -59,50 +58,9 @@ public class Bug extends AbstractAnnotation {
         this(priority, message, category, type, lineNumber, lineNumber);
     }
 
-    /**
-     * Creates a new instance of <code>Bug</code> that has no associated line in code (file warning).
-     *
-     * @param priority
-     *            the priority
-     * @param message
-     *            the message of the warning
-     * @param category
-     *            the warning category
-     * @param type
-     *            the identifier of the warning type
-     */
-    public Bug(final Priority priority, final String message, final String category, final String type) {
-        this(priority, message, category, type, 0, 0);
-    }
-
-    /**
-     * Creates a new instance of <code>Bug</code>.
-     *
-     * @param priority
-     *            the priority
-     * @param message
-     *            the message of the warning
-     * @param category
-     *            the warning category
-     * @param type
-     *            the identifier of the warning type
-     * @param start
-     *            the first line of the line range
-     * @param end
-     *            the last line of the line range
-     * @param tooltip
-     *            the tooltip to show
-     */
-    public Bug(final Priority priority, final String message, final String category, final String type,
-            final int start, final int end, final String tooltip) {
-        this(priority, message, category, type, start, end);
-
-        this.tooltip = tooltip;
-    }
-
     /** {@inheritDoc} */
     public String getToolTip() {
-        return tooltip;
+        return PmdMessages.getInstance().getMessage(getCategory(), getType());
     }
 }
 

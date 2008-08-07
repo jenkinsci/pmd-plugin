@@ -22,6 +22,9 @@ import org.xml.sax.SAXException;
  * @author Ulli Hafner
  */
 public class PmdParser implements AnnotationParser {
+    /** Unique ID of this class. */
+    private static final long serialVersionUID = 6507147028628714706L;
+
     /** {@inheritDoc} */
     public Collection<FileAnnotation>  parse(final File file, final String moduleName) throws InvocationTargetException {
         try {
@@ -94,7 +97,7 @@ public class PmdParser implements AnnotationParser {
                     priority = Priority.NORMAL;
                 }
                 Bug bug = new Bug(priority, warning.getMessage() + ".", warning.getRuleset(), warning.getRule(),
-                            warning.getBeginline(), warning.getEndline(), PmdMessages.getInstance().getMessage(warning.getRuleset(), warning.getRule()));
+                            warning.getBeginline(), warning.getEndline());
                 bug.setPackageName(warning.getPackage());
                 bug.setModuleName(moduleName);
                 bug.setFileName(file.getName());
