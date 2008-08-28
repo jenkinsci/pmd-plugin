@@ -48,10 +48,13 @@ public class PmdReporter extends HealthAwareMavenReporter {
      *            than this value
      * @param height
      *            the height of the trend graph
+     * @param thresholdLimit
+     *            determines which warning priorities should be considered when
+     *            evaluating the build stability and health
      */
     @DataBoundConstructor
-    public PmdReporter(final String threshold, final String healthy, final String unHealthy, final String height) {
-        super(threshold, healthy, unHealthy, height, "PMD");
+    public PmdReporter(final String threshold, final String healthy, final String unHealthy, final String height, final String thresholdLimit) {
+        super(threshold, healthy, unHealthy, height, thresholdLimit, "PMD");
     }
 
     /** {@inheritDoc} */
@@ -74,7 +77,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
         PmdResult result = new PmdResultBuilder().build(build, project);
         HealthReportBuilder healthReportBuilder = createHealthBuilder(
                 Messages.PMD_ResultAction_HealthReportSingleItem(),
-                Messages.PMD_ResultAction_HealthReportMultipleItem("%d"));
+                Messages.PMD_ResultAction_HealthReportMultipleItem());
         build.getActions().add(new MavenPmdResultAction(build, healthReportBuilder, getHeight(), result));
         build.registerAsProjectAction(PmdReporter.this);
     }
