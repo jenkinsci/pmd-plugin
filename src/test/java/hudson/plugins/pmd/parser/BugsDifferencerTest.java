@@ -11,9 +11,11 @@ import hudson.plugins.pmd.util.model.Priority;
 public class BugsDifferencerTest extends AnnotationDifferencerTest {
     /** {@inheritDoc} */
     @Override
-    public FileAnnotation createAnnotation(final Priority priority, final String message, final String category,
+    public FileAnnotation createAnnotation(final String fileName, final Priority priority, final String message, final String category,
             final String type, final int start, final int end) {
-        return new Bug(priority, message, message, message, start, end);
+        Bug bug = new Bug(priority, message, message, message, start, end);
+        bug.setFileName(fileName);
+        return bug;
     }
 }
 
