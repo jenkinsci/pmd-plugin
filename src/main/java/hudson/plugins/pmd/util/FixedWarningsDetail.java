@@ -1,7 +1,6 @@
 package hudson.plugins.pmd.util;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.pmd.util.model.AnnotationContainer;
 import hudson.plugins.pmd.util.model.FileAnnotation;
 
 import java.util.Collection;
@@ -32,12 +31,6 @@ public class FixedWarningsDetail extends AbstractAnnotationsDetail {
     /** {@inheritDoc} */
     public String getDisplayName() {
         return Messages.FixedWarningsDetail_Name();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected Collection<? extends AnnotationContainer> getChildren() {
-        return getModules();
     }
 }
 

@@ -1,7 +1,6 @@
 package hudson.plugins.pmd.util;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.pmd.util.model.AnnotationContainer;
 import hudson.plugins.pmd.util.model.FileAnnotation;
 import hudson.plugins.pmd.util.model.Priority;
 
@@ -48,12 +47,6 @@ public class PrioritiesDetail extends AbstractAnnotationsDetail {
     /** {@inheritDoc} */
     public String getDisplayName() {
         return priority.getLongLocalizedString();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected Collection<? extends AnnotationContainer> getChildren() {
-        return getModules();
     }
 }
 

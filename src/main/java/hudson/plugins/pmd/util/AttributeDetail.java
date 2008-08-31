@@ -1,7 +1,6 @@
 package hudson.plugins.pmd.util;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.pmd.util.model.AnnotationContainer;
 import hudson.plugins.pmd.util.model.FileAnnotation;
 
 import java.util.Collection;
@@ -49,12 +48,6 @@ public class AttributeDetail extends AbstractAnnotationsDetail {
      */
     public String getToolTip(final String category) {
         return "TODO";
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected Collection<? extends AnnotationContainer> getChildren() {
-        return getModules();
     }
 }
 
