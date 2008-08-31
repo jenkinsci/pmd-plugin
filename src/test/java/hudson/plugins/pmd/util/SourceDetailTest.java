@@ -1,7 +1,6 @@
 package hudson.plugins.pmd.util;
 
 import static org.easymock.EasyMock.*;
-import hudson.plugins.pmd.util.SourceDetail;
 import hudson.plugins.pmd.util.model.FileAnnotation;
 import hudson.plugins.pmd.util.model.LineRange;
 

@@ -22,7 +22,7 @@ public class PmdResultBuilder {
      */
     public PmdResult build(final AbstractBuild<?, ?> build, final ParserResult result) {
         Object previous = build.getPreviousBuild();
-        while (previous instanceof AbstractBuild<?, ?> && previous != null) {
+        while (previous instanceof AbstractBuild<?, ?>) {
             AbstractBuild<?, ?> previousBuild = (AbstractBuild<?, ?>)previous;
             PmdResultAction previousAction = previousBuild.getAction(PmdResultAction.class);
             if (previousAction != null) {
