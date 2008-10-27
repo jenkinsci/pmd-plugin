@@ -24,7 +24,7 @@ public class PmdResultTest extends AbstractAnnotationsBuildResultTest<PmdResult>
 
     /** {@inheritDoc} */
     @Override
-    protected void verifyHighScoreMessage(final int expectedZeroWarningsBuildNumber, final boolean expectedIsNewHighScore, final long expectedHighScore, final int gap, final PmdResult result) {
+    protected void verifyHighScoreMessage(final int expectedZeroWarningsBuildNumber, final boolean expectedIsNewHighScore, final long expectedHighScore, final long gap, final PmdResult result) {
         if (result.hasNoAnnotations() && result.getDelta() == 0) {
             assertTrue(result.getDetails().contains(Messages.PMD_ResultAction_NoWarningsSince(expectedZeroWarningsBuildNumber)));
             if (expectedIsNewHighScore) {
