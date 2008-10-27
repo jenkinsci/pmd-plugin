@@ -26,7 +26,7 @@ public class PmdParser implements AnnotationParser {
     private static final long serialVersionUID = 6507147028628714706L;
 
     /** {@inheritDoc} */
-    public Collection<FileAnnotation>  parse(final File file, final String moduleName) throws InvocationTargetException {
+    public Collection<FileAnnotation> parse(final File file, final String moduleName) throws InvocationTargetException {
         try {
             return parse(new FileInputStream(file), moduleName);
         }
@@ -35,7 +35,17 @@ public class PmdParser implements AnnotationParser {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Returns the annotations found in the specified file.
+     *
+     * @param file
+     *            the file to parse
+     * @param moduleName
+     *            name of the maven module
+     * @return the parsed result (stored in the module instance)
+     * @throws InvocationTargetException
+     *             if the file could not be parsed (wrap your exception in this exception)
+     */
     public Collection<FileAnnotation>  parse(final InputStream file, final String moduleName) throws InvocationTargetException {
         try {
             Digester digester = new Digester();
