@@ -2,7 +2,7 @@ package hudson.plugins.pmd;
 
 import hudson.model.AbstractBuild;
 import hudson.plugins.pmd.util.AbstractResultAction;
-import hudson.plugins.pmd.util.HealthReportBuilder;
+import hudson.plugins.pmd.util.HealthDescriptor;
 import hudson.plugins.pmd.util.PluginDescriptor;
 
 import java.util.NoSuchElementException;
@@ -27,13 +27,13 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
      *
      * @param owner
      *            the associated build of this action
-     * @param healthReportBuilder
-     *            health builder to use
+     * @param healthDescriptor
+     *            health descriptor to use
      * @param result
      *            the result in this build
      */
-    public PmdResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final PmdResult result) {
-        super(owner, healthReportBuilder, result);
+    public PmdResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor, final PmdResult result) {
+        super(owner, new PmdHealthDescriptor(healthDescriptor), result);
     }
 
     /**
@@ -41,11 +41,11 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
      *
      * @param owner
      *            the associated build of this action
-     * @param healthReportBuilder
-     *            health builder to use
+     * @param healthDescriptor
+     *            health descriptor to use
      */
-    public PmdResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder) {
-        super(owner, healthReportBuilder);
+    public PmdResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor) {
+        super(owner, new PmdHealthDescriptor(healthDescriptor));
     }
 
     /** {@inheritDoc} */

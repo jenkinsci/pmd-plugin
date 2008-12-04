@@ -7,7 +7,6 @@ import hudson.model.Descriptor;
 import hudson.plugins.pmd.parser.PmdParser;
 import hudson.plugins.pmd.util.FilesParser;
 import hudson.plugins.pmd.util.HealthAwarePublisher;
-import hudson.plugins.pmd.util.HealthReportBuilder;
 import hudson.plugins.pmd.util.ParserResult;
 import hudson.tasks.Publisher;
 
@@ -80,10 +79,7 @@ public class PmdPublisher extends HealthAwarePublisher {
 
         ParserResult project = build.getProject().getWorkspace().act(pmdCollector);
         PmdResult result = new PmdResultBuilder().build(build, project);
-        HealthReportBuilder healthReportBuilder = createHealthReporter(
-                Messages.PMD_ResultAction_HealthReportSingleItem(),
-                Messages.PMD_ResultAction_HealthReportMultipleItem());
-        build.getActions().add(new PmdResultAction(build, healthReportBuilder, result));
+        build.getActions().add(new PmdResultAction(build, this, result));
 
         return project;
     }

@@ -9,7 +9,6 @@ import hudson.model.Action;
 import hudson.plugins.pmd.parser.PmdParser;
 import hudson.plugins.pmd.util.FilesParser;
 import hudson.plugins.pmd.util.HealthAwareMavenReporter;
-import hudson.plugins.pmd.util.HealthReportBuilder;
 import hudson.plugins.pmd.util.ParserResult;
 
 import java.io.IOException;
@@ -75,10 +74,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
     @Override
     protected void persistResult(final ParserResult project, final MavenBuild build) {
         PmdResult result = new PmdResultBuilder().build(build, project);
-        HealthReportBuilder healthReportBuilder = createHealthBuilder(
-                Messages.PMD_ResultAction_HealthReportSingleItem(),
-                Messages.PMD_ResultAction_HealthReportMultipleItem());
-        build.getActions().add(new MavenPmdResultAction(build, healthReportBuilder, getHeight(), result));
+        build.getActions().add(new MavenPmdResultAction(build, this, getHeight(), result));
         build.registerAsProjectAction(PmdReporter.this);
     }
 
