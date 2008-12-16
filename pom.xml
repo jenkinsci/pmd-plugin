@@ -11,7 +11,7 @@
   <artifactId>pmd</artifactId>
   <packaging>hpi</packaging>
   <name>Hudson PMD Plug-in</name>
-  <version>1.18</version>
+  <version>1.19-SNAPSHOT</version>
   <url>http://hudson.gotdns.com/wiki/display/HUDSON/PMD+Plugin</url>
   <description>This plug-in generates the trend report for PMD, an
     open source static code analysis program.</description>
