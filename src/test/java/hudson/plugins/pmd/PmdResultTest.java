@@ -13,13 +13,13 @@ public class PmdResultTest extends AbstractAnnotationsBuildResultTest<PmdResult>
     /** {@inheritDoc} */
     @Override
     protected PmdResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project) {
-        return new PmdResult(build, project);
+        return new PmdResult(build, null, project);
     }
 
     /** {@inheritDoc} */
     @Override
     protected PmdResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project, final PmdResult previous) {
-        return new PmdResult(build, project, previous);
+        return new PmdResult(build, null, project, previous);
     }
 
     /** {@inheritDoc} */

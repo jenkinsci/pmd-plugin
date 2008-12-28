@@ -73,8 +73,8 @@ public class PmdReporter extends HealthAwareMavenReporter {
     /** {@inheritDoc} */
     @Override
     protected void persistResult(final ParserResult project, final MavenBuild build) {
-        PmdResult result = new PmdResultBuilder().build(build, project);
-        build.getActions().add(new MavenPmdResultAction(build, this, getHeight(), result));
+        PmdResult result = new PmdResultBuilder().build(build, project, getDefaultEncoding());
+        build.getActions().add(new MavenPmdResultAction(build, this, getHeight(), getDefaultEncoding(), result));
         build.registerAsProjectAction(PmdReporter.this);
     }
 
