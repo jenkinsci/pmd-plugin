@@ -149,10 +149,4 @@
       </plugin>
     </plugins>
   </reporting>
-
-  <scm>
-    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/pmd-1.18</connection>
-    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/pmd-1.18</developerConnection>
-    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/pmd/tags/pmd-1.18</url>
-  </scm>
 </project>
