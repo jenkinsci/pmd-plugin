@@ -42,11 +42,11 @@ public class PmdParser implements AnnotationParser {
      *            the file to parse
      * @param moduleName
      *            name of the maven module
-     * @return the parsed result (stored in the module instance)
+     * @return the parsed annotations
      * @throws InvocationTargetException
      *             if the file could not be parsed (wrap your exception in this exception)
      */
-    public Collection<FileAnnotation>  parse(final InputStream file, final String moduleName) throws InvocationTargetException {
+    public Collection<FileAnnotation> parse(final InputStream file, final String moduleName) throws InvocationTargetException {
         try {
             Digester digester = new Digester();
             digester.setValidating(false);
