@@ -3,7 +3,7 @@
   <f:entry title="${%PMD results}"
 	description="${%description.pattern}">
 	<f:textbox name="pattern" value="${instance.pattern}"
-		checkUrl="'${rootURL}/publisher/PmdPublisher/checkPattern?job=${it.fullName}&amp;value='+escape(this.value)" />
+		checkUrl="'descriptorByName/PmdPublisher/checkPattern?value='+escape(this.value)" />
   </f:entry>
   <f:advanced>
     <u:thresholds id="pmd"/>
