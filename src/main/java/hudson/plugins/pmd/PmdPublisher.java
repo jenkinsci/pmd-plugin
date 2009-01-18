@@ -82,7 +82,7 @@ public class PmdPublisher extends HealthAwarePublisher {
     @Override
     public ParserResult perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
         log(logger, "Collecting pmd analysis files...");
-        FilesParser pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new PmdParser(),
+        FilesParser pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new PmdParser(getDefaultEncoding()),
                 isMavenBuild(build), isAntBuild(build));
 
         ParserResult project = build.getProject().getWorkspace().act(pmdCollector);

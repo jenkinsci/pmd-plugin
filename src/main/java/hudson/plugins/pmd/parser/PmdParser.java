@@ -1,12 +1,9 @@
 package hudson.plugins.pmd.parser;
 
-import hudson.plugins.pmd.util.AnnotationParser;
+import hudson.plugins.pmd.util.AbstractAnnotationParser;
 import hudson.plugins.pmd.util.model.FileAnnotation;
 import hudson.plugins.pmd.util.model.Priority;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -14,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.commons.digester.Digester;
+import org.apache.commons.lang.StringUtils;
 import org.xml.sax.SAXException;
 
 /**
@@ -21,31 +19,29 @@ import org.xml.sax.SAXException;
  *
  * @author Ulli Hafner
  */
-public class PmdParser implements AnnotationParser {
+public class PmdParser extends AbstractAnnotationParser {
     /** Unique ID of this class. */
     private static final long serialVersionUID = 6507147028628714706L;
 
-    /** {@inheritDoc} */
-    public Collection<FileAnnotation> parse(final File file, final String moduleName) throws InvocationTargetException {
-        try {
-            return parse(new FileInputStream(file), moduleName);
-        }
-        catch (FileNotFoundException exception) {
-            throw new InvocationTargetException(exception);
-        }
+    /**
+     * Creates a new instance of {@link PmdParser}.
+     */
+    public PmdParser() {
+        super(StringUtils.EMPTY);
     }
 
     /**
-     * Returns the annotations found in the specified file.
+     * Creates a new instance of {@link PmdParser}.
      *
-     * @param file
-     *            the file to parse
-     * @param moduleName
-     *            name of the maven module
-     * @return the parsed annotations
-     * @throws InvocationTargetException
-     *             if the file could not be parsed (wrap your exception in this exception)
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
      */
+    public PmdParser(final String defaultEncoding) {
+        super(defaultEncoding);
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public Collection<FileAnnotation> parse(final InputStream file, final String moduleName) throws InvocationTargetException {
         try {
             Digester digester = new Digester();
@@ -90,8 +86,9 @@ public class PmdParser implements AnnotationParser {
      * @param moduleName
      *            name of the maven module
      * @return a maven module of the annotations API
+     * @throws IOException if the contents of a source file could not be read
      */
-    private Collection<FileAnnotation> convert(final Pmd collection, final String moduleName) {
+    private Collection<FileAnnotation> convert(final Pmd collection, final String moduleName) throws IOException {
         ArrayList<FileAnnotation> annotations = new ArrayList<FileAnnotation>();
 
         for (hudson.plugins.pmd.parser.File file : collection.getFiles()) {
@@ -111,6 +108,10 @@ public class PmdParser implements AnnotationParser {
                 bug.setPackageName(warning.getPackage());
                 bug.setModuleName(moduleName);
                 bug.setFileName(file.getName());
+
+                if (StringUtils.isNotBlank(getDefaultEncoding())) {
+                    bug.setContextHashCode(createContextHashCode(file.getName(), warning.getBeginline()));
+                }
 
                 annotations.add(bug);
             }
