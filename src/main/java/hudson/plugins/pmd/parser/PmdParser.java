@@ -86,9 +86,8 @@ public class PmdParser extends AbstractAnnotationParser {
      * @param moduleName
      *            name of the maven module
      * @return a maven module of the annotations API
-     * @throws IOException if the contents of a source file could not be read
      */
-    private Collection<FileAnnotation> convert(final Pmd collection, final String moduleName) throws IOException {
+    private Collection<FileAnnotation> convert(final Pmd collection, final String moduleName) {
         ArrayList<FileAnnotation> annotations = new ArrayList<FileAnnotation>();
 
         for (hudson.plugins.pmd.parser.File file : collection.getFiles()) {
@@ -110,7 +109,12 @@ public class PmdParser extends AbstractAnnotationParser {
                 bug.setFileName(file.getName());
 
                 if (StringUtils.isNotBlank(getDefaultEncoding())) {
-                    bug.setContextHashCode(createContextHashCode(file.getName(), warning.getBeginline()));
+                    try {
+                        bug.setContextHashCode(createContextHashCode(file.getName(), warning.getBeginline()));
+                    }
+                    catch (IOException exception) {
+                        // ignore and continue
+                    }
                 }
 
                 annotations.add(bug);
