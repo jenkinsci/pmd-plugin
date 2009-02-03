@@ -10,6 +10,7 @@ import hudson.plugins.pmd.parser.PmdParser;
 import hudson.plugins.pmd.util.FilesParser;
 import hudson.plugins.pmd.util.HealthAwareMavenReporter;
 import hudson.plugins.pmd.util.ParserResult;
+import hudson.plugins.pmd.util.model.Priority;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -47,13 +48,13 @@ public class PmdReporter extends HealthAwareMavenReporter {
      *            than this value
      * @param height
      *            the height of the trend graph
-     * @param thresholdLimit
+     * @param minimumPriority
      *            determines which warning priorities should be considered when
      *            evaluating the build stability and health
      */
     @DataBoundConstructor
-    public PmdReporter(final String threshold, final String healthy, final String unHealthy, final String height, final String thresholdLimit) {
-        super(threshold, healthy, unHealthy, height, thresholdLimit, "PMD");
+    public PmdReporter(final String threshold, final String healthy, final String unHealthy, final String height, final Priority minimumPriority) {
+        super(threshold, healthy, unHealthy, height, minimumPriority, "PMD");
     }
 
     /** {@inheritDoc} */
