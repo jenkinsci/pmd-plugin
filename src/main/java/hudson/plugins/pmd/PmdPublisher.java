@@ -5,6 +5,7 @@ import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.Descriptor;
 import hudson.plugins.pmd.parser.PmdParser;
+import hudson.plugins.pmd.util.AnnotationsBuildResult;
 import hudson.plugins.pmd.util.FilesParser;
 import hudson.plugins.pmd.util.HealthAwarePublisher;
 import hudson.plugins.pmd.util.ParserResult;
@@ -38,8 +39,11 @@ public class PmdPublisher extends HealthAwarePublisher {
      * @param pattern
      *            Ant file-set pattern to scan for PMD files
      * @param threshold
-     *            Bug threshold to be reached if a build should be considered as
+     *            Annotation threshold to be reached if a build should be considered as
      *            unstable.
+     * @param newThreshold
+     *            New annotations threshold to be reached if a build should be
+     *            considered as unstable.
      * @param healthy
      *            Report health as 100% when the number of warnings is less than
      *            this value
@@ -57,9 +61,9 @@ public class PmdPublisher extends HealthAwarePublisher {
     // CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveParameterList")
     @DataBoundConstructor
-    public PmdPublisher(final String pattern, final String threshold, final String healthy, final String unHealthy,
+    public PmdPublisher(final String pattern, final String threshold, final String newThreshold, final String healthy, final String unHealthy,
             final String height, final Priority minimumPriority, final String defaultEncoding) {
-        super(threshold, healthy, unHealthy, height, minimumPriority, defaultEncoding, "PMD");
+        super(threshold, newThreshold, healthy, unHealthy, height, minimumPriority, defaultEncoding, "PMD");
         this.pattern = pattern;
     }
     // CHECKSTYLE:ON
@@ -81,7 +85,7 @@ public class PmdPublisher extends HealthAwarePublisher {
 
     /** {@inheritDoc} */
     @Override
-    public ParserResult perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
+    public AnnotationsBuildResult perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
         log(logger, "Collecting pmd analysis files...");
         FilesParser pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new PmdParser(getDefaultEncoding()),
                 isMavenBuild(build), isAntBuild(build));
@@ -90,7 +94,7 @@ public class PmdPublisher extends HealthAwarePublisher {
         PmdResult result = new PmdResultBuilder().build(build, project, getDefaultEncoding());
         build.getActions().add(new PmdResultAction(build, this, result));
 
-        return project;
+        return result;
     }
 
     /** {@inheritDoc} */
