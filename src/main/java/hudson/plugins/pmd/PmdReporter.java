@@ -44,6 +44,12 @@ public class PmdReporter extends HealthAwareMavenReporter {
      * @param newThreshold
      *            New annotations threshold to be reached if a build should be
      *            considered as unstable.
+     * @param failureThreshold
+     *            Annotation threshold to be reached if a build should be considered as
+     *            failure.
+     * @param newFailureThreshold
+     *            New annotations threshold to be reached if a build should be
+     *            considered as failure.
      * @param healthy
      *            Report health as 100% when the number of warnings is less than
      *            this value
@@ -56,10 +62,17 @@ public class PmdReporter extends HealthAwareMavenReporter {
      *            determines which warning priorities should be considered when
      *            evaluating the build stability and health
      */
+    // CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.ExcessiveParameterList")
     @DataBoundConstructor
-    public PmdReporter(final String threshold, final String newThreshold, final String healthy, final String unHealthy, final String height, final Priority minimumPriority) {
-        super(threshold, newThreshold, healthy, unHealthy, height, minimumPriority, "PMD");
+    public PmdReporter(final String threshold, final String newThreshold,
+            final String failureThreshold, final String newFailureThreshold,
+            final String healthy, final String unHealthy,
+            final String height, final Priority minimumPriority) {
+        super(threshold, newThreshold, failureThreshold, newFailureThreshold,
+                healthy, unHealthy, height, minimumPriority, "PMD");
     }
+    // CHECKSTYLE:ON
 
     /** {@inheritDoc} */
     @Override
