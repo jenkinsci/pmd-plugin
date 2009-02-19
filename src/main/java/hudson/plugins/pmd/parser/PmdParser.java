@@ -122,10 +122,5 @@ public class PmdParser extends AbstractAnnotationParser {
         }
         return annotations;
     }
-
-    /** {@inheritDoc} */
-    public String getName() {
-        return "PMD";
-    }
 }
 

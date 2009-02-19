@@ -11,10 +11,9 @@ import hudson.plugins.pmd.util.AnnotationsBuildResult;
 import hudson.plugins.pmd.util.FilesParser;
 import hudson.plugins.pmd.util.HealthAwareMavenReporter;
 import hudson.plugins.pmd.util.ParserResult;
-import hudson.plugins.pmd.util.model.Priority;
+import hudson.plugins.pmd.util.PluginLogger;
 
 import java.io.IOException;
-import java.io.PrintStream;
 
 import org.apache.maven.project.MavenProject;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -58,7 +57,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
      *            than this value
      * @param height
      *            the height of the trend graph
-     * @param minimumPriority
+     * @param thresholdLimit
      *            determines which warning priorities should be considered when
      *            evaluating the build stability and health
      */
@@ -68,9 +67,9 @@ public class PmdReporter extends HealthAwareMavenReporter {
     public PmdReporter(final String threshold, final String newThreshold,
             final String failureThreshold, final String newFailureThreshold,
             final String healthy, final String unHealthy,
-            final String height, final Priority minimumPriority) {
+            final String height, final String thresholdLimit) {
         super(threshold, newThreshold, failureThreshold, newFailureThreshold,
-                healthy, unHealthy, height, minimumPriority, "PMD");
+                healthy, unHealthy, height, thresholdLimit, "PMD");
     }
     // CHECKSTYLE:ON
 
@@ -82,7 +81,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
 
     /** {@inheritDoc} */
     @Override
-    public ParserResult perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PrintStream logger) throws InterruptedException, IOException {
+    public ParserResult perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PluginLogger logger) throws InterruptedException, IOException {
         FilesParser pmdCollector = new FilesParser(logger, PMD_XML_FILE, new PmdParser(getDefaultEncoding()), true, false);
 
         return getTargetPath(pom).act(pmdCollector);
