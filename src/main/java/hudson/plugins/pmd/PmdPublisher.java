@@ -5,7 +5,7 @@ import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.Descriptor;
 import hudson.plugins.pmd.parser.PmdParser;
-import hudson.plugins.pmd.util.AnnotationsBuildResult;
+import hudson.plugins.pmd.util.BuildResult;
 import hudson.plugins.pmd.util.FilesParser;
 import hudson.plugins.pmd.util.HealthAwarePublisher;
 import hudson.plugins.pmd.util.ParserResult;
@@ -93,7 +93,7 @@ public class PmdPublisher extends HealthAwarePublisher {
 
     /** {@inheritDoc} */
     @Override
-    public AnnotationsBuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
+    public BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
         logger.log("Collecting PMD analysis files...");
         FilesParser pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new PmdParser(getDefaultEncoding()),
                 isMavenBuild(build), isAntBuild(build));

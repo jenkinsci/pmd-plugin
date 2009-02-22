@@ -2,7 +2,7 @@ package hudson.plugins.pmd;
 
 import hudson.model.AbstractBuild;
 import hudson.plugins.pmd.parser.Bug;
-import hudson.plugins.pmd.util.AnnotationsBuildResult;
+import hudson.plugins.pmd.util.BuildResult;
 import hudson.plugins.pmd.util.ParserResult;
 import hudson.plugins.pmd.util.model.JavaProject;
 
@@ -12,7 +12,7 @@ import hudson.plugins.pmd.util.model.JavaProject;
  *
  * @author Ulli Hafner
  */
-public class PmdResult extends AnnotationsBuildResult {
+public class PmdResult extends BuildResult {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 2768250056765266658L;
     static {

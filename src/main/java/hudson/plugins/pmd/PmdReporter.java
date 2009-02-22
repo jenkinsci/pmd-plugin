@@ -7,7 +7,7 @@ import hudson.maven.MavenReporterDescriptor;
 import hudson.maven.MojoInfo;
 import hudson.model.Action;
 import hudson.plugins.pmd.parser.PmdParser;
-import hudson.plugins.pmd.util.AnnotationsBuildResult;
+import hudson.plugins.pmd.util.BuildResult;
 import hudson.plugins.pmd.util.FilesParser;
 import hudson.plugins.pmd.util.HealthAwareMavenReporter;
 import hudson.plugins.pmd.util.ParserResult;
@@ -89,7 +89,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
 
     /** {@inheritDoc} */
     @Override
-    protected AnnotationsBuildResult persistResult(final ParserResult project, final MavenBuild build) {
+    protected BuildResult persistResult(final ParserResult project, final MavenBuild build) {
         PmdResult result = new PmdResultBuilder().build(build, project, getDefaultEncoding());
         build.getActions().add(new MavenPmdResultAction(build, this, getHeight(), getDefaultEncoding(), result));
         build.registerAsProjectAction(PmdReporter.this);

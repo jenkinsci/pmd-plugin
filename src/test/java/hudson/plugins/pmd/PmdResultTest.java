@@ -2,14 +2,14 @@ package hudson.plugins.pmd;
 
 import static junit.framework.Assert.*;
 import hudson.model.AbstractBuild;
-import hudson.plugins.pmd.util.AbstractAnnotationsBuildResultTest;
-import hudson.plugins.pmd.util.AnnotationsBuildResult;
+import hudson.plugins.pmd.util.BuildResult;
+import hudson.plugins.pmd.util.BuildResultTest;
 import hudson.plugins.pmd.util.ParserResult;
 
 /**
  * Tests the class {@link PmdResult}.
  */
-public class PmdResultTest extends AbstractAnnotationsBuildResultTest<PmdResult> {
+public class PmdResultTest extends BuildResultTest<PmdResult> {
     /** {@inheritDoc} */
     @Override
     protected PmdResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project) {
@@ -28,7 +28,7 @@ public class PmdResultTest extends AbstractAnnotationsBuildResultTest<PmdResult>
         if (result.hasNoAnnotations() && result.getDelta() == 0) {
             assertTrue(result.getDetails().contains(Messages.PMD_ResultAction_NoWarningsSince(expectedZeroWarningsBuildNumber)));
             if (expectedIsNewHighScore) {
-                long days = AnnotationsBuildResult.getDays(expectedHighScore);
+                long days = BuildResult.getDays(expectedHighScore);
                 if (days == 1) {
                     assertTrue(result.getDetails().contains(Messages.PMD_ResultAction_OneHighScore()));
                 }
@@ -37,7 +37,7 @@ public class PmdResultTest extends AbstractAnnotationsBuildResultTest<PmdResult>
                 }
             }
             else {
-                long days = AnnotationsBuildResult.getDays(gap);
+                long days = BuildResult.getDays(gap);
                 if (days == 1) {
                     assertTrue(result.getDetails().contains(Messages.PMD_ResultAction_OneNoHighScore()));
                 }
