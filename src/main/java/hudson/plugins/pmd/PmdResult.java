@@ -20,7 +20,7 @@ public class PmdResult extends BuildResult {
     }
 
     /**
-     * Creates a new instance of <code>PmdResult</code>.
+     * Creates a new instance of {@link PmdResult}.
      *
      * @param build
      *            the current build as owner of this action
@@ -29,12 +29,13 @@ public class PmdResult extends BuildResult {
      * @param result
      *            the parsed result with all annotations
      */
-    public PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
+    public PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
+            final ParserResult result) {
         super(build, defaultEncoding, result);
     }
 
     /**
-     * Creates a new instance of <code>PmdResult</code>.
+     * Creates a new instance of {@link PmdResult}.
      *
      * @param build
      *            the current build as owner of this action
@@ -45,7 +46,8 @@ public class PmdResult extends BuildResult {
      * @param previous
      *            the result of the previous build
      */
-    public PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result, final PmdResult previous) {
+    public PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
+            final ParserResult result, final PmdResult previous) {
         super(build, defaultEncoding, result, previous);
     }
 

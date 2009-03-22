@@ -2,7 +2,9 @@ package hudson.plugins.pmd;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import hudson.plugins.pmd.util.AbstractEnglishLocaleTest;
+import hudson.plugins.pmd.util.AbstractHealthDescriptor;
+import hudson.plugins.pmd.util.AbstractHealthDescriptorTest;
+import hudson.plugins.pmd.util.HealthDescriptor;
 import hudson.plugins.pmd.util.NullHealthDescriptor;
 import hudson.plugins.pmd.util.model.AnnotationProvider;
 
@@ -14,7 +16,7 @@ import org.jvnet.localizer.Localizable;
  *
  * @author Ulli Hafner
  */
-public class PmdHealthDescriptorTest extends AbstractEnglishLocaleTest {
+public class PmdHealthDescriptorTest extends AbstractHealthDescriptorTest {
     /**
      * Verifies the different messages if the number of items are 0, 1, and 2.
      */
@@ -33,6 +35,12 @@ public class PmdHealthDescriptorTest extends AbstractEnglishLocaleTest {
         when(provider.getNumberOfAnnotations()).thenReturn(2);
         description = healthDescriptor.createDescription(provider);
         assertEquals(Messages.PMD_ResultAction_HealthReportMultipleItem(2), description.toString());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected AbstractHealthDescriptor createHealthDescriptor(final HealthDescriptor healthDescriptor) {
+        return new PmdHealthDescriptor(healthDescriptor);
     }
 }
 
