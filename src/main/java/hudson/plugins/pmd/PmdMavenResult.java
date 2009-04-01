@@ -1,8 +1,9 @@
 package hudson.plugins.pmd;
 
 import hudson.model.AbstractBuild;
+import hudson.plugins.pmd.util.BuildResult;
 import hudson.plugins.pmd.util.ParserResult;
-import hudson.plugins.pmd.util.model.JavaProject;
+import hudson.plugins.pmd.util.ResultAction;
 
 /**
  * Represents the aggregated results of the PMD analysis in m2 jobs.
@@ -46,30 +47,13 @@ public class PmdMavenResult extends PmdResult {
     }
 
     /**
-     * Returns the results of the previous build.
+     * Returns the actual type of the associated result action.
      *
-     * @return the result of the previous build, or <code>null</code> if no
-     *         such build exists
+     * @return the actual type of the associated result action
      */
     @Override
-    public JavaProject getPreviousResult() {
-        MavenPmdResultAction action = getOwner().getAction(MavenPmdResultAction.class);
-        if (action.hasPreviousResultAction()) {
-            return action.getPreviousResultAction().getResult().getProject();
-        }
-        else {
-            return null;
-        }
-    }
-
-    /**
-     * Returns whether a previous build result exists.
-     *
-     * @return <code>true</code> if a previous build result exists.
-     */
-    @Override
-    public boolean hasPreviousResult() {
-        return getOwner().getAction(MavenPmdResultAction.class).hasPreviousResultAction();
+    protected Class<? extends ResultAction<? extends BuildResult>> getResultActionType() {
+        return MavenPmdResultAction.class;
     }
 }
 

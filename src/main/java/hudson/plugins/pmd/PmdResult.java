@@ -4,7 +4,7 @@ import hudson.model.AbstractBuild;
 import hudson.plugins.pmd.parser.Bug;
 import hudson.plugins.pmd.util.BuildResult;
 import hudson.plugins.pmd.util.ParserResult;
-import hudson.plugins.pmd.util.model.JavaProject;
+import hudson.plugins.pmd.util.ResultAction;
 
 /**
  * Represents the results of the PMD analysis. One instance of this class is persisted for
@@ -109,29 +109,12 @@ public class PmdResult extends BuildResult {
     }
 
     /**
-     * Returns the results of the previous build.
+     * Returns the actual type of the associated result action.
      *
-     * @return the result of the previous build, or <code>null</code> if no
-     *         such build exists
+     * @return the actual type of the associated result action
      */
     @Override
-    public JavaProject getPreviousResult() {
-        PmdResultAction action = getOwner().getAction(PmdResultAction.class);
-        if (action.hasPreviousResultAction()) {
-            return action.getPreviousResultAction().getResult().getProject();
-        }
-        else {
-            return null;
-        }
-    }
-
-    /**
-     * Returns whether a previous build result exists.
-     *
-     * @return <code>true</code> if a previous build result exists.
-     */
-    @Override
-    public boolean hasPreviousResult() {
-        return getOwner().getAction(PmdResultAction.class).hasPreviousResultAction();
+    protected Class<? extends ResultAction<? extends BuildResult>> getResultActionType() {
+        return PmdResultAction.class;
     }
 }
