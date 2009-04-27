@@ -7,7 +7,6 @@
   </f:entry>
   <f:advanced>
     <u:thresholds id="pmd"/>
-    <u:trendHeight/>
     <u:defaultEncoding id="pmd"/>
   </f:advanced>
 </j:jelly>
