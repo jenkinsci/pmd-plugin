@@ -33,12 +33,6 @@ public class PmdProjectAction extends AbstractProjectAction<PmdResultAction> {
 
     /** {@inheritDoc} */
     @Override
-    public String getCookieName() {
-        return "PMD_displayMode";
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String getTrendName() {
         return Messages.PMD_Trend_Name();
     }
