@@ -55,8 +55,6 @@ public class PmdReporter extends HealthAwareMavenReporter {
      * @param unHealthy
      *            Report health as 0% when the number of warnings is greater
      *            than this value
-     * @param height
-     *            the height of the trend graph
      * @param thresholdLimit
      *            determines which warning priorities should be considered when
      *            evaluating the build stability and health
@@ -66,10 +64,9 @@ public class PmdReporter extends HealthAwareMavenReporter {
     @DataBoundConstructor
     public PmdReporter(final String threshold, final String newThreshold,
             final String failureThreshold, final String newFailureThreshold,
-            final String healthy, final String unHealthy,
-            final String height, final String thresholdLimit) {
+            final String healthy, final String unHealthy, final String thresholdLimit) {
         super(threshold, newThreshold, failureThreshold, newFailureThreshold,
-                healthy, unHealthy, height, thresholdLimit, "PMD");
+                healthy, unHealthy, thresholdLimit, "PMD");
     }
     // CHECKSTYLE:ON
 
@@ -91,7 +88,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
     @Override
     protected BuildResult persistResult(final ParserResult project, final MavenBuild build) {
         PmdResult result = new PmdResultBuilder().build(build, project, getDefaultEncoding());
-        build.getActions().add(new MavenPmdResultAction(build, this, getHeight(), getDefaultEncoding(), result));
+        build.getActions().add(new MavenPmdResultAction(build, this, getDefaultEncoding(), result));
         build.registerAsProjectAction(PmdReporter.this);
 
         return result;
