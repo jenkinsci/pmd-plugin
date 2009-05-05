@@ -97,7 +97,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
     /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final MavenModule module) {
-        return new PmdProjectAction(module, getTrendHeight());
+        return new PmdProjectAction(module);
     }
 
     /** {@inheritDoc} */

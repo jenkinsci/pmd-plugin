@@ -86,7 +86,7 @@ public class PmdPublisher extends HealthAwarePublisher {
     /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final AbstractProject<?, ?> project) {
-        return new PmdProjectAction(project, getTrendHeight());
+        return new PmdProjectAction(project);
     }
 
     /** {@inheritDoc} */

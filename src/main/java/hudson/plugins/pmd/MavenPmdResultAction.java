@@ -9,7 +9,6 @@ import hudson.maven.MavenModuleSetBuild;
 import hudson.model.AbstractBuild;
 import hudson.model.Action;
 import hudson.plugins.pmd.util.HealthDescriptor;
-import hudson.plugins.pmd.util.TrendReportHeightValidator;
 
 import java.util.List;
 import java.util.Map;
@@ -68,7 +67,7 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
 
     /** {@inheritDoc} */
     public Action getProjectAction(final MavenModuleSet moduleSet) {
-        return new PmdProjectAction(moduleSet, TrendReportHeightValidator.defaultHeight(height));
+        return new PmdProjectAction(moduleSet);
     }
 
     /** {@inheritDoc} */
