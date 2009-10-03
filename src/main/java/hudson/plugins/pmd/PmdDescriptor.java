@@ -1,6 +1,6 @@
 package hudson.plugins.pmd;
 
-import hudson.plugins.pmd.util.PluginDescriptor;
+import hudson.plugins.analysis.util.PluginDescriptor;
 
 /**
  * Descriptor for the class {@link PmdPublisher}. Used as a singleton. The

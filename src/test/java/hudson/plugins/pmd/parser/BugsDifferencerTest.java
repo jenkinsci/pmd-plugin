@@ -1,9 +1,9 @@
 package hudson.plugins.pmd.parser;
 
-import hudson.plugins.pmd.util.AnnotationDifferencer;
-import hudson.plugins.pmd.util.AnnotationDifferencerTest;
-import hudson.plugins.pmd.util.model.FileAnnotation;
-import hudson.plugins.pmd.util.model.Priority;
+import hudson.plugins.analysis.test.AnnotationDifferencerTest;
+import hudson.plugins.analysis.util.AnnotationDifferencer;
+import hudson.plugins.analysis.util.model.FileAnnotation;
+import hudson.plugins.analysis.util.model.Priority;
 
 /**
  * Tests the {@link AnnotationDifferencer} for bugs.

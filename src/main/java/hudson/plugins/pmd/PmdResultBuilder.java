@@ -1,7 +1,7 @@
 package hudson.plugins.pmd;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.pmd.util.ParserResult;
+import hudson.plugins.analysis.util.ParserResult;
 
 /**
  * Creates a new PMD result based on the values of a previous build and the

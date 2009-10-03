@@ -1,7 +1,7 @@
 package hudson.plugins.pmd.parser;
 
-import hudson.plugins.pmd.util.model.AbstractAnnotation;
-import hudson.plugins.pmd.util.model.Priority;
+import hudson.plugins.analysis.util.model.AbstractAnnotation;
+import hudson.plugins.analysis.util.model.Priority;
 
 import org.apache.commons.lang.StringUtils;
 

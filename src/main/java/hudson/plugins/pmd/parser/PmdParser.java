@@ -1,8 +1,8 @@
 package hudson.plugins.pmd.parser;
 
-import hudson.plugins.pmd.util.AbstractAnnotationParser;
-import hudson.plugins.pmd.util.model.FileAnnotation;
-import hudson.plugins.pmd.util.model.Priority;
+import hudson.plugins.analysis.util.AbstractAnnotationParser;
+import hudson.plugins.analysis.util.model.FileAnnotation;
+import hudson.plugins.analysis.util.model.Priority;
 
 import java.io.IOException;
 import java.io.InputStream;

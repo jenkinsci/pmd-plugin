@@ -1,12 +1,12 @@
 package hudson.plugins.pmd.parser;
 
 import hudson.XmlFile;
-import hudson.plugins.pmd.util.model.AbstractAnnotation;
-import hudson.plugins.pmd.util.model.AbstractSerializeModelTest;
-import hudson.plugins.pmd.util.model.AnnotationStream;
-import hudson.plugins.pmd.util.model.FileAnnotation;
-import hudson.plugins.pmd.util.model.JavaProject;
-import hudson.plugins.pmd.util.model.Priority;
+import hudson.plugins.analysis.test.AbstractSerializeModelTest;
+import hudson.plugins.analysis.util.model.AbstractAnnotation;
+import hudson.plugins.analysis.util.model.AnnotationStream;
+import hudson.plugins.analysis.util.model.FileAnnotation;
+import hudson.plugins.analysis.util.model.JavaProject;
+import hudson.plugins.analysis.util.model.Priority;
 
 import java.io.File;
 import java.io.IOException;

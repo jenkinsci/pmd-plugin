@@ -6,12 +6,12 @@ import hudson.maven.MavenModule;
 import hudson.maven.MavenReporterDescriptor;
 import hudson.maven.MojoInfo;
 import hudson.model.Action;
+import hudson.plugins.analysis.util.BuildResult;
+import hudson.plugins.analysis.util.FilesParser;
+import hudson.plugins.analysis.util.HealthAwareMavenReporter;
+import hudson.plugins.analysis.util.ParserResult;
+import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.pmd.parser.PmdParser;
-import hudson.plugins.pmd.util.BuildResult;
-import hudson.plugins.pmd.util.FilesParser;
-import hudson.plugins.pmd.util.HealthAwareMavenReporter;
-import hudson.plugins.pmd.util.ParserResult;
-import hudson.plugins.pmd.util.PluginLogger;
 
 import java.io.IOException;
 

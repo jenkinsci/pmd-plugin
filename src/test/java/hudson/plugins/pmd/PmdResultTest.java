@@ -2,9 +2,9 @@ package hudson.plugins.pmd;
 
 import static junit.framework.Assert.*;
 import hudson.model.AbstractBuild;
-import hudson.plugins.pmd.util.BuildResult;
-import hudson.plugins.pmd.util.BuildResultTest;
-import hudson.plugins.pmd.util.ParserResult;
+import hudson.plugins.analysis.test.BuildResultTest;
+import hudson.plugins.analysis.util.BuildResult;
+import hudson.plugins.analysis.util.ParserResult;
 
 /**
  * Tests the class {@link PmdResult}.

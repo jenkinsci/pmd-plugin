@@ -1,6 +1,5 @@
 package hudson.plugins.pmd;
 
-
 /**
  * Represents the result summary of the PMD parser. This summary will be
  * shown in the summary.jelly script of the PMD result action.

@@ -2,11 +2,11 @@ package hudson.plugins.pmd;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import hudson.plugins.pmd.util.AbstractHealthDescriptor;
-import hudson.plugins.pmd.util.AbstractHealthDescriptorTest;
-import hudson.plugins.pmd.util.HealthDescriptor;
-import hudson.plugins.pmd.util.NullHealthDescriptor;
-import hudson.plugins.pmd.util.model.AnnotationProvider;
+import hudson.plugins.analysis.test.AbstractHealthDescriptorTest;
+import hudson.plugins.analysis.util.AbstractHealthDescriptor;
+import hudson.plugins.analysis.util.HealthDescriptor;
+import hudson.plugins.analysis.util.NullHealthDescriptor;
+import hudson.plugins.analysis.util.model.AnnotationProvider;
 
 import org.junit.Test;
 import org.jvnet.localizer.Localizable;

@@ -1,7 +1,7 @@
 package hudson.plugins.pmd;
 
 import hudson.model.AbstractProject;
-import hudson.plugins.pmd.util.AbstractProjectAction;
+import hudson.plugins.analysis.util.AbstractProjectAction;
 
 /**
  * Entry point to visualize the PMD trend graph in the project screen.

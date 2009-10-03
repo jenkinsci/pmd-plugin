@@ -1,8 +1,8 @@
 package hudson.plugins.pmd;
 
-import hudson.plugins.pmd.util.AbstractHealthDescriptor;
-import hudson.plugins.pmd.util.HealthDescriptor;
-import hudson.plugins.pmd.util.model.AnnotationProvider;
+import hudson.plugins.analysis.util.AbstractHealthDescriptor;
+import hudson.plugins.analysis.util.HealthDescriptor;
+import hudson.plugins.analysis.util.model.AnnotationProvider;
 
 import org.jvnet.localizer.Localizable;
 

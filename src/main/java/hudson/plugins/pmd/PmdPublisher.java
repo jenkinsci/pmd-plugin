@@ -4,12 +4,12 @@ import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.Descriptor;
+import hudson.plugins.analysis.util.BuildResult;
+import hudson.plugins.analysis.util.FilesParser;
+import hudson.plugins.analysis.util.HealthAwarePublisher;
+import hudson.plugins.analysis.util.ParserResult;
+import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.pmd.parser.PmdParser;
-import hudson.plugins.pmd.util.BuildResult;
-import hudson.plugins.pmd.util.FilesParser;
-import hudson.plugins.pmd.util.HealthAwarePublisher;
-import hudson.plugins.pmd.util.ParserResult;
-import hudson.plugins.pmd.util.PluginLogger;
 import hudson.tasks.Publisher;
 
 import java.io.IOException;
