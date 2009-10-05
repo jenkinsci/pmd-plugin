@@ -16,10 +16,6 @@ import org.apache.commons.lang.StringUtils;
 public class Bug extends AbstractAnnotation {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 5171661552905752370L;
-    /** The tooltip. */
-    @SuppressWarnings("unused")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("SS")
-    private final String tooltip = StringUtils.EMPTY; // backward compatibility
 
     /**
      * Creates a new instance of <code>Bug</code>.
@@ -64,5 +60,10 @@ public class Bug extends AbstractAnnotation {
     public String getToolTip() {
         return PmdMessages.getInstance().getMessage(getCategory(), getType());
     }
+
+    /** The tooltip. */
+    @SuppressWarnings("unused")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings("SS")
+    private final String tooltip = StringUtils.EMPTY; // backward compatibility
 }
 
