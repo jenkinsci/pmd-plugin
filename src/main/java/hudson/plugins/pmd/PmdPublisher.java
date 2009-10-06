@@ -1,15 +1,16 @@
 package hudson.plugins.pmd;
 
+import hudson.Extension;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
-import hudson.model.Descriptor;
 import hudson.plugins.analysis.util.BuildResult;
 import hudson.plugins.analysis.util.FilesParser;
 import hudson.plugins.analysis.util.HealthAwarePublisher;
 import hudson.plugins.analysis.util.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.pmd.parser.PmdParser;
+import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 
 import java.io.IOException;
@@ -25,10 +26,13 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public class PmdPublisher extends HealthAwarePublisher {
     /** Unique ID of this class. */
     private static final long serialVersionUID = 6711252664481150129L;
+
+    /** Descriptor of this publisher. */
+    @Extension
+    public static final PmdDescriptor PMD_DESCRIPTOR = new PmdDescriptor();
+
     /** Default PMD pattern. */
     private static final String DEFAULT_PATTERN = "**/pmd.xml";
-    /** Descriptor of this publisher. */
-    public static final PmdDescriptor PMD_DESCRIPTOR = new PmdDescriptor();
     /** Ant file-set pattern of files to work with. */
     private final String pattern;
 
@@ -105,7 +109,7 @@ public class PmdPublisher extends HealthAwarePublisher {
 
     /** {@inheritDoc} */
     @Override
-    public Descriptor<Publisher> getDescriptor() {
+    public BuildStepDescriptor<Publisher> getDescriptor() {
         return PMD_DESCRIPTOR;
     }
 }

@@ -39,6 +39,13 @@ public final class PmdMessages {
      * Creates a new instance of <code>PmdMessages</code>.
      */
     private PmdMessages() {
+        // prevents instantiation
+    }
+
+    /**
+     * Initializes the rules.
+     */
+    public void initialize() {
         try {
             Iterator<RuleSet> ruleSets = new RuleSetFactory().getRegisteredRuleSets();
             for (Iterator<RuleSet> iterator = ruleSets; iterator.hasNext();) {

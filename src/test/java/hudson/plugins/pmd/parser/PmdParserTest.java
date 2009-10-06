@@ -58,6 +58,8 @@ public class PmdParserTest {
      */
     @Test
     public void scanFileWith4Warnings() throws InvocationTargetException {
+        PmdMessages.getInstance().initialize();
+
         String fileName = "4-pmd-warnings.xml";
         Collection<FileAnnotation> annotations = parseFile(fileName);
         MavenModule module = new MavenModule();
