@@ -1,9 +1,9 @@
 package hudson.plugins.pmd;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.analysis.util.BuildResult;
-import hudson.plugins.analysis.util.ParserResult;
-import hudson.plugins.analysis.util.ResultAction;
+import hudson.plugins.analysis.core.BuildResult;
+import hudson.plugins.analysis.core.ParserResult;
+import hudson.plugins.analysis.core.ResultAction;
 import hudson.plugins.pmd.parser.Bug;
 
 import com.thoughtworks.xstream.XStream;
