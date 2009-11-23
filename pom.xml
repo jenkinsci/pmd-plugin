@@ -4,14 +4,14 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>1.323</version>
+    <version>1.335</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>pmd</artifactId>
   <packaging>hpi</packaging>
   <name>Hudson PMD Plug-in</name>
-  <version>2.13-SNAPSHOT</version>
+  <version>3.0-SNAPSHOT</version>
   <url>http://wiki.hudson-ci.org/display/HUDSON/PMD+Plugin</url>
   <description>This plug-in generates the trend report for PMD, an
     open source static code analysis program.</description>
