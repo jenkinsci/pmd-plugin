@@ -29,7 +29,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
     private static final long serialVersionUID = 2272875032054063496L;
 
     /** Descriptor of this publisher. */
-    @Extension
+    @Extension(ordinal = 100)
     public static final PmdReporterDescriptor PMD_SCANNER_DESCRIPTOR = new PmdReporterDescriptor(PmdPublisher.PMD_DESCRIPTOR);
 
     /** Default PMD pattern. */
