@@ -2,6 +2,7 @@ package hudson.plugins.pmd.parser;
 
 import hudson.plugins.analysis.util.model.AbstractAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.pmd.Messages;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -36,6 +37,8 @@ public class Bug extends AbstractAnnotation {
     public Bug(final Priority priority, final String message, final String category, final String type,
             final int start, final int end) {
         super(priority, message, start, end, category, type);
+
+        setOrigin(Messages.PMD_Warning_Origin());
     }
 
     /**
