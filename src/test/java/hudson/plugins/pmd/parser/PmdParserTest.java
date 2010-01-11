@@ -22,7 +22,8 @@ public class PmdParserTest {
     /**
      * Parses the specified file.
      *
-     * @param fileName the file to read
+     * @param fileName
+     *            the file to read
      * @return the parsed module
      * @throws InvocationTargetException
      *             in case of an error
@@ -33,6 +34,9 @@ public class PmdParserTest {
 
     /**
      * Checks whether we correctly detect all 669 warnings.
+     *
+     * @throws InvocationTargetException
+     *             indicates a test failure
      */
     @Test
     public void scanFileWithSeveralWarnings() throws InvocationTargetException {
@@ -44,6 +48,10 @@ public class PmdParserTest {
 
     /**
      * Checks whether we correctly detect an empty file.
+     *      * @throws InvocationTargetException indicates a test failure
+
+     * @throws InvocationTargetException
+     *             indicates a test failure
      */
     @Test
     public void scanFileWithNoBugs() throws InvocationTargetException {
@@ -55,6 +63,9 @@ public class PmdParserTest {
 
     /**
      * Checks whether we correctly parse a file with 4 warnings.
+     *
+     * @throws InvocationTargetException
+     *             indicates a test failure
      */
     @Test
     public void scanFileWith4Warnings() throws InvocationTargetException {
@@ -67,45 +78,50 @@ public class PmdParserTest {
 
         assertEquals(ERROR_MESSAGE, 4, module.getNumberOfAnnotations());
 
-        assertEquals(ERROR_MESSAGE, 1, module.getPackage("com.avaloq.adt.env.internal.ui.actions").getNumberOfAnnotations());
-        assertEquals(ERROR_MESSAGE, 1, module.getPackage("com.avaloq.adt.env.internal.ui.actions.change").getNumberOfAnnotations());
-        assertEquals(ERROR_MESSAGE, 2, module.getPackage("com.avaloq.adt.env.internal.ui.dialogs").getNumberOfAnnotations());
+        assertEquals(ERROR_MESSAGE, 1, module.getPackage("com.avaloq.adt.env.internal.ui.actions")
+                .getNumberOfAnnotations());
+        assertEquals(ERROR_MESSAGE, 1, module.getPackage(
+                "com.avaloq.adt.env.internal.ui.actions.change").getNumberOfAnnotations());
+        assertEquals(ERROR_MESSAGE, 2, module.getPackage("com.avaloq.adt.env.internal.ui.dialogs")
+                .getNumberOfAnnotations());
 
         assertEquals(ERROR_MESSAGE, 2, module.getNumberOfAnnotations("HIGH"));
         assertEquals(ERROR_MESSAGE, 1, module.getNumberOfAnnotations("NORMAL"));
         assertEquals(ERROR_MESSAGE, 1, module.getNumberOfAnnotations("LOW"));
 
-        Bug warning = (Bug)module.getPackage("com.avaloq.adt.env.internal.ui.actions").getAnnotations().iterator().next();
+        Bug warning = (Bug)module.getPackage("com.avaloq.adt.env.internal.ui.actions")
+                .getAnnotations().iterator().next();
 
-        assertEquals(WRONG_WARNING_PROPERTY, "These nested if statements could be combined.", warning.getMessage());
+        assertEquals(WRONG_WARNING_PROPERTY, "These nested if statements could be combined.",
+                warning.getMessage());
         assertEquals(WRONG_WARNING_PROPERTY, Priority.NORMAL, warning.getPriority());
         assertEquals(WRONG_WARNING_PROPERTY, "Basic Rules", warning.getCategory());
         assertEquals(WRONG_WARNING_PROPERTY, "CollapsibleIfStatements", warning.getType());
         assertEquals(WRONG_WARNING_PROPERTY, 54, warning.getPrimaryLineNumber());
-        assertEquals(WRONG_WARNING_PROPERTY, "com.avaloq.adt.env.internal.ui.actions", warning.getPackageName());
+        assertEquals(WRONG_WARNING_PROPERTY, "com.avaloq.adt.env.internal.ui.actions", warning
+                .getPackageName());
         assertEquals(WRONG_WARNING_PROPERTY, 1, warning.getLineRanges().size());
-        assertEquals(WRONG_WARNING_PROPERTY, 54, warning.getLineRanges().iterator().next().getStart());
+        assertEquals(WRONG_WARNING_PROPERTY, 54, warning.getLineRanges().iterator().next()
+                .getStart());
         assertEquals(WRONG_WARNING_PROPERTY, 61, warning.getLineRanges().iterator().next().getEnd());
-        assertEquals(WRONG_WARNING_PROPERTY, "C:/Build/Results/jobs/ADT-Base/workspace/com.avaloq.adt.ui/src/main/java/com/avaloq/adt/env/internal/ui/actions/CopyToClipboard.java", warning.getFileName());
-        assertEquals(WRONG_WARNING_PROPERTY, "\n"
-                + "Sometimes two \'if\' statements can be consolidated by separating their conditions with a boolean short-circuit operator.\n"
-                + "      <pre>\n"
-                + "  \n"
-                + "public class Foo {\n"
-                + " void bar() {\n"
-                + "  if (x) {\n"
-                + "   if (y) {\n"
-                + "    // do stuff\n"
-                + "   }\n"
-                + "  }\n"
-                + " }\n"
-                + "}\n"
-                + " \n"
-                + "      </pre>", warning.getToolTip());
+        assertEquals(
+                WRONG_WARNING_PROPERTY,
+                "C:/Build/Results/jobs/ADT-Base/workspace/com.avaloq.adt.ui/src/main/java/com/avaloq/adt/env/internal/ui/actions/CopyToClipboard.java",
+                warning.getFileName());
+        assertEquals(
+                WRONG_WARNING_PROPERTY,
+                "\n"
+                        + "Sometimes two \'if\' statements can be consolidated by separating their conditions with a boolean short-circuit operator.\n"
+                        + "      <pre>\n" + "  \n" + "public class Foo {\n" + " void bar() {\n"
+                        + "  if (x) {\n" + "   if (y) {\n" + "    // do stuff\n" + "   }\n"
+                        + "  }\n" + " }\n" + "}\n" + " \n" + "      </pre>", warning.getToolTip());
     }
 
     /**
      * Checks whether we correctly parse a file with 4 warnings.
+     *
+     * @throws InvocationTargetException
+     *             indicates a test failure
      */
     @Test
     public void testEquals() throws InvocationTargetException {

@@ -93,7 +93,7 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
         updateBuildHealth(newBuild, annotationsResult);
     }
 
-    /** Backward compatibility. */
+    /** Backward compatibility. @deprecated */
     @SuppressWarnings("unused")
     @Deprecated
     private transient String height;
