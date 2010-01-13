@@ -1,6 +1,5 @@
 package hudson.plugins.pmd;
 
-import hudson.Extension;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
@@ -10,8 +9,6 @@ import hudson.plugins.analysis.core.HealthAwarePublisher;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.pmd.parser.PmdParser;
-import hudson.tasks.BuildStepDescriptor;
-import hudson.tasks.Publisher;
 
 import java.io.IOException;
 
@@ -26,10 +23,6 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public class PmdPublisher extends HealthAwarePublisher {
     /** Unique ID of this class. */
     private static final long serialVersionUID = 6711252664481150129L;
-
-    /** Descriptor of this publisher. */
-    @Extension(ordinal = 100)
-    public static final PmdDescriptor PMD_DESCRIPTOR = new PmdDescriptor();
 
     /** Default PMD pattern. */
     private static final String DEFAULT_PATTERN = "**/pmd.xml";
@@ -105,11 +98,5 @@ public class PmdPublisher extends HealthAwarePublisher {
         build.getActions().add(new PmdResultAction(build, this, result));
 
         return result;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public BuildStepDescriptor<Publisher> getDescriptor() {
-        return PMD_DESCRIPTOR;
     }
 }

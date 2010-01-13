@@ -1,10 +1,8 @@
 package hudson.plugins.pmd;
 
-import hudson.Extension;
 import hudson.maven.MavenBuild;
 import hudson.maven.MavenBuildProxy;
 import hudson.maven.MavenModule;
-import hudson.maven.MavenReporterDescriptor;
 import hudson.maven.MojoInfo;
 import hudson.model.Action;
 import hudson.plugins.analysis.core.BuildResult;
@@ -27,10 +25,6 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public class PmdReporter extends HealthAwareMavenReporter {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 2272875032054063496L;
-
-    /** Descriptor of this publisher. */
-    @Extension(ordinal = 100)
-    public static final PmdReporterDescriptor PMD_SCANNER_DESCRIPTOR = new PmdReporterDescriptor(PmdPublisher.PMD_DESCRIPTOR);
 
     /** Default PMD pattern. */
     private static final String PMD_XML_FILE = "pmd.xml";
@@ -108,12 +102,6 @@ public class PmdReporter extends HealthAwareMavenReporter {
     @Override
     protected Class<? extends Action> getResultActionClass() {
         return MavenPmdResultAction.class;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public MavenReporterDescriptor getDescriptor() {
-        return PMD_SCANNER_DESCRIPTOR;
     }
 }
 

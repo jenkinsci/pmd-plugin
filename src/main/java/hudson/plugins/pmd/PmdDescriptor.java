@@ -1,5 +1,6 @@
 package hudson.plugins.pmd;
 
+import hudson.Extension;
 import hudson.plugins.analysis.core.PluginDescriptor;
 
 /**
@@ -8,6 +9,7 @@ import hudson.plugins.analysis.core.PluginDescriptor;
  *
  * @author Ulli Hafner
  */
+@Extension(ordinal = 100)
 public final class PmdDescriptor extends PluginDescriptor {
     /** Plug-in name. */
     private static final String PLUGIN_NAME = "pmd";
@@ -17,7 +19,7 @@ public final class PmdDescriptor extends PluginDescriptor {
     /**
      * Instantiates a new find bugs descriptor.
      */
-    PmdDescriptor() {
+    public PmdDescriptor() {
         super(PmdPublisher.class);
     }
 

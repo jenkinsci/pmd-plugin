@@ -21,7 +21,7 @@ public class PmdProjectAction extends AbstractProjectAction<PmdResultAction> {
      *            the project that owns this action
      */
     public PmdProjectAction(final AbstractProject<?, ?> project) {
-        super(project, PmdResultAction.class, PmdPublisher.PMD_DESCRIPTOR);
+        super(project, PmdResultAction.class, new PmdDescriptor());
     }
 
     /** {@inheritDoc} */

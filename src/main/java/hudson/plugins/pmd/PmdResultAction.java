@@ -56,7 +56,7 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
     /** {@inheritDoc} */
     @Override
     protected PluginDescriptor getDescriptor() {
-        return PmdPublisher.PMD_DESCRIPTOR;
+        return new PmdDescriptor();
     }
 
     /**

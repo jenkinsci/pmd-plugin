@@ -1,7 +1,7 @@
 package hudson.plugins.pmd;
 
+import hudson.Extension;
 import hudson.maven.MavenReporter;
-import hudson.plugins.analysis.core.PluginDescriptor;
 import hudson.plugins.analysis.core.ReporterDescriptor;
 import net.sf.json.JSONObject;
 
@@ -13,15 +13,13 @@ import org.kohsuke.stapler.StaplerRequest;
  *
  * @author Ulli Hafner
  */
+@Extension(ordinal = 100)
 public class PmdReporterDescriptor extends ReporterDescriptor {
     /**
      * Creates a new instance of <code>PmdReporterDescriptor</code>.
-     *
-     * @param pluginDescriptor
-     *            the plug-in descriptor of the publisher
      */
-    public PmdReporterDescriptor(final PluginDescriptor pluginDescriptor) {
-        super(PmdReporter.class, pluginDescriptor);
+    public PmdReporterDescriptor() {
+        super(PmdReporter.class, new PmdDescriptor());
     }
 
     /** {@inheritDoc} */
