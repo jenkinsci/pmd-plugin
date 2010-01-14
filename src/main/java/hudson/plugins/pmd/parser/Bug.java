@@ -2,7 +2,6 @@ package hudson.plugins.pmd.parser;
 
 import hudson.plugins.analysis.util.model.AbstractAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
-import hudson.plugins.pmd.Messages;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -17,6 +16,8 @@ import org.apache.commons.lang.StringUtils;
 public class Bug extends AbstractAnnotation {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 5171661552905752370L;
+    /** Origin of the annotation. */
+    public static final String ORIGIN = "pmd";
 
     /**
      * Creates a new instance of <code>Bug</code>.
@@ -38,7 +39,7 @@ public class Bug extends AbstractAnnotation {
             final int start, final int end) {
         super(priority, message, start, end, category, type);
 
-        setOrigin(Messages.PMD_Warning_Origin());
+        setOrigin(ORIGIN);
     }
 
     /**
