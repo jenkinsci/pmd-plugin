@@ -93,10 +93,16 @@ public class PmdPublisher extends HealthAwarePublisher {
         FilesParser pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new PmdParser(getDefaultEncoding()),
                 isMavenBuild(build), isAntBuild(build));
 
-        ParserResult project = build.getProject().getWorkspace().act(pmdCollector);
+        ParserResult project = build.getWorkspace().act(pmdCollector);
         PmdResult result = new PmdResultBuilder().build(build, project, getDefaultEncoding());
         build.getActions().add(new PmdResultAction(build, this, result));
 
         return result;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public PmdDescriptor getDescriptor() {
+        return (PmdDescriptor)super.getDescriptor();
     }
 }
