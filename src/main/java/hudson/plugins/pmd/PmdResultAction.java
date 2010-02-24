@@ -5,8 +5,6 @@ import hudson.plugins.analysis.core.AbstractResultAction;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.core.PluginDescriptor;
 
-import java.util.NoSuchElementException;
-
 /**
  * Controls the live cycle of the PMD results. This action persists the
  * results of the PMD analysis of a build and displays the results on the
@@ -57,21 +55,6 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
     @Override
     protected PluginDescriptor getDescriptor() {
         return new PmdDescriptor();
-    }
-
-    /**
-     * Gets the PMD result of the previous build.
-     *
-     * @return the PMD result of the previous build.
-     * @throws NoSuchElementException
-     *             if there is no previous build for this action
-     */
-    public PmdResultAction getPreviousResultAction() {
-        AbstractResultAction<PmdResult> previousBuild = getPreviousBuild();
-        if (previousBuild instanceof PmdResultAction) {
-            return (PmdResultAction)previousBuild;
-        }
-        throw new NoSuchElementException("There is no previous build for action " + this);
     }
 
     /** {@inheritDoc} */
