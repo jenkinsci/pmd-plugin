@@ -88,7 +88,7 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
      *            Newly completed build.
      */
     public void update(final Map<MavenModule, List<MavenBuild>> moduleBuilds, final MavenBuild newBuild) {
-        PmdResult annotationsResult = new PmdResultBuilder().buildMaven(getOwner(), createAggregatedResult(moduleBuilds), defaultEncoding);
+        PmdResult annotationsResult = new PmdResult(getOwner(), defaultEncoding, createAggregatedResult(moduleBuilds));
         setResult(annotationsResult);
         updateBuildHealth(newBuild, annotationsResult);
     }

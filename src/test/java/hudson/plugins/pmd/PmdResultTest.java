@@ -18,12 +18,6 @@ public class PmdResultTest extends BuildResultTest<PmdResult> {
 
     /** {@inheritDoc} */
     @Override
-    protected PmdResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project, final PmdResult previous) {
-        return new PmdResult(build, null, project, previous);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     protected void verifyHighScoreMessage(final int expectedZeroWarningsBuildNumber, final boolean expectedIsNewHighScore, final long expectedHighScore, final long gap, final PmdResult result) {
         if (result.hasNoAnnotations() && result.getDelta() == 0) {
             assertTrue(result.getDetails().contains(Messages.PMD_ResultAction_NoWarningsSince(expectedZeroWarningsBuildNumber)));

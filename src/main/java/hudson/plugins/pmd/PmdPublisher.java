@@ -94,7 +94,7 @@ public class PmdPublisher extends HealthAwarePublisher {
                 isMavenBuild(build), isAntBuild(build));
 
         ParserResult project = build.getWorkspace().act(pmdCollector);
-        PmdResult result = new PmdResultBuilder().build(build, project, getDefaultEncoding());
+        PmdResult result = new PmdResult(build, getDefaultEncoding(), project);
         build.getActions().add(new PmdResultAction(build, this, result));
 
         return result;

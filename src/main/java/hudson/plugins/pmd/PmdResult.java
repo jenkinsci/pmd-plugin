@@ -33,23 +33,6 @@ public class PmdResult extends BuildResult {
         super(build, defaultEncoding, result);
     }
 
-    /**
-     * Creates a new instance of {@link PmdResult}.
-     *
-     * @param build
-     *            the current build as owner of this action
-     * @param defaultEncoding
-     *            the default encoding to be used when reading and parsing files
-     * @param result
-     *            the parsed result with all annotations
-     * @param previous
-     *            the result of the previous build
-     */
-    public PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
-            final ParserResult result, final PmdResult previous) {
-        super(build, defaultEncoding, result, previous);
-    }
-
     /** {@inheritDoc} */
     @Override
     protected void configure(final XStream xstream) {
