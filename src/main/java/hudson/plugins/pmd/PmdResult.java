@@ -1,6 +1,7 @@
 package hudson.plugins.pmd;
 
 import hudson.model.AbstractBuild;
+import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ResultAction;
@@ -31,6 +32,23 @@ public class PmdResult extends BuildResult {
     public PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
             final ParserResult result) {
         super(build, defaultEncoding, result);
+    }
+
+    /**
+     * Creates a new instance of {@link PmdResult}.
+     *
+     * @param build
+     *            the current build as owner of this action
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param result
+     *            the parsed result with all annotations
+     * @param history
+     *            the history of build results of the associated plug-in
+     */
+    public PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
+            final ParserResult result, final BuildHistory history) {
+        super(build, defaultEncoding, result, history);
     }
 
     /** {@inheritDoc} */
