@@ -57,6 +57,10 @@ public class PmdPublisher extends HealthAwarePublisher {
      *            evaluating the build stability and health
      * @param defaultEncoding
      *            the default encoding to be used when reading and parsing files
+     * @param useDeltaValues
+     *            determines whether the absolute annotations delta or the
+     *            actual annotations set difference should be used to evaluate
+     *            the build stability
      */
     // CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveParameterList")
@@ -64,9 +68,9 @@ public class PmdPublisher extends HealthAwarePublisher {
     public PmdPublisher(final String pattern, final String threshold, final String newThreshold,
             final String failureThreshold, final String newFailureThreshold,
             final String healthy, final String unHealthy,
-            final String thresholdLimit, final String defaultEncoding) {
+            final String thresholdLimit, final String defaultEncoding, final boolean useDeltaValues) {
         super(threshold, newThreshold, failureThreshold, newFailureThreshold,
-                healthy, unHealthy, thresholdLimit, defaultEncoding, "PMD");
+                healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues, "PMD");
         this.pattern = pattern;
     }
     // CHECKSTYLE:ON
