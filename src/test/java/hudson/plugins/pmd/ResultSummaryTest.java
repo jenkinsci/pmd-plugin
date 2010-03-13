@@ -11,43 +11,43 @@ import org.junit.Test;
  */
 public class ResultSummaryTest extends AbstractEnglishLocaleTest {
     /**
-     * Checks the text for no warnings in 0 files.
+     * Checks the text for no warnings from 0 files.
      */
     @Test
     public void test0WarningsIn0File() {
-        checkSummaryText(0, 0, "PMD: 0 warnings in 0 PMD files.");
+        checkSummaryText(0, 0, "PMD: 0 warnings from 0 PMD files.");
     }
 
     /**
-     * Checks the text for no warnings in 1 file.
+     * Checks the text for no warnings from 1 file.
      */
     @Test
     public void test0WarningsIn1File() {
-        checkSummaryText(0, 1, "PMD: 0 warnings in 1 PMD file.");
+        checkSummaryText(0, 1, "PMD: 0 warnings from one PMD file.");
     }
 
     /**
-     * Checks the text for no warnings in 5 files.
+     * Checks the text for no warnings from 5 files.
      */
     @Test
     public void test0WarningsIn5Files() {
-        checkSummaryText(0, 5, "PMD: 0 warnings in 5 PMD files.");
+        checkSummaryText(0, 5, "PMD: 0 warnings from 5 PMD files.");
     }
 
     /**
-     * Checks the text for 1 warning in 2 files.
+     * Checks the text for 1 warning from 2 files.
      */
     @Test
     public void test1WarningIn2Files() {
-        checkSummaryText(1, 2, "PMD: <a href=\"pmdResult\">1 warning</a> in 2 PMD files.");
+        checkSummaryText(1, 2, "PMD: <a href=\"pmdResult\">1 warning</a> from 2 PMD files.");
     }
 
     /**
-     * Checks the text for 5 warnings in 1 file.
+     * Checks the text for 5 warnings from 1 file.
      */
     @Test
     public void test5WarningsIn1File() {
-        checkSummaryText(5, 1, "PMD: <a href=\"pmdResult\">5 warnings</a> in 1 PMD file.");
+        checkSummaryText(5, 1, "PMD: <a href=\"pmdResult\">5 warnings</a> from one PMD file.");
     }
 
     /**
