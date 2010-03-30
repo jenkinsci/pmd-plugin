@@ -11,7 +11,7 @@ Avoid unused imports such as 'org.eclipse.ui.IWorkbenchPart'
 </violation>
 </file>
 <file name="C:\Build\Results\jobs\ADT-Base\workspace\com.avaloq.adt.ui\src\main\java\com\avaloq\adt\env\internal\ui\dialogs\SelectSourceDialog.java">
-<violation beginline="938" endline="940" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="com.avaloq.adt.env.internal.ui.dialogs" class="SourceRunnable" method="run" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="2">
+<violation beginline="938" endline="940" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="com.avaloq.adt.env.internal.ui.dialogs" class="SourceRunnable" method="run" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="5">
 Avoid empty catch blocks
 </violation>
 <violation beginline="980" endline="982" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="com.avaloq.adt.env.internal.ui.dialogs" class="HistRunnable" method="run" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="2">

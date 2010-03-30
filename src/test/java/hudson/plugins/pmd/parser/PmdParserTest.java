@@ -85,8 +85,8 @@ public class PmdParserTest {
         assertEquals(ERROR_MESSAGE, 2, module.getPackage("com.avaloq.adt.env.internal.ui.dialogs")
                 .getNumberOfAnnotations());
 
-        assertEquals(ERROR_MESSAGE, 2, module.getNumberOfAnnotations("HIGH"));
-        assertEquals(ERROR_MESSAGE, 1, module.getNumberOfAnnotations("NORMAL"));
+        assertEquals(ERROR_MESSAGE, 1, module.getNumberOfAnnotations("HIGH"));
+        assertEquals(ERROR_MESSAGE, 2, module.getNumberOfAnnotations("NORMAL"));
         assertEquals(ERROR_MESSAGE, 1, module.getNumberOfAnnotations("LOW"));
 
         Bug warning = (Bug)module.getPackage("com.avaloq.adt.env.internal.ui.actions")

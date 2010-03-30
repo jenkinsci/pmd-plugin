@@ -96,7 +96,7 @@ public class PmdParser extends AbstractAnnotationParser {
                 if (warning.getPriority() < 3) {
                     priority = Priority.HIGH;
                 }
-                else if (warning.getPriority() >  3) {
+                else if (warning.getPriority() >  4) {
                     priority = Priority.LOW;
                 }
                 else {
