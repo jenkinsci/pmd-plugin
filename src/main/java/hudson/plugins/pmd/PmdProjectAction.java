@@ -11,9 +11,6 @@ import hudson.plugins.analysis.core.AbstractProjectAction;
  * @author Ulli Hafner
  */
 public class PmdProjectAction extends AbstractProjectAction<PmdResultAction> {
-    /** Unique identifier of this class. */
-    private static final long serialVersionUID = -654316141132780561L;
-
     /**
      * Instantiates a new find bugs project action.
      *
