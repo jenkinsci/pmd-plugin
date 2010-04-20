@@ -6,6 +6,7 @@
 		checkUrl="'descriptorByName/PmdPublisher/checkPattern?value='+escape(this.value)" />
   </f:entry>
   <f:advanced>
+    <u:failed/>
     <u:thresholds id="pmd"/>
     <u:defaultEncoding id="pmd"/>
     <u:trend id="pmd"/>
