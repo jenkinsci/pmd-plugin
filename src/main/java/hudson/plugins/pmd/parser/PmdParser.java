@@ -23,6 +23,11 @@ public class PmdParser extends AbstractAnnotationParser {
     /** Unique ID of this class. */
     private static final long serialVersionUID = 6507147028628714706L;
 
+    /** PMD priorities smaller than this value are mapped to {@link Priority#HIGH}. */
+    private static final int PMD_PRIORITY_MAPPED_TO_HIGH_PRIORITY = 3;
+    /** PMD priorities greater than this value are mapped to {@link Priority#LOW}. */
+    private static final int PMD_PRIORITY_MAPPED_TO_LOW_PRIORITY = 4;
+
     /**
      * Creates a new instance of {@link PmdParser}.
      */
@@ -93,10 +98,10 @@ public class PmdParser extends AbstractAnnotationParser {
         for (hudson.plugins.pmd.parser.File file : collection.getFiles()) {
             for (Violation warning : file.getViolations()) {
                 Priority priority;
-                if (warning.getPriority() < 3) {
+                if (warning.getPriority() < PMD_PRIORITY_MAPPED_TO_HIGH_PRIORITY) {
                     priority = Priority.HIGH;
                 }
-                else if (warning.getPriority() >  4) {
+                else if (warning.getPriority() >  PMD_PRIORITY_MAPPED_TO_LOW_PRIORITY) {
                     priority = Priority.LOW;
                 }
                 else {

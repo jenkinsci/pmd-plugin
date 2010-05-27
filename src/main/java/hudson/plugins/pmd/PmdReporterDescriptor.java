@@ -13,7 +13,7 @@ import org.kohsuke.stapler.StaplerRequest;
  *
  * @author Ulli Hafner
  */
-@Extension(ordinal = 100)
+@Extension(ordinal = 100) // NOCHECKSTYLE
 public class PmdReporterDescriptor extends ReporterDescriptor {
     /**
      * Creates a new instance of <code>PmdReporterDescriptor</code>.
