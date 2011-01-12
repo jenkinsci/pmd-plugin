@@ -5,9 +5,11 @@ import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.MavenModule;
 import hudson.plugins.analysis.util.model.Priority;
 
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 /**
@@ -29,7 +31,13 @@ public class PmdParserTest {
      *             in case of an error
      */
     private Collection<FileAnnotation> parseFile(final String fileName) throws InvocationTargetException {
-        return new PmdParser().parse(PmdParserTest.class.getResourceAsStream(fileName), "module");
+        InputStream file = PmdParserTest.class.getResourceAsStream(fileName);
+        try {
+            return new PmdParser().parse(file, "module");
+        }
+        finally {
+            IOUtils.closeQuietly(file);
+        }
     }
 
     /**
