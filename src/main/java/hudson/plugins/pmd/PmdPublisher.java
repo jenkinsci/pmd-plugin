@@ -1,6 +1,10 @@
 package hudson.plugins.pmd;
 
+import hudson.Launcher;
+import hudson.matrix.MatrixAggregator;
+import hudson.matrix.MatrixBuild;
 import hudson.model.Action;
+import hudson.model.BuildListener;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.plugins.analysis.core.BuildResult;
@@ -138,5 +142,11 @@ public class PmdPublisher extends HealthAwarePublisher {
     @Override
     public PmdDescriptor getDescriptor() {
         return (PmdDescriptor)super.getDescriptor();
+    }
+
+    /** {@inheritDoc} */
+    public MatrixAggregator createAggregator(final MatrixBuild build, final Launcher launcher,
+            final BuildListener listener) {
+        return new PmdAnnotationsAggregator(build, launcher, listener, this, getDefaultEncoding());
     }
 }
