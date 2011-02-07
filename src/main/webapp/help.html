@@ -1,0 +1,15 @@
+<div>
+<p>Jenkins understands <a href="http://pmd.sourceforge.net/">PMD</a>
+analysis report XML format. When this option is configured Jenkins shows
+the PMD analysis results in different views: historical result
+trend, module and package statistics, web UI for viewing analysis
+reports and warnings, and so on.</p>
+<p>You need to set up your build to run PMD in order to use
+this feature - this Jenkins plug-in does not perform the actual analysis!
+This plug-in is not invoked for failed builds, it is only called for
+stable or unstable builds (i.e., a build with failed tests).</p>
+<p><b>Note:</b> If you are using the maven-pmd-plugin to create the
+PMD analysis files please make sure to specify the pattern <code>**/target/pmd.xml</code>.
+Otherwise you will get a wrong warning count since the maven-pmd-plugin
+gererates two identical output files.</p>
+</div>
