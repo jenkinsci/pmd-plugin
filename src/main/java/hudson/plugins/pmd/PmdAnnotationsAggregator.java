@@ -43,12 +43,18 @@ public class PmdAnnotationsAggregator extends AnnotationsAggregator {
                 new PmdResult(build, defaultEncoding, aggregatedResult));
     }
 
-    /** {@inheritDoc} */
+    @Override
+    protected boolean hasResult(final MatrixRun run) {
+        return getAction(run) != null;
+    }
+
     @Override
     protected PmdResult getResult(final MatrixRun run) {
-        PmdResultAction action = run.getAction(PmdResultAction.class);
+        return getAction(run).getResult();
+    }
 
-        return action.getResult();
+    private PmdResultAction getAction(final MatrixRun run) {
+        return run.getAction(PmdResultAction.class);
     }
 }
 
