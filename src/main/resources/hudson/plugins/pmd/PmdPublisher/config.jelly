@@ -5,10 +5,6 @@
 	<f:textbox />
   </f:entry>
   <f:advanced>
-    <u:failed/>
-    <u:health id="pmd"/>
-    <u:thresholds id="pmd"/>
-    <u:defaultEncoding id="pmd"/>
-    <u:trend id="pmd"/>
+    <u:advanced id="pmd"/>
   </f:advanced>
 </j:jelly>
