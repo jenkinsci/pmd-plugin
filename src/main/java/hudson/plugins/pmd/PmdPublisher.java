@@ -85,6 +85,8 @@ public class PmdPublisher extends HealthAwarePublisher {
      *            annotation threshold
      * @param canRunOnFailed
      *            determines whether the plug-in can run for failed builds, too
+     * @param shouldDetectModules
+     *            determines whether module names should be derived from Maven POM or Ant build files
      * @param pattern
      *            Ant file-set pattern to scan for PMD files
      */
@@ -97,14 +99,14 @@ public class PmdPublisher extends HealthAwarePublisher {
             final String unstableNewAll, final String unstableNewHigh, final String unstableNewNormal, final String unstableNewLow,
             final String failedTotalAll, final String failedTotalHigh, final String failedTotalNormal, final String failedTotalLow,
             final String failedNewAll, final String failedNewHigh, final String failedNewNormal, final String failedNewLow,
-            final boolean canRunOnFailed,
+            final boolean canRunOnFailed, final boolean shouldDetectModules,
             final String pattern) {
         super(healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues,
                 unstableTotalAll, unstableTotalHigh, unstableTotalNormal, unstableTotalLow,
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                canRunOnFailed, "PMD");
+                canRunOnFailed, shouldDetectModules, "PMD");
         this.pattern = pattern;
     }
     // CHECKSTYLE:ON
@@ -128,9 +130,16 @@ public class PmdPublisher extends HealthAwarePublisher {
     @Override
     public BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
         logger.log("Collecting PMD analysis files...");
-        FilesParser pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new PmdParser(getDefaultEncoding()),
-                isMavenBuild(build), isAntBuild(build));
-
+        FilesParser pmdCollector;
+        if (shouldDetectModules()) {
+            pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(),
+                    DEFAULT_PATTERN), new PmdParser(getDefaultEncoding()),
+                    isMavenBuild(build), isAntBuild(build));
+        }
+        else {
+            pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(),
+                    DEFAULT_PATTERN), new PmdParser(getDefaultEncoding()));
+        }
         ParserResult project = build.getWorkspace().act(pmdCollector);
         PmdResult result = new PmdResult(build, getDefaultEncoding(), project);
         build.getActions().add(new PmdResultAction(build, this, result));
