@@ -134,7 +134,7 @@ public class PmdPublisher extends HealthAwarePublisher {
         if (shouldDetectModules()) {
             pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(),
                     DEFAULT_PATTERN), new PmdParser(getDefaultEncoding()),
-                    isMavenBuild(build), isAntBuild(build));
+                    isMavenBuild(build));
         }
         else {
             pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(),
