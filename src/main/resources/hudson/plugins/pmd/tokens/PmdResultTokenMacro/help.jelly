@@ -1,0 +1,8 @@
+<j:jelly xmlns:j="jelly:core">
+
+  <dt>$${PMD_RESULT}</dt>
+  <dd>
+    Expands to the build result of the PMD plug-in.
+  </dd>
+
+</j:jelly>
