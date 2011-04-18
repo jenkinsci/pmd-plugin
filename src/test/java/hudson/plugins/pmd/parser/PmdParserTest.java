@@ -55,6 +55,24 @@ public class PmdParserTest {
     }
 
     /**
+     * Checks whether we create messages with a single dot.
+     *
+     * @throws InvocationTargetException
+     *             indicates a test failure
+     */
+    @Test
+    public void verifySingleDot() throws InvocationTargetException {
+        String fileName = "warning-message-with-dot.xml";
+        Collection<FileAnnotation> annotations = parseFile(fileName);
+
+        assertEquals(ERROR_MESSAGE, 2, annotations.size());
+
+        FileAnnotation annotation = annotations.iterator().next();
+
+        assertEquals("Wrong message text: ", "Avoid really long parameter lists.", annotation.getMessage());
+    }
+
+    /**
      * Checks whether we correctly detect an empty file.
      *      * @throws InvocationTargetException indicates a test failure
 

@@ -107,7 +107,7 @@ public class PmdParser extends AbstractAnnotationParser {
                 else {
                     priority = Priority.NORMAL;
                 }
-                Bug bug = new Bug(priority, warning.getMessage() + ".", warning.getRuleset(), warning.getRule(),
+                Bug bug = new Bug(priority, createMessage(warning), warning.getRuleset(), warning.getRule(),
                             warning.getBeginline(), warning.getEndline());
                 bug.setPackageName(warning.getPackage());
                 bug.setModuleName(moduleName);
@@ -124,6 +124,16 @@ public class PmdParser extends AbstractAnnotationParser {
             }
         }
         return annotations;
+    }
+
+    private String createMessage(final Violation warning) {
+        String original = warning.getMessage();
+        if (StringUtils.endsWith(original, ".")) {
+            return original;
+        }
+        else {
+            return original + ".";
+        }
     }
 }
 
