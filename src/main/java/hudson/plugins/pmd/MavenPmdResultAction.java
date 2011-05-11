@@ -7,10 +7,7 @@ import hudson.maven.MavenModule;
 import hudson.maven.MavenModuleSet;
 import hudson.maven.MavenModuleSetBuild;
 import hudson.model.Action;
-import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.HealthDescriptor;
-import hudson.plugins.analysis.core.ParserResult;
-import hudson.plugins.analysis.util.PluginLogger;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +19,7 @@ import java.util.Map;
  *
  * @author Ulli Hafner
  */
+@Deprecated
 public class MavenPmdResultAction extends PmdResultAction implements AggregatableAction, MavenAggregatedReport {
     /** The default encoding to be used when reading and parsing files. */
     private final String defaultEncoding;
@@ -92,43 +90,7 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
      *            Newly completed build.
      */
     public void update(final Map<MavenModule, List<MavenBuild>> moduleBuilds, final MavenBuild newBuild) {
-        MavenPmdResultAction additionalAction = newBuild.getAction(MavenPmdResultAction.class);
-        if (additionalAction != null) {
-            PmdResult existingResult = getResult();
-            PmdResult additionalResult = additionalAction.getResult();
-
-            log("Aggregating results of " + newBuild.getProject().getDisplayName());
-
-            if (existingResult == null) {
-                setResult(additionalResult);
-                getOwner().setResult(additionalResult.getPluginResult());
-            }
-            else {
-                setResult(aggregate(existingResult, additionalResult, getLogger()));
-            }
-        }
-    }
-
-    /**
-     * Creates a new instance of {@link BuildResult} that contains the aggregated
-     * results of this result and the provided additional result.
-     *
-     * @param existingResult
-     *            the existing result
-     * @param additionalResult
-     *            the result that will be added to the existing result
-     * @param logger
-     *            the plug-in logger
-     * @return the aggregated result
-     */
-    public PmdResult aggregate(final PmdResult existingResult, final PmdResult additionalResult, final PluginLogger logger) {
-        ParserResult aggregatedAnnotations = new ParserResult();
-        aggregatedAnnotations.addAnnotations(existingResult.getAnnotations());
-        aggregatedAnnotations.addAnnotations(additionalResult.getAnnotations());
-
-        PmdResult createdResult = new PmdResult(getOwner(), existingResult.getDefaultEncoding(), aggregatedAnnotations);
-        createdResult.evaluateStatus(existingResult.getThresholds(), existingResult.canUseDeltaValues(), logger);
-        return createdResult;
+        // not used anymore
     }
 
     /** Backward compatibility. @deprecated */

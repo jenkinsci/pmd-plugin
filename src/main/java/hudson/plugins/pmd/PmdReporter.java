@@ -131,8 +131,8 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
     }
 
     @Override
-    protected Class<MavenPmdResultAction> getResultActionClass() {
-        return MavenPmdResultAction.class;
+    protected Class<PmdMavenResultAction> getResultActionClass() {
+        return PmdMavenResultAction.class;
     }
 }
 
