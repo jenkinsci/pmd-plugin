@@ -1,13 +1,12 @@
 package hudson.plugins.pmd;
 
+import hudson.maven.MavenAggregatedReport;
 import hudson.maven.MavenBuildProxy;
 import hudson.maven.MojoInfo;
 import hudson.maven.MavenBuild;
 import hudson.maven.MavenModule;
-import hudson.model.Action;
-import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.FilesParser;
-import hudson.plugins.analysis.core.HealthAwareMavenReporter;
+import hudson.plugins.analysis.core.HealthAwareReporter;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.pmd.parser.PmdParser;
@@ -24,7 +23,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
  *
  * @author Ulli Hafner
  */
-public class PmdReporter extends HealthAwareMavenReporter {
+public class PmdReporter extends HealthAwareReporter<PmdResult> {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 2272875032054063496L;
 
@@ -46,6 +45,10 @@ public class PmdReporter extends HealthAwareMavenReporter {
      * @param thresholdLimit
      *            determines which warning priorities should be considered when
      *            evaluating the build stability and health
+     * @param useDeltaValues
+     *            determines whether the absolute annotations delta or the
+     *            actual annotations set difference should be used to evaluate
+     *            the build stability
      * @param unstableTotalAll
      *            annotation threshold
      * @param unstableTotalHigh
@@ -84,13 +87,13 @@ public class PmdReporter extends HealthAwareMavenReporter {
     // CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveParameterList")
     @DataBoundConstructor
-    public PmdReporter(final String healthy, final String unHealthy, final String thresholdLimit,
+    public PmdReporter(final String healthy, final String unHealthy, final String thresholdLimit, final boolean useDeltaValues,
             final String unstableTotalAll, final String unstableTotalHigh, final String unstableTotalNormal, final String unstableTotalLow,
             final String unstableNewAll, final String unstableNewHigh, final String unstableNewNormal, final String unstableNewLow,
             final String failedTotalAll, final String failedTotalHigh, final String failedTotalNormal, final String failedTotalLow,
             final String failedNewAll, final String failedNewHigh, final String failedNewNormal, final String failedNewLow,
             final boolean canRunOnFailed) {
-        super(healthy, unHealthy, thresholdLimit,
+        super(healthy, unHealthy, thresholdLimit, useDeltaValues,
                 unstableTotalAll, unstableTotalHigh, unstableTotalNormal, unstableTotalLow,
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
@@ -99,13 +102,11 @@ public class PmdReporter extends HealthAwareMavenReporter {
     }
     // CHECKSTYLE:ON
 
-    /** {@inheritDoc} */
     @Override
     protected boolean acceptGoal(final String goal) {
         return "pmd".equals(goal) || "site".equals(goal);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ParserResult perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PluginLogger logger) throws InterruptedException, IOException {
         FilesParser pmdCollector = new FilesParser(logger, PMD_XML_FILE,
@@ -114,25 +115,23 @@ public class PmdReporter extends HealthAwareMavenReporter {
         return getTargetPath(pom).act(pmdCollector);
     }
 
-    /** {@inheritDoc} */
     @Override
-    protected BuildResult persistResult(final ParserResult project, final MavenBuild build) {
-        PmdResult result = new PmdResult(build, getDefaultEncoding(), project);
-        build.getActions().add(new MavenPmdResultAction(build, this, getDefaultEncoding(), result));
-        build.registerAsProjectAction(PmdReporter.this);
-
-        return result;
+    protected PmdResult createResult(final MavenBuild build, final ParserResult project) {
+        return new PmdResult(build, getDefaultEncoding(), project);
     }
 
-    /** {@inheritDoc} */
+    @Override
+    protected MavenAggregatedReport createMavenAggregatedReport(final MavenBuild build, final PmdResult result) {
+        return new MavenPmdResultAction(build, this, getDefaultEncoding(), result);
+    }
+
     @Override
     public List<PmdProjectAction> getProjectActions(final MavenModule module) {
         return Collections.singletonList(new PmdProjectAction(module));
     }
 
-    /** {@inheritDoc} */
     @Override
-    protected Class<? extends Action> getResultActionClass() {
+    protected Class<MavenPmdResultAction> getResultActionClass() {
         return MavenPmdResultAction.class;
     }
 }
