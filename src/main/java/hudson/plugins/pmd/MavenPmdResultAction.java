@@ -18,6 +18,7 @@ import java.util.Map;
  * project.
  *
  * @author Ulli Hafner
+ * @deprecated not used anymore
  */
 @Deprecated
 public class MavenPmdResultAction extends PmdResultAction implements AggregatableAction, MavenAggregatedReport {
