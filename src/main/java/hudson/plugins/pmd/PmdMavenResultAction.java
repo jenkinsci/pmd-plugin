@@ -35,7 +35,7 @@ public class PmdMavenResultAction extends MavenResultAction<PmdResult> {
      */
     public PmdMavenResultAction(final MavenModuleSetBuild owner, final HealthDescriptor healthDescriptor,
             final String defaultEncoding) {
-        super(new PmdResultAction(owner, healthDescriptor), defaultEncoding);
+        super(new PmdResultAction(owner, healthDescriptor), defaultEncoding, "PMD");
     }
 
     /**
@@ -52,7 +52,7 @@ public class PmdMavenResultAction extends MavenResultAction<PmdResult> {
      */
     public PmdMavenResultAction(final MavenBuild owner, final HealthDescriptor healthDescriptor,
             final String defaultEncoding, final PmdResult result) {
-        super(new PmdResultAction(owner, healthDescriptor, result), defaultEncoding);
+        super(new PmdResultAction(owner, healthDescriptor, result), defaultEncoding, "PMD");
     }
 
     /** {@inheritDoc} */
