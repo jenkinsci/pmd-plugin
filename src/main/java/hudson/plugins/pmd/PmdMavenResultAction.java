@@ -8,7 +8,6 @@ import hudson.maven.MavenModuleSetBuild;
 import hudson.model.Action;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.core.MavenResultAction;
-import hudson.plugins.analysis.core.ParserResult;
 
 import java.util.List;
 import java.util.Map;
@@ -71,8 +70,8 @@ public class PmdMavenResultAction extends MavenResultAction<PmdResult> {
     }
 
     @Override
-    protected PmdResult createResult(final PmdResult existingResult, final ParserResult aggregatedAnnotations) {
-        return new PmdResult(getOwner(), existingResult.getDefaultEncoding(), aggregatedAnnotations);
+    protected PmdResult createResult(final PmdResult existingResult, final PmdResult additionalResult) {
+        return new PmdResult(getOwner(), existingResult.getDefaultEncoding(), aggregate(existingResult, additionalResult));
     }
 }
 
