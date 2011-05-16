@@ -70,8 +70,8 @@ public class PmdMavenResultAction extends MavenResultAction<PmdResult> {
     }
 
     @Override
-    protected PmdResult createResult(final PmdResult existingResult, final PmdResult additionalResult) {
-        return new PmdResult(getOwner(), existingResult.getDefaultEncoding(), aggregate(existingResult, additionalResult));
+    protected PmdResult createResult(final PmdResult... results) {
+        return new PmdResult(getOwner(), results[0].getDefaultEncoding(), aggregate(results));
     }
 }
 
