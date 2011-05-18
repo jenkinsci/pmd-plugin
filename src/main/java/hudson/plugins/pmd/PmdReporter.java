@@ -9,6 +9,7 @@ import hudson.plugins.analysis.core.FilesParser;
 import hudson.plugins.analysis.core.HealthAwareReporter;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
+import hudson.plugins.analysis.util.StringPluginLogger;
 import hudson.plugins.pmd.parser.PmdParser;
 
 import java.io.IOException;
@@ -24,8 +25,9 @@ import org.kohsuke.stapler.DataBoundConstructor;
  * @author Ulli Hafner
  */
 public class PmdReporter extends HealthAwareReporter<PmdResult> {
-    /** Unique identifier of this class. */
     private static final long serialVersionUID = 2272875032054063496L;
+
+    private static final String PLUGIN_NAME = "PMD";
 
     /** Default PMD pattern. */
     private static final String PMD_XML_FILE = "pmd.xml";
@@ -98,7 +100,7 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                canRunOnFailed, "PMD");
+                canRunOnFailed, PLUGIN_NAME);
     }
     // CHECKSTYLE:ON
 
@@ -109,7 +111,7 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
 
     @Override
     public ParserResult perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PluginLogger logger) throws InterruptedException, IOException {
-        FilesParser pmdCollector = new FilesParser(logger, PMD_XML_FILE,
+        FilesParser pmdCollector = new FilesParser(new StringPluginLogger(PLUGIN_NAME), PMD_XML_FILE,
                 new PmdParser(getDefaultEncoding()), getModuleName(pom));
 
         return getTargetPath(pom).act(pmdCollector);

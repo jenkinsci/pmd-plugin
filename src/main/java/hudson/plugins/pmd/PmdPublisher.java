@@ -12,6 +12,7 @@ import hudson.plugins.analysis.core.FilesParser;
 import hudson.plugins.analysis.core.HealthAwarePublisher;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
+import hudson.plugins.analysis.util.StringPluginLogger;
 import hudson.plugins.pmd.parser.PmdParser;
 
 import java.io.IOException;
@@ -25,8 +26,9 @@ import org.kohsuke.stapler.DataBoundConstructor;
  * @author Ulli Hafner
  */
 public class PmdPublisher extends HealthAwarePublisher {
-    /** Unique ID of this class. */
     private static final long serialVersionUID = 6711252664481150129L;
+
+    private static final String PLUGIN_NAME = "PMD";
 
     /** Default PMD pattern. */
     private static final String DEFAULT_PATTERN = "**/pmd.xml";
@@ -106,7 +108,7 @@ public class PmdPublisher extends HealthAwarePublisher {
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                canRunOnFailed, shouldDetectModules, "PMD");
+                canRunOnFailed, shouldDetectModules, PLUGIN_NAME);
         this.pattern = pattern;
     }
     // CHECKSTYLE:ON
@@ -130,17 +132,12 @@ public class PmdPublisher extends HealthAwarePublisher {
     @Override
     public BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
         logger.log("Collecting PMD analysis files...");
-        FilesParser pmdCollector;
-        if (shouldDetectModules()) {
-            pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(),
-                    DEFAULT_PATTERN), new PmdParser(getDefaultEncoding()),
-                    isMavenBuild(build));
-        }
-        else {
-            pmdCollector = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(),
-                    DEFAULT_PATTERN), new PmdParser(getDefaultEncoding()));
-        }
+        FilesParser pmdCollector = new FilesParser(new StringPluginLogger(PLUGIN_NAME),
+                StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new PmdParser(getDefaultEncoding()),
+                shouldDetectModules(), isMavenBuild(build));
         ParserResult project = build.getWorkspace().act(pmdCollector);
+        logger.logLines(project.getLogMessages());
+
         PmdResult result = new PmdResult(build, getDefaultEncoding(), project);
         build.getActions().add(new PmdResultAction(build, this, result));
 
