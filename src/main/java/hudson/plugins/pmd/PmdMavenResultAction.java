@@ -61,7 +61,7 @@ public class PmdMavenResultAction extends MavenResultAction<PmdResult> {
 
     /** {@inheritDoc} */
     public Action getProjectAction(final MavenModuleSet moduleSet) {
-        return new PmdProjectAction(moduleSet);
+        return new PmdProjectAction(moduleSet, PmdMavenResultAction.class);
     }
 
     @Override

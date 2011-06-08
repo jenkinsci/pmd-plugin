@@ -129,7 +129,7 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
 
     @Override
     public List<PmdProjectAction> getProjectActions(final MavenModule module) {
-        return Collections.singletonList(new PmdProjectAction(module));
+        return Collections.singletonList(new PmdProjectAction(module, getResultActionClass()));
     }
 
     @Override
