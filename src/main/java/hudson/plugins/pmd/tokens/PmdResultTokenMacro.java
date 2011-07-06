@@ -2,6 +2,7 @@ package hudson.plugins.pmd.tokens;
 
 import hudson.Extension;
 import hudson.plugins.analysis.tokens.AbstractResultTokenMacro;
+import hudson.plugins.pmd.PmdMavenResultAction;
 import hudson.plugins.pmd.PmdResultAction;
 
 /**
@@ -14,8 +15,9 @@ public class PmdResultTokenMacro extends AbstractResultTokenMacro {
     /**
      * Creates a new instance of {@link PmdResultTokenMacro}.
      */
+    @SuppressWarnings("unchecked")
     public PmdResultTokenMacro() {
-        super(PmdResultAction.class, "PMD_RESULT");
+        super("PMD_RESULT", PmdResultAction.class, PmdMavenResultAction.class);
     }
 }
 

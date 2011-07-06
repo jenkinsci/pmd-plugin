@@ -1,7 +1,8 @@
 package hudson.plugins.pmd.tokens;
 
 import hudson.Extension;
-import hudson.plugins.analysis.tokens.AbstractResultTokenMacro;
+import hudson.plugins.analysis.tokens.AbstractAnnotationsCountTokenMacro;
+import hudson.plugins.pmd.PmdMavenResultAction;
 import hudson.plugins.pmd.PmdResultAction;
 
 /**
@@ -10,12 +11,13 @@ import hudson.plugins.pmd.PmdResultAction;
  * @author Ulli Hafner
  */
 @Extension(optional = true)
-public class PmdWarningCountTokenMacro extends AbstractResultTokenMacro {
+public class PmdWarningCountTokenMacro extends AbstractAnnotationsCountTokenMacro {
     /**
      * Creates a new instance of {@link PmdWarningCountTokenMacro}.
      */
+    @SuppressWarnings("unchecked")
     public PmdWarningCountTokenMacro() {
-        super(PmdResultAction.class, "PMD_COUNT");
+        super("PMD_COUNT", PmdResultAction.class, PmdMavenResultAction.class);
     }
 }
 
