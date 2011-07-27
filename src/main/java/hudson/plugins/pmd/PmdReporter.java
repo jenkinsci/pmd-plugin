@@ -106,7 +106,7 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
 
     @Override
     protected boolean acceptGoal(final String goal) {
-        return "pmd".equals(goal) || "site".equals(goal);
+        return "pmd".equals(goal) || "site".equals(goal) || "report".equals(goal) || "check".equals(goal);
     }
 
     @Override
