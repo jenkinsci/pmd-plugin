@@ -9,7 +9,6 @@ import hudson.plugins.analysis.core.FilesParser;
 import hudson.plugins.analysis.core.HealthAwareReporter;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
-import hudson.plugins.analysis.util.StringPluginLogger;
 import hudson.plugins.pmd.parser.PmdParser;
 
 import java.io.IOException;
@@ -111,7 +110,7 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
 
     @Override
     public ParserResult perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PluginLogger logger) throws InterruptedException, IOException {
-        FilesParser pmdCollector = new FilesParser(new StringPluginLogger(PLUGIN_NAME), PMD_XML_FILE,
+        FilesParser pmdCollector = new FilesParser(PLUGIN_NAME, PMD_XML_FILE,
                 new PmdParser(getDefaultEncoding()), getModuleName(pom));
 
         return getTargetPath(pom).act(pmdCollector);
