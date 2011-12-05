@@ -25,14 +25,10 @@ import org.kohsuke.stapler.DataBoundConstructor;
  */
 public class PmdReporter extends HealthAwareReporter<PmdResult> {
     private static final long serialVersionUID = 2272875032054063496L;
-
     private static final String PLUGIN_NAME = "PMD";
 
     /** Default PMD pattern. */
     private static final String PMD_XML_FILE = "pmd.xml";
-    /** Ant file-set pattern of files to work with. */
-    @SuppressWarnings("unused")
-    private String pattern; // obsolete since release 2.5
 
     /**
      * Creates a new instance of <code>PmdReporter</code>.
@@ -93,13 +89,13 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
             final String unstableNewAll, final String unstableNewHigh, final String unstableNewNormal, final String unstableNewLow,
             final String failedTotalAll, final String failedTotalHigh, final String failedTotalNormal, final String failedTotalLow,
             final String failedNewAll, final String failedNewHigh, final String failedNewNormal, final String failedNewLow,
-            final boolean canRunOnFailed) {
+            final boolean canRunOnFailed, final boolean canComputeNew) {
         super(healthy, unHealthy, thresholdLimit, useDeltaValues,
                 unstableTotalAll, unstableTotalHigh, unstableTotalNormal, unstableTotalLow,
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                canRunOnFailed, PLUGIN_NAME);
+                canRunOnFailed, canComputeNew, PLUGIN_NAME);
     }
     // CHECKSTYLE:ON
 
@@ -135,5 +131,9 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
     protected Class<PmdMavenResultAction> getResultActionClass() {
         return PmdMavenResultAction.class;
     }
+
+    /** Ant file-set pattern of files to work with. */
+    @SuppressWarnings("unused")
+    private transient String pattern; // obsolete since release 2.5
 }
 
