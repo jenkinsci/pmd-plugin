@@ -1,6 +1,7 @@
 package hudson.plugins.pmd.parser;
 
-import static org.junit.Assert.*;
+import static junit.framework.Assert.*;
+import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.MavenModule;
 import hudson.plugins.analysis.util.model.Priority;
@@ -38,6 +39,24 @@ public class PmdParserTest {
         finally {
             IOUtils.closeQuietly(file);
         }
+    }
+
+    /**
+     * Parses a warning log with 15 warnings.
+     *
+     * @throws InvocationTargetException
+     *      if the file could not be read
+     * @see <a href="http://issues.jenkins-ci.org/browse/JENKINS-12801">Issue 12801</a>
+     */
+    @Test
+    public void issue12801() throws InvocationTargetException {
+        String fileName = "issue12801.xml";
+        Collection<FileAnnotation> annotations = parseFile(fileName);
+
+        assertEquals(ERROR_MESSAGE, 2, annotations.size());
+        ParserResult result = new ParserResult(annotations);
+        assertEquals(ERROR_MESSAGE, 2, result.getNumberOfAnnotations());
+
     }
 
     /**
