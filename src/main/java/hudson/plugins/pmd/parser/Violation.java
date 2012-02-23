@@ -20,6 +20,7 @@ public class Violation {
     private int begincolumn;
     private int endcolumn;
 
+    // CHECKSTYLE:OFF
     public String getRule() {
         return rule;
     }
