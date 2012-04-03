@@ -31,18 +31,8 @@ public class PmdProjectAction extends AbstractProjectAction<ResultAction<PmdResu
      */
     public PmdProjectAction(final AbstractProject<?, ?> project,
             final Class<? extends ResultAction<PmdResult>> type) {
-        super(project, type, new PmdDescriptor());
-    }
-
-    /** {@inheritDoc} */
-    public String getDisplayName() {
-        return Messages.PMD_ProjectAction_Name();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getTrendName() {
-        return Messages.PMD_Trend_Name();
+        super(project, type, Messages._PMD_ProjectAction_Name(), Messages._PMD_Trend_Name(),
+                PmdDescriptor.PLUGIN_ID, PmdDescriptor.ICON_URL, PmdDescriptor.RESULT_URL);
     }
 }
 

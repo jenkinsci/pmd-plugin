@@ -12,7 +12,7 @@ public class PmdResultTest extends BuildResultTest<PmdResult> {
     /** {@inheritDoc} */
     @Override
     protected PmdResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project, final BuildHistory history) {
-        return new PmdResult(build, null, project, history);
+        return new PmdResult(build, history, project, "UTF8", false);
     }
 }
 
