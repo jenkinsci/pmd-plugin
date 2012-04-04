@@ -33,12 +33,6 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
         return PmdProjectAction.class;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    protected String getPluginName() {
-        return "pmd";
-    }
-
     /**
      * Extension point registration.
      *
