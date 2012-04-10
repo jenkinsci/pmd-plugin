@@ -9,7 +9,6 @@ import hudson.plugins.pmd.parser.PmdMessages;
  * @author Ulli Hafner
  */
 public class PmdPlugin extends Plugin {
-    /** {@inheritDoc} */
     @Override
     public void start() {
         PmdMessages.getInstance().initialize();

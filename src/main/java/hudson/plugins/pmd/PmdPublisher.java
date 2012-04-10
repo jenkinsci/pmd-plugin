@@ -121,13 +121,11 @@ public class PmdPublisher extends HealthAwarePublisher {
         return pattern;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final AbstractProject<?, ?> project) {
         return new PmdProjectAction(project);
     }
 
-    /** {@inheritDoc} */
     @Override
     public BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
         logger.log("Collecting PMD analysis files...");
@@ -142,7 +140,6 @@ public class PmdPublisher extends HealthAwarePublisher {
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public PmdDescriptor getDescriptor() {
         return (PmdDescriptor)super.getDescriptor();

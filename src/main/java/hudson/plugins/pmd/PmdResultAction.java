@@ -48,19 +48,16 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
         return Messages.PMD_ProjectAction_Name();
     }
 
-    /** {@inheritDoc} */
     @Override
     protected PluginDescriptor getDescriptor() {
         return new PmdDescriptor();
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getMultipleItemsTooltip(final int numberOfItems) {
         return Messages.PMD_ResultAction_MultipleWarnings(numberOfItems);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getSingleItemTooltip() {
         return Messages.PMD_ResultAction_OneWarning();
