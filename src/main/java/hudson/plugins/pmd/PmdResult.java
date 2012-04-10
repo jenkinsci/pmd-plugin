@@ -29,7 +29,7 @@ public class PmdResult extends BuildResult {
      *            the parsed result with all annotations
      */
     public PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
-        super(build, new BuildHistory(build, PmdResultAction.class), result, defaultEncoding);
+        this(build, new BuildHistory(build, PmdResultAction.class), result, defaultEncoding, true);
     }
 
     PmdResult(final AbstractBuild<?, ?> build, final BuildHistory history,
