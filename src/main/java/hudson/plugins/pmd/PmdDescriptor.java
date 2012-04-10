@@ -16,7 +16,7 @@ public final class PmdDescriptor extends PluginDescriptor {
     /** The URL of the result action. */
     static final String RESULT_URL = PluginDescriptor.createResultUrlName(PLUGIN_ID);
     /** Icon to use for the result and project action. */
-    static final String ICON_URL = "/plugin/pmd/icons/pmd-24x24.gif";
+    static final String ICON_URL = "/plugin/pmd/icons/pmd-24x24.png";
 
     /**
      * Creates a new instance of {@link PmdDescriptor}.
