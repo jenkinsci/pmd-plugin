@@ -29,7 +29,24 @@ public class PmdResult extends BuildResult {
      *            the parsed result with all annotations
      */
     public PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
-        this(build, new BuildHistory(build, PmdResultAction.class), result, defaultEncoding, true);
+        this(build, defaultEncoding, result, PmdResultAction.class);
+    }
+
+    /**
+     * Creates a new instance of {@link DryResult}.
+     *
+     * @param build
+     *            the current build as owner of this action
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param result
+     *            the parsed result with all annotations
+     * @param actionType
+     *            the type of the result action
+     */
+    protected PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result,
+            final Class<? extends ResultAction<PmdResult>> actionType) {
+        this(build, new BuildHistory(build, actionType), result, defaultEncoding, true);
     }
 
     PmdResult(final AbstractBuild<?, ?> build, final BuildHistory history,

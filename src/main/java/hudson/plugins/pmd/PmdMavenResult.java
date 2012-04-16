@@ -1,9 +1,9 @@
 package hudson.plugins.pmd;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ResultAction;
+import hudson.plugins.analysis.core.BuildResult;
 
 /**
  * Represents the aggregated results of the PMD analysis in m2 jobs.
@@ -26,9 +26,10 @@ public class PmdMavenResult extends PmdResult {
      * @param result
      *            the parsed result with all annotations
      */
+    @SuppressWarnings("deprecation")
     public PmdMavenResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
             final ParserResult result) {
-        super(build, defaultEncoding, result);
+        super(build, defaultEncoding, result, MavenPmdResultAction.class);
     }
 
     /**
@@ -36,6 +37,7 @@ public class PmdMavenResult extends PmdResult {
      *
      * @return the actual type of the associated result action
      */
+    @SuppressWarnings("deprecation")
     @Override
     protected Class<? extends ResultAction<? extends BuildResult>> getResultActionType() {
         return MavenPmdResultAction.class;
