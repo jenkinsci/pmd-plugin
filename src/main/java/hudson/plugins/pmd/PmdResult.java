@@ -70,12 +70,12 @@ public class PmdResult extends BuildResult {
 
     @Override
     public String getSummary() {
-        return ResultSummary.createSummary(this);
+        return "PMD: " + createDefaultSummary(PmdDescriptor.RESULT_URL, getNumberOfAnnotations(), getNumberOfModules());
     }
 
     @Override
     protected String createDeltaMessage() {
-        return ResultSummary.createDeltaMessage(this);
+        return createDefaultDeltaMessage(PmdDescriptor.RESULT_URL, getNumberOfNewWarnings(), getNumberOfFixedWarnings());
     }
 
     @Override
