@@ -52,14 +52,4 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
     protected PluginDescriptor getDescriptor() {
         return new PmdDescriptor();
     }
-
-    @Override
-    public String getMultipleItemsTooltip(final int numberOfItems) {
-        return Messages.PMD_ResultAction_MultipleWarnings(numberOfItems);
-    }
-
-    @Override
-    public String getSingleItemTooltip() {
-        return Messages.PMD_ResultAction_OneWarning();
-    }
 }
