@@ -33,7 +33,7 @@ public class PmdResult extends BuildResult {
     }
 
     /**
-     * Creates a new instance of {@link DryResult}.
+     * Creates a new instance of {@link PmdResult}.
      *
      * @param build
      *            the current build as owner of this action
