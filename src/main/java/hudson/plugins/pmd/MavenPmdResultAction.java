@@ -96,7 +96,7 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
 
     /** Backward compatibility. @deprecated */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings("UUF")
-    @SuppressWarnings("unused")
+    @SuppressWarnings("PMD")
     @Deprecated
     private transient String height;
 }

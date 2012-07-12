@@ -66,7 +66,7 @@ public class Bug extends AbstractAnnotation {
     }
 
     /** The tooltip. */
-    @SuppressWarnings("unused")
+    @SuppressWarnings("PMD")
     @edu.umd.cs.findbugs.annotations.SuppressWarnings("SS")
     private final String tooltip = StringUtils.EMPTY; // backward compatibility
 }

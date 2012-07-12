@@ -133,7 +133,7 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
     }
 
     /** Ant file-set pattern of files to work with. */
-    @SuppressWarnings({"unused", "PMD"})
+    @SuppressWarnings("PMD")
     @edu.umd.cs.findbugs.annotations.SuppressWarnings("")
     private transient String pattern; // obsolete since release 2.5
 }
