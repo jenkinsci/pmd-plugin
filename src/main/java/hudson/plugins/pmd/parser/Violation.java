@@ -5,6 +5,7 @@ package hudson.plugins.pmd.parser;
  *
  * @author Ulli Hafner
  */
+@SuppressWarnings("javadoc")
 public class Violation {
     /** Type of warning. */
     private String rule;
