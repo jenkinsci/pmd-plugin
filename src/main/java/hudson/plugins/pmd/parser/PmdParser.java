@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.apache.commons.digester.Digester;
 import org.apache.commons.lang.StringUtils;
@@ -93,7 +92,7 @@ public class PmdParser extends AbstractAnnotationParser {
      * @return a maven module of the annotations API
      */
     private Collection<FileAnnotation> convert(final Pmd collection, final String moduleName) {
-        List<FileAnnotation> annotations = new ArrayList<FileAnnotation>();
+        ArrayList<FileAnnotation> annotations = new ArrayList<FileAnnotation>();
 
         for (hudson.plugins.pmd.parser.File file : collection.getFiles()) {
             for (Violation warning : file.getViolations()) {
@@ -118,7 +117,7 @@ public class PmdParser extends AbstractAnnotationParser {
                     bug.setContextHashCode(createContextHashCode(file.getName(), warning.getBeginline()));
                 }
                 catch (IOException exception) {
-                    bug.setModuleName(exception.getLocalizedMessage());
+                    // ignore and continue
                 }
 
                 annotations.add(bug);
