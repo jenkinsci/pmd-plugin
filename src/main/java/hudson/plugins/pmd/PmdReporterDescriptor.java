@@ -9,7 +9,7 @@ import hudson.plugins.analysis.core.ReporterDescriptor;
  *
  * @author Ulli Hafner
  */
-@Extension(ordinal = 100) // NOCHECKSTYLE
+@Extension(ordinal = 100, optional = true) // NOCHECKSTYLE
 public class PmdReporterDescriptor extends ReporterDescriptor {
     /**
      * Creates a new instance of <code>PmdReporterDescriptor</code>.
