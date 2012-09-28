@@ -29,7 +29,7 @@ public class PmdMavenResult extends PmdResult {
     @SuppressWarnings("deprecation")
     public PmdMavenResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
             final ParserResult result) {
-        super(build, defaultEncoding, result, MavenPmdResultAction.class);
+        super(build, defaultEncoding, result, false, MavenPmdResultAction.class);
     }
 
     /**

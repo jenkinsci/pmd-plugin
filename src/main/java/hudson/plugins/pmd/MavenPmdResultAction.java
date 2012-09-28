@@ -7,7 +7,9 @@ import hudson.maven.MavenModule;
 import hudson.maven.MavenModuleSet;
 import hudson.maven.MavenModuleSetBuild;
 import hudson.model.Action;
+import hudson.model.AbstractBuild;
 import hudson.plugins.analysis.core.HealthDescriptor;
+import hudson.plugins.analysis.core.ParserResult;
 
 import java.util.List;
 import java.util.Map;
@@ -26,25 +28,6 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
     private final String defaultEncoding;
 
     /**
-     * Creates a new instance of {@link MavenPmdResultAction}. This instance
-     * will have no result set in the beginning. The result will be set
-     * successively after each of the modules are build.
-     *
-     * @param owner
-     *            the associated build of this action
-     * @param healthDescriptor
-     *            health descriptor to use
-     * @param defaultEncoding
-     *            the default encoding to be used when reading and parsing files
-     */
-    public MavenPmdResultAction(final MavenModuleSetBuild owner, final HealthDescriptor healthDescriptor,
-            final String defaultEncoding) {
-        super(owner, healthDescriptor);
-
-        this.defaultEncoding = defaultEncoding;
-    }
-
-    /**
      * Creates a new instance of {@link MavenPmdResultAction}.
      *
      * @param owner
@@ -56,7 +39,7 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
      * @param result
      *            the result in this build
      */
-    public MavenPmdResultAction(final MavenBuild owner, final HealthDescriptor healthDescriptor,
+    public MavenPmdResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor,
             final String defaultEncoding, final PmdResult result) {
         super(owner, healthDescriptor, result);
 
@@ -65,7 +48,8 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
 
     /** {@inheritDoc} */
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
-        return new MavenPmdResultAction(build, getHealthDescriptor(), defaultEncoding);
+        return new MavenPmdResultAction(build, getHealthDescriptor(), defaultEncoding,
+                new PmdResult(build, defaultEncoding, new ParserResult(), false));
     }
 
     /** {@inheritDoc} */

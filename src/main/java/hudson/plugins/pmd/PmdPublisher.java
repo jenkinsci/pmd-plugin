@@ -86,6 +86,8 @@ public class PmdPublisher extends HealthAwarePublisher {
      *            annotation threshold
      * @param canRunOnFailed
      *            determines whether the plug-in can run for failed builds, too
+     * @param useStableBuildAsReference
+     *            determines whether only stable builds should be used as reference builds or not
      * @param canComputeNew
      *            determines whether new warnings should be computed (with
      *            respect to baseline)
@@ -103,14 +105,14 @@ public class PmdPublisher extends HealthAwarePublisher {
             final String unstableNewAll, final String unstableNewHigh, final String unstableNewNormal, final String unstableNewLow,
             final String failedTotalAll, final String failedTotalHigh, final String failedTotalNormal, final String failedTotalLow,
             final String failedNewAll, final String failedNewHigh, final String failedNewNormal, final String failedNewLow,
-            final boolean canRunOnFailed, final boolean shouldDetectModules, final boolean canComputeNew,
-            final String pattern) {
+            final boolean canRunOnFailed, final boolean useStableBuildAsReference, final boolean shouldDetectModules,
+            final boolean canComputeNew, final String pattern) {
         super(healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues,
                 unstableTotalAll, unstableTotalHigh, unstableTotalNormal, unstableTotalLow,
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                canRunOnFailed, shouldDetectModules, canComputeNew, PLUGIN_NAME);
+                canRunOnFailed, useStableBuildAsReference, shouldDetectModules, canComputeNew, false, PLUGIN_NAME);
         this.pattern = pattern;
     }
     // CHECKSTYLE:ON
@@ -137,7 +139,7 @@ public class PmdPublisher extends HealthAwarePublisher {
         ParserResult project = build.getWorkspace().act(pmdCollector);
         logger.logLines(project.getLogMessages());
 
-        PmdResult result = new PmdResult(build, getDefaultEncoding(), project);
+        PmdResult result = new PmdResult(build, getDefaultEncoding(), project, useOnlyStableBuildsAsReference());
         build.getActions().add(new PmdResultAction(build, this, result));
 
         return result;
@@ -151,6 +153,6 @@ public class PmdPublisher extends HealthAwarePublisher {
     /** {@inheritDoc} */
     public MatrixAggregator createAggregator(final MatrixBuild build, final Launcher launcher,
             final BuildListener listener) {
-        return new PmdAnnotationsAggregator(build, launcher, listener, this, getDefaultEncoding());
+        return new PmdAnnotationsAggregator(build, launcher, listener, this, getDefaultEncoding(), useOnlyStableBuildsAsReference());
     }
 }

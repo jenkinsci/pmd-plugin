@@ -22,10 +22,13 @@ public class PmdReporterResult extends PmdResult {
      *            the default encoding to be used when reading and parsing files
      * @param result
      *            the parsed result with all annotations
+     * @param useStableBuildAsReference
+     *            determines whether only stable builds should be used as
+     *            reference builds or not
      */
     public PmdReporterResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
-            final ParserResult result) {
-        super(build, defaultEncoding, result, PmdMavenResultAction.class);
+            final ParserResult result, final boolean useStableBuildAsReference) {
+        super(build, defaultEncoding, result, useStableBuildAsReference, PmdMavenResultAction.class);
     }
 
     @Override

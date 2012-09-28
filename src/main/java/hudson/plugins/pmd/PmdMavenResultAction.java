@@ -42,7 +42,7 @@ public class PmdMavenResultAction extends MavenResultAction<PmdResult> {
     /** {@inheritDoc} */
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
         return new PmdMavenResultAction(build, getHealthDescriptor(), getDisplayName(),
-                new PmdResult(build, getDefaultEncoding(), new ParserResult()));
+                new PmdResult(build, getDefaultEncoding(), new ParserResult(), false));
     }
 
     /** {@inheritDoc} */
@@ -57,7 +57,8 @@ public class PmdMavenResultAction extends MavenResultAction<PmdResult> {
 
     @Override
     protected PmdResult createResult(final PmdResult existingResult, final PmdResult additionalResult) {
-        return new PmdReporterResult(getOwner(), additionalResult.getDefaultEncoding(), aggregate(existingResult, additionalResult));
+        return new PmdReporterResult(getOwner(), additionalResult.getDefaultEncoding(),
+                aggregate(existingResult, additionalResult), existingResult.useOnlyStableBuildsAsReference());
     }
 }
 
