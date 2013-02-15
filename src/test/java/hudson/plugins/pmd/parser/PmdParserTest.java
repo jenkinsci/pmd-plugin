@@ -1,6 +1,6 @@
 package hudson.plugins.pmd.parser;
 
-import static junit.framework.Assert.*;
+import static org.junit.Assert.*;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.MavenModule;
