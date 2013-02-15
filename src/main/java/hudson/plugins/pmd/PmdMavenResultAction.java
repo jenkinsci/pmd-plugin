@@ -41,7 +41,7 @@ public class PmdMavenResultAction extends MavenResultAction<PmdResult> {
 
     /** {@inheritDoc} */
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
-        return new PmdMavenResultAction(build, getHealthDescriptor(), getDisplayName(),
+        return new PmdMavenResultAction(build, getHealthDescriptor(), getDefaultEncoding(),
                 new PmdResult(build, getDefaultEncoding(), new ParserResult(), false));
     }
 
