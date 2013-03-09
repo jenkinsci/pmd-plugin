@@ -1,0 +1,16 @@
+<div>
+  <p>
+    Jenkins 認得 XML 格式的 <a href="http://pmd.sourceforge.net/">PMD</a> 分析報告。 
+    選用這個選項後，Jenkins 會從不同面向顯示 PMD 分析結果，包含:
+    結果歷史趨勢、模組及套件統計、查看分析報告及警告的網頁等。
+  </p>
+  <p>
+    您要在建置過程中執行 PMD 才能用這項功能，本 Jenkins 外掛程式不會實際執行分析作業!
+    本外掛程式在不會在失敗的建置中執行，只有穩定或是不穩定 (測試失敗) 的建置才會呼叫。
+  </p>
+  <p>
+    <b>注意:</b> 如果您是使用 maven-pmd-plugin 產生 PMD 分析結果檔，請確認您是設成
+    <code>**/target/pmd.xml</code>。
+    否則計算出來的警告數會是錯的，因為 maven-pmd-plugin 會產生兩個一模一樣的檔案。
+  </p>
+</div>
