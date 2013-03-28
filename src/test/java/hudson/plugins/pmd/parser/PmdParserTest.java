@@ -180,6 +180,3 @@ public class PmdParserTest {
         assertEquals(ERROR_MESSAGE, 4, module.getNumberOfAnnotations(Priority.NORMAL));
     }
 }
-
-
-/* Copyright (c) Avaloq Evolution AG */
