@@ -46,18 +46,18 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
         this.defaultEncoding = defaultEncoding;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
         return new MavenPmdResultAction(build, getHealthDescriptor(), defaultEncoding,
                 new PmdResult(build, defaultEncoding, new ParserResult(), false));
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Action getProjectAction(final MavenModuleSet moduleSet) {
         return new PmdProjectAction(moduleSet);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Class<? extends AggregatableAction> getIndividualActionType() {
         return getClass();
     }
@@ -74,6 +74,7 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
      * @param newBuild
      *            Newly completed build.
      */
+    @Override
     public void update(final Map<MavenModule, List<MavenBuild>> moduleBuilds, final MavenBuild newBuild) {
         // not used anymore
     }

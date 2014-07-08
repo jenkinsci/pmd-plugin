@@ -60,7 +60,7 @@ public class Bug extends AbstractAnnotation {
         this(priority, message, category, type, lineNumber, lineNumber);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public String getToolTip() {
         return PmdMessages.getInstance().getMessage(getCategory(), getType());
     }

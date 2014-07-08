@@ -90,7 +90,7 @@ public class PmdResult extends BuildResult {
         return "pmd-warnings.xml";
     }
 
-    /** {@inheritDoc} */
+    @Override
     public String getDisplayName() {
         return Messages.PMD_ProjectAction_Name();
     }

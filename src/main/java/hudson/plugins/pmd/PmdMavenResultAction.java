@@ -39,13 +39,13 @@ public class PmdMavenResultAction extends MavenResultAction<PmdResult> {
         super(new PmdResultAction(owner, healthDescriptor, result), defaultEncoding, "PMD");
     }
 
-    /** {@inheritDoc} */
+    @Override
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
         return new PmdMavenResultAction(build, getHealthDescriptor(), getDefaultEncoding(),
                 new PmdResult(build, getDefaultEncoding(), new ParserResult(), false));
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Action getProjectAction(final MavenModuleSet moduleSet) {
         return new PmdProjectAction(moduleSet, PmdMavenResultAction.class);
     }

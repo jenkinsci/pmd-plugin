@@ -31,7 +31,7 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
         super(owner, new PmdHealthDescriptor(healthDescriptor), result);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public String getDisplayName() {
         return Messages.PMD_ProjectAction_Name();
     }

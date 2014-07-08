@@ -150,7 +150,7 @@ public class PmdPublisher extends HealthAwarePublisher {
         return (PmdDescriptor)super.getDescriptor();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public MatrixAggregator createAggregator(final MatrixBuild build, final Launcher launcher,
             final BuildListener listener) {
         return new PmdAnnotationsAggregator(build, launcher, listener, this, getDefaultEncoding(), useOnlyStableBuildsAsReference());
