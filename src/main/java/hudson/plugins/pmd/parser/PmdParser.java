@@ -1,9 +1,5 @@
 package hudson.plugins.pmd.parser;
 
-import hudson.plugins.analysis.core.AbstractAnnotationParser;
-import hudson.plugins.analysis.util.model.FileAnnotation;
-import hudson.plugins.analysis.util.model.Priority;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -13,6 +9,10 @@ import java.util.Collection;
 import org.apache.commons.digester3.Digester;
 import org.apache.commons.lang.StringUtils;
 import org.xml.sax.SAXException;
+
+import hudson.plugins.analysis.core.AbstractAnnotationParser;
+import hudson.plugins.analysis.util.model.FileAnnotation;
+import hudson.plugins.analysis.util.model.Priority;
 
 /**
  * A parser for PMD XML files.
@@ -114,7 +114,8 @@ public class PmdParser extends AbstractAnnotationParser {
                 bug.setColumnPosition(warning.getBegincolumn(), warning.getEndcolumn());
 
                 try {
-                    bug.setContextHashCode(createContextHashCode(file.getName(), warning.getBeginline()));
+                    bug.setContextHashCode(createContextHashCode(file.getName(), warning.getBeginline()) * 31
+                            + warning.getRule().hashCode());
                 }
                 catch (IOException exception) {
                     // ignore and continue
