@@ -61,28 +61,6 @@ public class PmdResult extends BuildResult {
 
     /**
      * Creates a new instance of {@link PmdResult}.
-     *
-     * @param build
-     *            the current build as owner of this action
-     * @param defaultEncoding
-     *            the default encoding to be used when reading and parsing files
-     * @param result
-     *            the parsed result with all annotations
-     * @param useStableBuildAsReference
-     *            determines whether only stable builds should be used as
-     *            reference builds or not
-     * @param actionType
-     *            the type of the result action
-     * @deprecated
-     */
-    @Deprecated
-    protected PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result,
-            final boolean useStableBuildAsReference, final Class<? extends ResultAction<PmdResult>> actionType) {
-        this(build, defaultEncoding, result, useStableBuildAsReference, false, actionType);
-    }
-
-    /**
-     * Creates a new instance of {@link PmdResult}.
      * @param build the current build as owner of this action
      * @param defaultEncoding the default encoding to be used when reading and parsing files
      * @param result the parsed result with all annotations
