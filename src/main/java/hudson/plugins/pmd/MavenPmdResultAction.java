@@ -49,7 +49,7 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
     @Override
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
         return new MavenPmdResultAction(build, getHealthDescriptor(), defaultEncoding,
-                new PmdResult(build, defaultEncoding, new ParserResult(), false));
+                new PmdResult(build, defaultEncoding, new ParserResult(), false, false));
     }
 
     @Override

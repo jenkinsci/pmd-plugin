@@ -32,17 +32,22 @@ public class PmdAnnotationsAggregator extends AnnotationsAggregator {
      * @param useStableBuildAsReference
      *            determines whether only stable builds should be used as
      *            reference builds or not
+     * @param usePreviousBuildAsReference
+     *            determines whether the previous build should be used as the
+     *            reference build
      */
     public PmdAnnotationsAggregator(final MatrixBuild build, final Launcher launcher,
             final BuildListener listener, final HealthDescriptor healthDescriptor, final String defaultEncoding,
-            final boolean useStableBuildAsReference) {
-        super(build, launcher, listener, healthDescriptor, defaultEncoding, useStableBuildAsReference);
+            final boolean useStableBuildAsReference,
+            final boolean usePreviousBuildAsReference) {
+        super(build, launcher, listener, healthDescriptor, defaultEncoding,
+                useStableBuildAsReference, usePreviousBuildAsReference);
     }
 
     @Override
     protected Action createAction(final HealthDescriptor healthDescriptor, final String defaultEncoding, final ParserResult aggregatedResult) {
         return new PmdResultAction(build, healthDescriptor,
-                new PmdResult(build, defaultEncoding, aggregatedResult, useOnlyStableBuildsAsReference()));
+                new PmdResult(build, defaultEncoding, aggregatedResult, useOnlyStableBuildsAsReference(), usePreviousBuildAsReference()));
     }
 
     @Override

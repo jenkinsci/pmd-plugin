@@ -159,6 +159,8 @@ public class PmdPublisher extends HealthAwarePublisher {
     @Override
     public MatrixAggregator createAggregator(final MatrixBuild build, final Launcher launcher,
             final BuildListener listener) {
-        return new PmdAnnotationsAggregator(build, launcher, listener, this, getDefaultEncoding(), useOnlyStableBuildsAsReference());
+        return new PmdAnnotationsAggregator(build, launcher, listener, this,
+                getDefaultEncoding(), useOnlyStableBuildsAsReference(),
+                getUsePreviousBuildAsReference());
     }
 }
