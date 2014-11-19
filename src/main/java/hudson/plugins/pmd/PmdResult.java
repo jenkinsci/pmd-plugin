@@ -27,33 +27,37 @@ public class PmdResult extends BuildResult {
      *            the default encoding to be used when reading and parsing files
      * @param result
      *            the parsed result with all annotations
+     * @param usePreviousBuildAsReference
+     *            determines whether to use the previous build as the reference
+     *            build
      * @param useStableBuildAsReference
      *            determines whether only stable builds should be used as
      *            reference builds or not
      */
-    public PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result,
+    public PmdResult(final AbstractBuild<?, ?> build,
+            final String defaultEncoding,
+            final ParserResult result,
+            final boolean usePreviousBuildAsReference,
             final boolean useStableBuildAsReference) {
-        this(build, defaultEncoding, result, useStableBuildAsReference, PmdResultAction.class);
+        this(build, defaultEncoding, result, usePreviousBuildAsReference, useStableBuildAsReference, PmdResultAction.class);
     }
 
     /**
      * Creates a new instance of {@link PmdResult}.
-     *
-     * @param build
-     *            the current build as owner of this action
-     * @param defaultEncoding
-     *            the default encoding to be used when reading and parsing files
-     * @param result
-     *            the parsed result with all annotations
-     * @param useStableBuildAsReference
-     *            determines whether only stable builds should be used as
-     *            reference builds or not
-     * @param actionType
-     *            the type of the result action
+     * @param build the current build as owner of this action
+     * @param defaultEncoding the default encoding to be used when reading and parsing files
+     * @param result the parsed result with all annotations
+     * @param usePreviousBuildAsReference the value of usePreviousBuildAsReference
+     * @param useStableBuildAsReference determines whether only stable builds should be used as
+            reference builds or not
+     * @param actionType the type of the result action
      */
-    protected PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result,
-            final boolean useStableBuildAsReference, final Class<? extends ResultAction<PmdResult>> actionType) {
-        this(build, new BuildHistory(build, actionType, useStableBuildAsReference), result, defaultEncoding, true);
+    protected PmdResult(final AbstractBuild<?, ?> build,
+            final String defaultEncoding, final ParserResult result,
+            boolean usePreviousBuildAsReference,
+            final boolean useStableBuildAsReference,
+            final Class<? extends ResultAction<PmdResult>> actionType) {
+        this(build, new BuildHistory(build, actionType, useStableBuildAsReference, usePreviousBuildAsReference), result, defaultEncoding, true);
     }
 
     PmdResult(final AbstractBuild<?, ?> build, final BuildHistory history,
