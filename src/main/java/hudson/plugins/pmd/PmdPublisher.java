@@ -1,23 +1,23 @@
 package hudson.plugins.pmd;
 
-import hudson.Launcher;
-import hudson.matrix.MatrixAggregator;
-import hudson.matrix.MatrixBuild;
-import hudson.model.Action;
-import hudson.model.BuildListener;
-import hudson.model.AbstractBuild;
-import hudson.model.AbstractProject;
-import hudson.plugins.analysis.core.FilesParser;
-import hudson.plugins.analysis.core.HealthAwarePublisher;
-import hudson.plugins.analysis.core.ParserResult;
-import hudson.plugins.analysis.core.BuildResult;
-import hudson.plugins.analysis.util.PluginLogger;
-import hudson.plugins.pmd.parser.PmdParser;
-
 import java.io.IOException;
 
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
+
+import hudson.Launcher;
+import hudson.matrix.MatrixAggregator;
+import hudson.matrix.MatrixBuild;
+import hudson.model.AbstractBuild;
+import hudson.model.AbstractProject;
+import hudson.model.Action;
+import hudson.model.BuildListener;
+import hudson.plugins.analysis.core.BuildResult;
+import hudson.plugins.analysis.core.FilesParser;
+import hudson.plugins.analysis.core.HealthAwarePublisher;
+import hudson.plugins.analysis.core.ParserResult;
+import hudson.plugins.analysis.util.PluginLogger;
+import hudson.plugins.pmd.parser.PmdParser;
 
 /**
  * Publishes the results of the PMD analysis  (freestyle project type).
@@ -107,18 +107,15 @@ public class PmdPublisher extends HealthAwarePublisher {
             final String unstableNewAll, final String unstableNewHigh, final String unstableNewNormal, final String unstableNewLow,
             final String failedTotalAll, final String failedTotalHigh, final String failedTotalNormal, final String failedTotalLow,
             final String failedNewAll, final String failedNewHigh, final String failedNewNormal, final String failedNewLow,
-            final boolean canRunOnFailed,
-            final boolean usePreviousBuildAsReference,
-            final boolean useStableBuildAsReference, final boolean shouldDetectModules,
-            final boolean canComputeNew, final String pattern) {
+            final boolean canRunOnFailed, final boolean usePreviousBuildAsReference, final boolean useStableBuildAsReference,
+            final boolean shouldDetectModules, final boolean canComputeNew, final String pattern) {
         super(healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues,
                 unstableTotalAll, unstableTotalHigh, unstableTotalNormal, unstableTotalLow,
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                canRunOnFailed,
-                usePreviousBuildAsReference,
-                useStableBuildAsReference, shouldDetectModules, canComputeNew, false, PLUGIN_NAME);
+                canRunOnFailed, usePreviousBuildAsReference, useStableBuildAsReference,
+                shouldDetectModules, canComputeNew, false, PLUGIN_NAME);
         this.pattern = pattern;
     }
     // CHECKSTYLE:ON
@@ -145,8 +142,9 @@ public class PmdPublisher extends HealthAwarePublisher {
         ParserResult project = build.getWorkspace().act(pmdCollector);
         logger.logLines(project.getLogMessages());
 
-        PmdResult result = new PmdResult(build, getDefaultEncoding(), project, useOnlyStableBuildsAsReference(), getUsePreviousBuildAsReference());
-        build.getActions().add(new PmdResultAction(build, this, result));
+        PmdResult result = new PmdResult(build, getDefaultEncoding(), project,
+                usePreviousBuildAsReference(), useOnlyStableBuildsAsReference());
+        build.addAction(new PmdResultAction(build, this, result));
 
         return result;
     }
@@ -160,7 +158,6 @@ public class PmdPublisher extends HealthAwarePublisher {
     public MatrixAggregator createAggregator(final MatrixBuild build, final Launcher launcher,
             final BuildListener listener) {
         return new PmdAnnotationsAggregator(build, launcher, listener, this,
-                getDefaultEncoding(), useOnlyStableBuildsAsReference(),
-                getUsePreviousBuildAsReference());
+                getDefaultEncoding(), usePreviousBuildAsReference(), useOnlyStableBuildsAsReference());
     }
 }

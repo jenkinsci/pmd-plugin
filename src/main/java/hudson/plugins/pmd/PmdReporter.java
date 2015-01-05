@@ -1,22 +1,22 @@
 package hudson.plugins.pmd;
 
-import hudson.maven.MavenAggregatedReport;
-import hudson.maven.MavenBuildProxy;
-import hudson.maven.MojoInfo;
-import hudson.maven.MavenBuild;
-import hudson.maven.MavenModule;
-import hudson.plugins.analysis.core.FilesParser;
-import hudson.plugins.analysis.core.HealthAwareReporter;
-import hudson.plugins.analysis.core.ParserResult;
-import hudson.plugins.analysis.util.PluginLogger;
-import hudson.plugins.pmd.parser.PmdParser;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.maven.project.MavenProject;
 import org.kohsuke.stapler.DataBoundConstructor;
+
+import hudson.maven.MavenAggregatedReport;
+import hudson.maven.MavenBuild;
+import hudson.maven.MavenBuildProxy;
+import hudson.maven.MavenModule;
+import hudson.maven.MojoInfo;
+import hudson.plugins.analysis.core.FilesParser;
+import hudson.plugins.analysis.core.HealthAwareReporter;
+import hudson.plugins.analysis.core.ParserResult;
+import hudson.plugins.analysis.util.PluginLogger;
+import hudson.plugins.pmd.parser.PmdParser;
 
 /**
  * Publishes the results of the PMD analysis  (maven 2 project type).
@@ -122,7 +122,8 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
 
     @Override
     protected PmdResult createResult(final MavenBuild build, final ParserResult project) {
-        return new PmdReporterResult(build, getDefaultEncoding(), project, useOnlyStableBuildsAsReference());
+        return new PmdReporterResult(build, getDefaultEncoding(), project,
+                usePreviousBuildAsStable(), useOnlyStableBuildsAsReference());
     }
 
     @Override

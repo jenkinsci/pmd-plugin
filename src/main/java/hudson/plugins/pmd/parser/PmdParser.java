@@ -112,14 +112,7 @@ public class PmdParser extends AbstractAnnotationParser {
                 bug.setModuleName(moduleName);
                 bug.setFileName(file.getName());
                 bug.setColumnPosition(warning.getBegincolumn(), warning.getEndcolumn());
-
-                try {
-                    bug.setContextHashCode(createContextHashCode(file.getName(), warning.getBeginline()) * 31
-                            + warning.getRule().hashCode());
-                }
-                catch (IOException exception) {
-                    // ignore and continue
-                }
+                bug.setContextHashCode(createContextHashCode(file.getName(), warning.getBeginline(), warning.getRule()));
 
                 annotations.add(bug);
             }

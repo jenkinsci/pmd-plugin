@@ -1,13 +1,13 @@
 package hudson.plugins.pmd;
 
+import com.thoughtworks.xstream.XStream;
+
 import hudson.model.AbstractBuild;
 import hudson.plugins.analysis.core.BuildHistory;
+import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ResultAction;
-import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.pmd.parser.Bug;
-
-import com.thoughtworks.xstream.XStream;
 
 /**
  * Represents the results of the PMD analysis. One instance of this class is persisted for
@@ -34,11 +34,8 @@ public class PmdResult extends BuildResult {
      *            determines whether only stable builds should be used as
      *            reference builds or not
      */
-    public PmdResult(final AbstractBuild<?, ?> build,
-            final String defaultEncoding,
-            final ParserResult result,
-            final boolean usePreviousBuildAsReference,
-            final boolean useStableBuildAsReference) {
+    public PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result,
+            final boolean usePreviousBuildAsReference, final boolean useStableBuildAsReference) {
         this(build, defaultEncoding, result, usePreviousBuildAsReference, useStableBuildAsReference, PmdResultAction.class);
     }
 
@@ -54,10 +51,10 @@ public class PmdResult extends BuildResult {
      */
     protected PmdResult(final AbstractBuild<?, ?> build,
             final String defaultEncoding, final ParserResult result,
-            boolean usePreviousBuildAsReference,
+            final boolean usePreviousBuildAsReference,
             final boolean useStableBuildAsReference,
             final Class<? extends ResultAction<PmdResult>> actionType) {
-        this(build, new BuildHistory(build, actionType, useStableBuildAsReference, usePreviousBuildAsReference), result, defaultEncoding, true);
+        this(build, new BuildHistory(build, actionType, usePreviousBuildAsReference, useStableBuildAsReference), result, defaultEncoding, true);
     }
 
     PmdResult(final AbstractBuild<?, ?> build, final BuildHistory history,

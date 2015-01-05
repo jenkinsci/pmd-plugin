@@ -1,18 +1,18 @@
 package hudson.plugins.pmd;
 
+import java.util.List;
+import java.util.Map;
+
 import hudson.maven.MavenAggregatedReport;
 import hudson.maven.MavenBuild;
 import hudson.maven.MavenModule;
 import hudson.maven.MavenModuleSet;
 import hudson.maven.MavenModuleSetBuild;
-import hudson.model.Action;
 import hudson.model.AbstractBuild;
+import hudson.model.Action;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.core.MavenResultAction;
 import hudson.plugins.analysis.core.ParserResult;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * A {@link PmdResultAction} for native Maven jobs. This action
@@ -58,7 +58,9 @@ public class PmdMavenResultAction extends MavenResultAction<PmdResult> {
     @Override
     protected PmdResult createResult(final PmdResult existingResult, final PmdResult additionalResult) {
         return new PmdReporterResult(getOwner(), additionalResult.getDefaultEncoding(),
-                aggregate(existingResult, additionalResult), existingResult.useOnlyStableBuildsAsReference());
+                aggregate(existingResult, additionalResult),
+                existingResult.usePreviousBuildAsStable(),
+                existingResult.useOnlyStableBuildsAsReference());
     }
 }
 
