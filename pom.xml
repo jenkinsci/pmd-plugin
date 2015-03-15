@@ -47,15 +47,20 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>pmd</groupId>
-      <artifactId>pmd</artifactId>
-      <version>4.2.6</version>
+      <groupId>net.sourceforge.pmd</groupId>
+      <artifactId>pmd-core</artifactId>
+      <version>5.2.3</version>
       <exclusions>
         <exclusion>
           <groupId>com.ibm.icu</groupId>
           <artifactId>icu4j</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.pmd</groupId>
+      <artifactId>pmd-java</artifactId>
+      <version>5.2.3</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>

@@ -1,17 +1,18 @@
 package hudson.plugins.pmd.parser;
 
-import static org.junit.Assert.*;
-import hudson.plugins.analysis.core.ParserResult;
-import hudson.plugins.analysis.util.model.FileAnnotation;
-import hudson.plugins.analysis.util.model.MavenModule;
-import hudson.plugins.analysis.util.model.Priority;
-
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+import hudson.plugins.analysis.core.ParserResult;
+import hudson.plugins.analysis.util.model.FileAnnotation;
+import hudson.plugins.analysis.util.model.MavenModule;
+import hudson.plugins.analysis.util.model.Priority;
 
 /**
  *  Tests the extraction of PMD analysis results.
@@ -140,7 +141,7 @@ public class PmdParserTest {
         assertEquals(WRONG_WARNING_PROPERTY, "These nested if statements could be combined.",
                 warning.getMessage());
         assertEquals(WRONG_WARNING_PROPERTY, Priority.NORMAL, warning.getPriority());
-        assertEquals(WRONG_WARNING_PROPERTY, "Basic Rules", warning.getCategory());
+        assertEquals(WRONG_WARNING_PROPERTY, "Basic", warning.getCategory());
         assertEquals(WRONG_WARNING_PROPERTY, "CollapsibleIfStatements", warning.getType());
         assertEquals(WRONG_WARNING_PROPERTY, 54, warning.getPrimaryLineNumber());
         assertEquals(WRONG_WARNING_PROPERTY, "com.avaloq.adt.env.internal.ui.actions", warning
@@ -155,11 +156,25 @@ public class PmdParserTest {
                 warning.getFileName());
         assertEquals(
                 WRONG_WARNING_PROPERTY,
-                "\n"
-                        + "Sometimes two \'if\' statements can be consolidated by separating their conditions with a boolean short-circuit operator.\n"
-                        + "      <pre>\n" + "  \n" + "public class Foo {\n" + " void bar() {\n"
-                        + "  if (x) {\n" + "   if (y) {\n" + "    // do stuff\n" + "   }\n"
-                        + "  }\n" + " }\n" + "}\n" + " \n" + "      </pre>", warning.getToolTip());
+                "\n" +
+                        "Sometimes two consecutive 'if' statements can be consolidated by separating their conditions with a boolean short-circuit operator.\n" +
+                        "      <pre>\n" +
+                        "  \n" +
+                        "void bar() {\n" +
+                        "\tif (x) {\t\t\t// original implementation\n" +
+                        "\t\tif (y) {\n" +
+                        "\t\t\t// do stuff\n" +
+                        "\t\t}\n" +
+                        "\t}\n" +
+                        "}\n" +
+                        "\n" +
+                        "void bar() {\n" +
+                        "\tif (x && y) {\t\t// optimized implementation\n" +
+                        "\t\t// do stuff\n" +
+                        "\t}\n" +
+                        "}\n" +
+                        " \n" +
+                        "      </pre>", warning.getToolTip());
     }
 
     /**

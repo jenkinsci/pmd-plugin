@@ -7,12 +7,12 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.pmd.Rule;
 import net.sourceforge.pmd.RuleSet;
 import net.sourceforge.pmd.RuleSetFactory;
 import net.sourceforge.pmd.RuleSetNotFoundException;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * Provides access to rule descriptions and examples.
@@ -44,18 +44,22 @@ public final class PmdMessages {
 
     /**
      * Initializes the rules.
+     *
+     * @return the number of rule sets
      */
-    public void initialize() {
+    public int initialize() {
         try {
             Iterator<RuleSet> ruleSets = new RuleSetFactory().getRegisteredRuleSets();
             for (Iterator<RuleSet> iterator = ruleSets; iterator.hasNext();) {
                 RuleSet ruleSet = iterator.next();
                 rules.put(ruleSet.getName(), ruleSet);
             }
+            return rules.size();
         }
         catch (RuleSetNotFoundException exception) {
             Logger.getLogger(PmdMessages.class.getName()).log(Level.SEVERE, "Installation problem: can't access PMD messages.");
         }
+        return 0;
     }
 
     /**
