@@ -42,7 +42,8 @@ public class PmdMavenResultAction extends MavenResultAction<PmdResult> {
     @Override
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
         return new PmdMavenResultAction(build, getHealthDescriptor(), getDefaultEncoding(),
-                new PmdResult(build, getDefaultEncoding(), new ParserResult(), false, false));
+                new PmdResult(build, getDefaultEncoding(), new ParserResult(),
+                        usePreviousBuildAsStable(), useOnlyStableBuildsAsReference()));
     }
 
     @Override
