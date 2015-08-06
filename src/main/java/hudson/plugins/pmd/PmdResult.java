@@ -3,6 +3,7 @@ package hudson.plugins.pmd;
 import com.thoughtworks.xstream.XStream;
 
 import hudson.model.AbstractBuild;
+import hudson.model.Run;
 import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
@@ -33,9 +34,33 @@ public class PmdResult extends BuildResult {
      * @param useStableBuildAsReference
      *            determines whether only stable builds should be used as
      *            reference builds or not
+     *
+     * @deprecated use {@link #PmdResult(Run, String, ParserResult, boolean, boolean, Class)}
      */
+    @Deprecated
     public PmdResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result,
             final boolean usePreviousBuildAsReference, final boolean useStableBuildAsReference) {
+        this((Run<?, ?>) build, defaultEncoding, result, usePreviousBuildAsReference, useStableBuildAsReference);
+    }
+
+    /**
+     * Creates a new instance of {@link PmdResult}.
+     *
+     * @param build
+     *            the current build as owner of this action
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param result
+     *            the parsed result with all annotations
+     * @param usePreviousBuildAsReference
+     *            determines whether to use the previous build as the reference
+     *            build
+     * @param useStableBuildAsReference
+     *            determines whether only stable builds should be used as
+     *            reference builds or not
+     */
+    public PmdResult(final Run<?, ?> build, final String defaultEncoding, final ParserResult result,
+                     final boolean usePreviousBuildAsReference, final boolean useStableBuildAsReference) {
         this(build, defaultEncoding, result, usePreviousBuildAsReference, useStableBuildAsReference, PmdResultAction.class);
     }
 
@@ -48,17 +73,47 @@ public class PmdResult extends BuildResult {
      * @param useStableBuildAsReference determines whether only stable builds should be used as
             reference builds or not
      * @param actionType the type of the result action
+     *
+     * @deprecated use {@link #PmdResult(Run, String, ParserResult, boolean, boolean, Class)}
      */
+    @Deprecated
     protected PmdResult(final AbstractBuild<?, ?> build,
             final String defaultEncoding, final ParserResult result,
             final boolean usePreviousBuildAsReference,
             final boolean useStableBuildAsReference,
             final Class<? extends ResultAction<PmdResult>> actionType) {
+        this((Run<?, ?>) build, defaultEncoding, result, usePreviousBuildAsReference, useStableBuildAsReference, actionType);
+    }
+
+    /**
+     * Creates a new instance of {@link PmdResult}.
+     *
+     * @param build the current build as owner of this action
+     * @param defaultEncoding the default encoding to be used when reading and parsing files
+     * @param result the parsed result with all annotations
+     * @param usePreviousBuildAsReference the value of usePreviousBuildAsReference
+     * @param useStableBuildAsReference determines whether only stable builds should be used as reference builds or not
+     * @param actionType the type of the result action
+     */
+    protected PmdResult(final Run<?, ?> build,
+                        final String defaultEncoding, final ParserResult result,
+                        final boolean usePreviousBuildAsReference,
+                        final boolean useStableBuildAsReference,
+                        final Class<? extends ResultAction<PmdResult>> actionType) {
         this(build, new BuildHistory(build, actionType, usePreviousBuildAsReference, useStableBuildAsReference), result, defaultEncoding, true);
     }
 
+    /**
+     *@deprecated use {@link #PmdResult(Run, BuildHistory, ParserResult, String, boolean)}
+     */
+    @Deprecated
     PmdResult(final AbstractBuild<?, ?> build, final BuildHistory history,
             final ParserResult result, final String defaultEncoding, final boolean canSerialize) {
+        this((Run<?, ?>) build, history, result, defaultEncoding, canSerialize);
+    }
+
+    PmdResult(final Run<?, ?> build, final BuildHistory history,
+              final ParserResult result, final String defaultEncoding, final boolean canSerialize) {
         super(build, history, result, defaultEncoding);
 
         if (canSerialize) {

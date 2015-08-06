@@ -1,6 +1,7 @@
 package hudson.plugins.pmd;
 
 import hudson.model.AbstractBuild;
+import hudson.model.Run;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.core.PluginDescriptor;
 import hudson.plugins.analysis.core.AbstractResultAction;
@@ -26,8 +27,25 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
      *            health descriptor to use
      * @param result
      *            the result in this build
+     *
+     * @deprecated use {@link #PmdResultAction(Run, HealthDescriptor, PmdResult)}
      */
+    @Deprecated
     public PmdResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor, final PmdResult result) {
+        this((Run<?, ?>) owner, healthDescriptor, result);
+    }
+
+    /**
+     * Creates a new instance of <code>PmdResultAction</code>.
+     *
+     * @param owner
+     *            the associated build of this action
+     * @param healthDescriptor
+     *            health descriptor to use
+     * @param result
+     *            the result in this build
+     */
+    public PmdResultAction(final Run<?, ?> owner, final HealthDescriptor healthDescriptor, final PmdResult result) {
         super(owner, new PmdHealthDescriptor(healthDescriptor), result);
     }
 
