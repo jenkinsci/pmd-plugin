@@ -1,10 +1,9 @@
 package hudson.plugins.pmd;
 
-import hudson.model.AbstractBuild;
 import hudson.model.Run;
+import hudson.plugins.analysis.core.AbstractResultAction;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.core.PluginDescriptor;
-import hudson.plugins.analysis.core.AbstractResultAction;
 
 /**
  * Controls the live cycle of the PMD results. This action persists the
@@ -18,23 +17,6 @@ import hudson.plugins.analysis.core.AbstractResultAction;
  * @author Ulli Hafner
  */
 public class PmdResultAction extends AbstractResultAction<PmdResult> {
-    /**
-     * Creates a new instance of <code>PmdResultAction</code>.
-     *
-     * @param owner
-     *            the associated build of this action
-     * @param healthDescriptor
-     *            health descriptor to use
-     * @param result
-     *            the result in this build
-     *
-     * @deprecated use {@link #PmdResultAction(Run, HealthDescriptor, PmdResult)}
-     */
-    @Deprecated
-    public PmdResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor, final PmdResult result) {
-        this((Run<?, ?>) owner, healthDescriptor, result);
-    }
-
     /**
      * Creates a new instance of <code>PmdResultAction</code>.
      *
