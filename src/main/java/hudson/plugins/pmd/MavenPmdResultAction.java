@@ -1,18 +1,18 @@
 package hudson.plugins.pmd;
 
+import java.util.List;
+import java.util.Map;
+
 import hudson.maven.AggregatableAction;
 import hudson.maven.MavenAggregatedReport;
 import hudson.maven.MavenBuild;
 import hudson.maven.MavenModule;
 import hudson.maven.MavenModuleSet;
 import hudson.maven.MavenModuleSetBuild;
-import hudson.model.Action;
 import hudson.model.AbstractBuild;
+import hudson.model.Action;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.core.ParserResult;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * A {@link PmdResultAction} for native maven jobs. This action
@@ -22,6 +22,7 @@ import java.util.Map;
  * @author Ulli Hafner
  * @deprecated not used anymore
  */
+@SuppressWarnings("deprecation")
 @Deprecated
 public class MavenPmdResultAction extends PmdResultAction implements AggregatableAction, MavenAggregatedReport {
     /** The default encoding to be used when reading and parsing files. */
@@ -80,7 +81,7 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
     }
 
     /** Backward compatibility. @deprecated */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("UUF")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("UUF")
     @SuppressWarnings("PMD")
     @Deprecated
     private transient String height;

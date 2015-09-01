@@ -123,7 +123,7 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
     @Override
     protected PmdResult createResult(final MavenBuild build, final ParserResult project) {
         return new PmdReporterResult(build, getDefaultEncoding(), project,
-                usePreviousBuildAsStable(), useOnlyStableBuildsAsReference());
+                usePreviousBuildAsReference(), useOnlyStableBuildsAsReference());
     }
 
     @Override
@@ -143,7 +143,7 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
 
     /** Ant file-set pattern of files to work with. */
     @SuppressWarnings("PMD")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("")
     private transient String pattern; // obsolete since release 2.5
 }
 
