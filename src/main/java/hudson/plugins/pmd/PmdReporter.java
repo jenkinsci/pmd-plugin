@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.maven.project.MavenProject;
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import hudson.maven.MavenAggregatedReport;
 import hudson.maven.MavenBuild;
 import hudson.maven.MavenBuildProxy;
@@ -143,7 +145,7 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
 
     /** Ant file-set pattern of files to work with. */
     @SuppressWarnings("PMD")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("")
+    @SuppressFBWarnings("")
     private transient String pattern; // obsolete since release 2.5
 }
 

@@ -1,9 +1,11 @@
 package hudson.plugins.pmd.parser;
 
+import org.apache.commons.lang.StringUtils;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import hudson.plugins.analysis.util.model.AbstractAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * A serializable Java Bean class representing a warning.
@@ -67,7 +69,7 @@ public class Bug extends AbstractAnnotation {
 
     /** The tooltip. */
     @SuppressWarnings("PMD")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("SS")
+    @SuppressFBWarnings("SS")
     private final String tooltip = StringUtils.EMPTY; // backward compatibility
 }
 
