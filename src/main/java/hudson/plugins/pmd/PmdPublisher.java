@@ -17,6 +17,7 @@ import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.BuildListener;
 import hudson.model.Run;
+import hudson.model.TaskListener;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.FilesParser;
 import hudson.plugins.analysis.core.HealthAwarePublisher;
@@ -76,7 +77,8 @@ public class PmdPublisher extends HealthAwarePublisher {
     public BuildResult perform(final Run<?, ?> build, final FilePath workspace, final PluginLogger logger) throws
             InterruptedException, IOException {
         logger.log("Collecting PMD analysis files...");
-        FilesParser parser = new FilesParser(PLUGIN_NAME, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN),
+        FilesParser parser = new FilesParser(PLUGIN_NAME,
+                StringUtils.defaultIfEmpty(expandFilePattern(getPattern(), build.getEnvironment(TaskListener.NULL)), DEFAULT_PATTERN),
                 new PmdParser(getDefaultEncoding()), shouldDetectModules(), isMavenBuild(build));
         ParserResult project = workspace.act(parser);
         logger.logLines(project.getLogMessages());
