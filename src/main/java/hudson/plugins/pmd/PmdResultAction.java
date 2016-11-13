@@ -1,5 +1,8 @@
 package hudson.plugins.pmd;
 
+import java.util.Collection;
+
+import hudson.model.Action;
 import hudson.model.Run;
 import hudson.plugins.analysis.core.AbstractResultAction;
 import hudson.plugins.analysis.core.HealthDescriptor;
@@ -29,6 +32,11 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
      */
     public PmdResultAction(final Run<?, ?> owner, final HealthDescriptor healthDescriptor, final PmdResult result) {
         super(owner, new PmdHealthDescriptor(healthDescriptor), result);
+    }
+
+    @Override
+    public Collection<? extends Action> getProjectActions() {
+        return asSet(new PmdProjectAction(getJob()));
     }
 
     @Override

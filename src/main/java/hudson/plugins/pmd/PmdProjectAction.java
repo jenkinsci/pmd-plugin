@@ -1,8 +1,8 @@
 package hudson.plugins.pmd;
 
-import hudson.model.AbstractProject;
-import hudson.plugins.analysis.core.ResultAction;
+import hudson.model.Job;
 import hudson.plugins.analysis.core.AbstractProjectAction;
+import hudson.plugins.analysis.core.ResultAction;
 
 /**
  * Entry point to visualize the PMD trend graph in the project screen. Drawing
@@ -14,24 +14,24 @@ public class PmdProjectAction extends AbstractProjectAction<ResultAction<PmdResu
     /**
      * Instantiates a new {@link PmdProjectAction}.
      *
-     * @param project
-     *            the project that owns this action
+     * @param job
+     *            the job that owns this action
      */
-    public PmdProjectAction(final AbstractProject<?, ?> project) {
-        this(project, PmdResultAction.class);
+    public PmdProjectAction(final Job<?, ?> job) {
+        this(job, PmdResultAction.class);
     }
 
     /**
      * Instantiates a new {@link PmdProjectAction}.
      *
-     * @param project
-     *            the project that owns this action
+     * @param job
+     *            the job that owns this action
      * @param type
      *            the result action type
      */
-    public PmdProjectAction(final AbstractProject<?, ?> project,
+    public PmdProjectAction(final Job<?, ?> job,
             final Class<? extends ResultAction<PmdResult>> type) {
-        super(project, type, Messages._PMD_ProjectAction_Name(), Messages._PMD_Trend_Name(),
+        super(job, type, Messages._PMD_ProjectAction_Name(), Messages._PMD_Trend_Name(),
                 PmdDescriptor.PLUGIN_ID, PmdDescriptor.ICON_URL, PmdDescriptor.RESULT_URL);
     }
 }
