@@ -1,5 +1,7 @@
 package hudson.plugins.pmd;
 
+import org.jenkinsci.Symbol;
+
 import hudson.Extension;
 import hudson.plugins.analysis.core.PluginDescriptor;
 
@@ -9,7 +11,7 @@ import hudson.plugins.analysis.core.PluginDescriptor;
  *
  * @author Ulli Hafner
  */
-@Extension(ordinal = 100)
+@Extension(ordinal = 100) @Symbol("pmd")
 public final class PmdDescriptor extends PluginDescriptor {
     private static final String ICONS_PREFIX = "/plugin/pmd/icons/";
     /** The ID of this plug-in is used as URL. */
