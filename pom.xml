@@ -49,18 +49,28 @@
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
       <artifactId>pmd-core</artifactId>
-      <version>5.2.3</version>
+      <version>5.7.0</version>
       <exclusions>
         <exclusion>
           <groupId>com.ibm.icu</groupId>
           <artifactId>icu4j</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>net.sourceforge.saxon</groupId>
+          <artifactId>saxon</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.pmd</groupId>
       <artifactId>pmd-java</artifactId>
-      <version>5.2.3</version>
+      <version>5.7.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>net.sourceforge.saxon</groupId>
+          <artifactId>saxon</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>

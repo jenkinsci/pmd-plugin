@@ -32,6 +32,6 @@ public class PmdMessagesTest {
                 "}\n" +
                 " \n" +
                 "      </pre>",
-                PmdMessages.getInstance().getMessage("Basic", "EmptyCatchBlock"));
+                PmdMessages.getInstance().getMessage("Empty Code", "EmptyCatchBlock"));
     }
 }
