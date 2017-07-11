@@ -76,6 +76,8 @@ public class PmdPublisher extends HealthAwarePublisher {
         ParserResult project = workspace.act(parser);
         logger.logLines(project.getLogMessages());
 
+        blame(project.getAnnotations(), build, workspace);
+
         PmdResult result = new PmdResult(build, getDefaultEncoding(), project,
                 usePreviousBuildAsReference(), useOnlyStableBuildsAsReference());
         build.addAction(new PmdResultAction(build, this, result));
