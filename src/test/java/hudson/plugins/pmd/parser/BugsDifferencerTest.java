@@ -1,12 +1,12 @@
 package hudson.plugins.pmd.parser;
 
-import hudson.plugins.analysis.core.AnnotationDifferencer;
+import hudson.plugins.analysis.core.IssueDifference;
 import hudson.plugins.analysis.test.AnnotationDifferencerTest;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
 
 /**
- * Tests the {@link AnnotationDifferencer} for bugs.
+ * Tests the {@link IssueDifference} for bugs.
  */
 public class BugsDifferencerTest extends AnnotationDifferencerTest {
     @Override
