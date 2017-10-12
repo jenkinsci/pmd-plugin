@@ -15,7 +15,7 @@ import hudson.plugins.analysis.core.PluginDescriptor;
 public final class PmdDescriptor extends PluginDescriptor {
     private static final String ICONS_PREFIX = "/plugin/pmd/icons/";
     /** The ID of this plug-in is used as URL. */
-    static final String PLUGIN_ID = "pmd";
+    public static final String PLUGIN_ID = "pmd";
     /** The URL of the result action. */
     static final String RESULT_URL = PluginDescriptor.createResultUrlName(PLUGIN_ID);
     /** Icon to use for the result and project action. */
