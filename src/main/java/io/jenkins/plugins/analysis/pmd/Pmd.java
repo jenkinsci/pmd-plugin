@@ -65,5 +65,9 @@ public class Pmd extends StaticAnalysisTool {
 
     /** Descriptor for PMD. */
     @Extension
-    public static final StaticAnalysisToolDescriptor D = new StaticAnalysisToolDescriptor(Pmd.class);
+    public static final class Descriptor extends StaticAnalysisToolDescriptor {
+        public Descriptor() {
+            super(Pmd.class);
+        }
+    }
 }
