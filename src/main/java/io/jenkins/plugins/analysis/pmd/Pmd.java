@@ -15,18 +15,17 @@ import hudson.plugins.pmd.PmdDescriptor;
 import hudson.plugins.pmd.parser.PmdParser;
 
 /**
- * Provides customized messages for PMD.
+ * Provides a parser and customized messages for PMD.
  *
  * @author Ullrich Hafner
  */
-@Extension
 public class Pmd extends StaticAnalysisTool {
     /**
      * Creates a new instance of {@link Pmd}.
      */
     @DataBoundConstructor
     public Pmd() {
-        super(PmdDescriptor.PLUGIN_ID);
+        // empty constructor required for stapler
     }
 
     @Override
@@ -34,40 +33,40 @@ public class Pmd extends StaticAnalysisTool {
         return new PmdParser().parse(file, moduleName);
     }
 
-    @Override
-    protected String getName() {
-        return "PMD";
-    }
-
-    @Override
-    public String getLinkName() {
-        return Messages.PMD_ProjectAction_Name();
-    }
-
-    @Override
-    public String getTrendName() {
-        return Messages.PMD_Trend_Name();
-    }
-
-    @Override
-    public String getSmallIconUrl() {
-        return get().getIconUrl();
-    }
-
-    private PmdDescriptor get() {
-        return new PmdDescriptor();
-    }
-
-    @Override
-    public String getLargeIconUrl() {
-        return get().getSummaryIconUrl();
-    }
-
-    /** Descriptor for PMD. */
+    /** Registers this tool as extension point implementation. */
     @Extension
     public static final class Descriptor extends StaticAnalysisToolDescriptor {
         public Descriptor() {
-            super(Pmd.class);
+            super(PmdDescriptor.PLUGIN_ID);
+        }
+
+        @Override
+        public String getName() {
+            return "PMD";
+        }
+
+        @Override
+        public String getLinkName() {
+            return Messages.PMD_ProjectAction_Name();
+        }
+
+        @Override
+        public String getTrendName() {
+            return Messages.PMD_Trend_Name();
+        }
+
+        @Override
+        public String getSmallIconUrl() {
+            return get().getIconUrl();
+        }
+
+        private PmdDescriptor get() {
+            return new PmdDescriptor();
+        }
+
+        @Override
+        public String getLargeIconUrl() {
+            return get().getSummaryIconUrl();
         }
     }
 }
