@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import io.jenkins.plugins.analysis.core.steps.DefaultLabelProvider;
 import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool;
 
 import hudson.Extension;
@@ -37,6 +38,13 @@ public class Pmd extends StaticAnalysisTool {
     @Extension
     public static final class Descriptor extends StaticAnalysisToolDescriptor {
         public Descriptor() {
+            super(new PmdLabelProvider());
+        }
+
+    }
+
+    private static class PmdLabelProvider extends DefaultLabelProvider {
+        private PmdLabelProvider() {
             super(PmdDescriptor.PLUGIN_ID);
         }
 
