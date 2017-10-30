@@ -2,15 +2,14 @@ package io.jenkins.plugins.analysis.pmd;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import edu.hm.hafner.analysis.Issues;
 import io.jenkins.plugins.analysis.core.steps.DefaultLabelProvider;
 import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool;
 
 import hudson.Extension;
-import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.pmd.Messages;
 import hudson.plugins.pmd.PmdDescriptor;
 import hudson.plugins.pmd.parser.PmdParser;
@@ -30,8 +29,8 @@ public class Pmd extends StaticAnalysisTool {
     }
 
     @Override
-    public Collection<FileAnnotation> parse(final File file, final String moduleName) throws InvocationTargetException {
-        return new PmdParser().parse(file, moduleName);
+    public Issues parse(final File file, final String moduleName) throws InvocationTargetException {
+        return new PmdParser().parseIssues(file, moduleName).withOrigin(PmdDescriptor.PLUGIN_ID);
     }
 
     /** Registers this tool as extension point implementation. */
