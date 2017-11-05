@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import edu.hm.hafner.analysis.Issue;
 import edu.hm.hafner.analysis.Issues;
 import io.jenkins.plugins.analysis.core.steps.DefaultLabelProvider;
 import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool;
@@ -30,7 +31,8 @@ public class Pmd extends StaticAnalysisTool {
 
     @Override
     public Issues parse(final File file, final String moduleName) throws InvocationTargetException {
-        return new PmdParser().parseIssues(file, moduleName).withOrigin(PmdDescriptor.PLUGIN_ID);
+        Issues<Issue> issues = new PmdParser().parseIssues(file, moduleName);
+        return withOrigin(issues, PmdDescriptor.PLUGIN_ID);
     }
 
     /** Registers this tool as extension point implementation. */
