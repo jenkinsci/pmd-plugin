@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import edu.hm.hafner.analysis.Issue;
+import edu.hm.hafner.analysis.IssueBuilder;
 import edu.hm.hafner.analysis.Issues;
 import io.jenkins.plugins.analysis.core.steps.DefaultLabelProvider;
 import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool;
@@ -13,7 +14,7 @@ import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool;
 import hudson.Extension;
 import hudson.plugins.pmd.Messages;
 import hudson.plugins.pmd.PmdDescriptor;
-import hudson.plugins.pmd.parser.PmdParser;
+import hudson.plugins.pmd.parser.PmdMessages;
 
 /**
  * Provides a parser and customized messages for PMD.
@@ -30,9 +31,8 @@ public class Pmd extends StaticAnalysisTool {
     }
 
     @Override
-    public Issues parse(final File file, final String moduleName) throws InvocationTargetException {
-        Issues<Issue> issues = new PmdParser().parseIssues(file, moduleName);
-        return withOrigin(issues, PmdDescriptor.PLUGIN_ID);
+    public Issues parse(final File file, final IssueBuilder builder) throws InvocationTargetException {
+        return new PmdParser().parse(file, builder);
     }
 
     /** Registers this tool as extension point implementation. */
@@ -44,8 +44,8 @@ public class Pmd extends StaticAnalysisTool {
 
     }
 
-    private static class PmdLabelProvider extends DefaultLabelProvider {
-        private PmdLabelProvider() {
+    static class PmdLabelProvider extends DefaultLabelProvider {
+        PmdLabelProvider() {
             super(PmdDescriptor.PLUGIN_ID);
         }
 
@@ -62,6 +62,11 @@ public class Pmd extends StaticAnalysisTool {
         @Override
         public String getTrendName() {
             return Messages.PMD_Trend_Name();
+        }
+
+        @Override
+        public String getDescription(final Issue issue) {
+            return PmdMessages.getInstance().getMessage(issue.getCategory(), issue.getType());
         }
 
         @Override
