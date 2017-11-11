@@ -72,7 +72,7 @@ public class PmdParser extends AbstractParser {
         }
     }
 
-    private Issues convert(final Pmd pmdIssues, final IssueBuilder builder) {
+    private Issues<Issue> convert(final Pmd pmdIssues, final IssueBuilder builder) {
         Issues<Issue> issues = new Issues<>();
         for (File file : pmdIssues.getFiles()) {
             for (Violation warning : file.getViolations()) {

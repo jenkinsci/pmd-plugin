@@ -31,7 +31,7 @@ public class Pmd extends StaticAnalysisTool {
     }
 
     @Override
-    public Issues parse(final File file, final IssueBuilder builder) throws InvocationTargetException {
+    public Issues<Issue> parse(final File file, final IssueBuilder builder) throws InvocationTargetException {
         return new PmdParser().parse(file, builder);
     }
 
