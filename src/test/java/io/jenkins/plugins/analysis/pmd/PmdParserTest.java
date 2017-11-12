@@ -13,7 +13,7 @@ import edu.hm.hafner.analysis.Issues;
 import static edu.hm.hafner.analysis.Issues.*;
 import edu.hm.hafner.analysis.Priority;
 import static edu.hm.hafner.analysis.assertj.Assertions.*;
-import edu.hm.hafner.analysis.assertj.SoftAssertions;
+import static edu.hm.hafner.analysis.assertj.SoftAssertions.*;
 import io.jenkins.plugins.analysis.pmd.Pmd.PmdLabelProvider;
 
 import hudson.plugins.pmd.parser.PmdMessages;
@@ -87,7 +87,7 @@ class PmdParserTest {
         assertThat(issues).hasLowPrioritySize(1);
 
         Issue actual = actionIssues.get(0);
-        SoftAssertions.assertSoftly((softly) -> {
+        assertSoftly(softly -> {
             softly.assertThat(actual)
                     .hasMessage("These nested if statements could be combined.")
                     .hasPriority(Priority.NORMAL)
