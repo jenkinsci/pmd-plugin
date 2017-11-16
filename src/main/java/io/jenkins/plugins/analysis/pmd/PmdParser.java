@@ -15,7 +15,6 @@ import edu.hm.hafner.analysis.ParsingCanceledException;
 import edu.hm.hafner.analysis.ParsingException;
 import edu.hm.hafner.analysis.Priority;
 
-import hudson.plugins.pmd.PmdDescriptor;
 import hudson.plugins.pmd.parser.File;
 import hudson.plugins.pmd.parser.Pmd;
 import hudson.plugins.pmd.parser.Violation;
@@ -33,10 +32,6 @@ public class PmdParser extends AbstractParser {
     private static final int PMD_PRIORITY_MAPPED_TO_HIGH_PRIORITY = 3;
     /** PMD priorities greater than this value are mapped to {@link Priority#LOW}. */
     private static final int PMD_PRIORITY_MAPPED_TO_LOW_PRIORITY = 4;
-
-    public PmdParser() {
-        super(PmdDescriptor.PLUGIN_ID);
-    }
 
     @Override
     public Issues<Issue> parse(final Reader reader, final IssueBuilder builder) throws ParsingCanceledException, ParsingException {
