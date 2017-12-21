@@ -1,5 +1,6 @@
 package io.jenkins.plugins.analysis.pmd;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.io.Reader;
 
@@ -34,7 +35,7 @@ public class PmdParser extends AbstractParser {
     private static final int PMD_PRIORITY_MAPPED_TO_LOW_PRIORITY = 4;
 
     @Override
-    public Issues<Issue> parse(final Reader reader, final IssueBuilder builder) throws ParsingCanceledException, ParsingException {
+    public Issues<Issue> parse(@Nonnull final Reader reader, @Nonnull final IssueBuilder builder) throws ParsingCanceledException, ParsingException {
         try {
             Digester digester = new Digester();
             digester.setValidating(false);
