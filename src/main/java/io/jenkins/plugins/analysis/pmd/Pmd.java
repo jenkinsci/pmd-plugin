@@ -1,15 +1,11 @@
 package io.jenkins.plugins.analysis.pmd;
 
-import java.io.File;
-import java.nio.charset.Charset;
-
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import edu.hm.hafner.analysis.AbstractParser;
 import edu.hm.hafner.analysis.Issue;
-import edu.hm.hafner.analysis.IssueBuilder;
-import edu.hm.hafner.analysis.Issues;
 import io.jenkins.plugins.analysis.core.steps.DefaultLabelProvider;
-import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool;
+import io.jenkins.plugins.analysis.core.steps.StreamBasedParser;
 
 import hudson.Extension;
 import hudson.plugins.pmd.Messages;
@@ -21,7 +17,7 @@ import hudson.plugins.pmd.parser.PmdMessages;
  *
  * @author Ullrich Hafner
  */
-public class Pmd extends StaticAnalysisTool {
+public class Pmd extends StreamBasedParser {
     /**
      * Creates a new instance of {@link Pmd}.
      */
@@ -31,8 +27,8 @@ public class Pmd extends StaticAnalysisTool {
     }
 
     @Override
-    public Issues<Issue> parse(final File file, final Charset charset, final IssueBuilder builder) {
-        return new PmdParser().parse(file, charset, builder);
+    protected AbstractParser createParser() {
+        return new PmdParser();
     }
 
     /** Registers this tool as extension point implementation. */
