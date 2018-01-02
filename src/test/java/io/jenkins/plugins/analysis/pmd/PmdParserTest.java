@@ -22,6 +22,22 @@ import hudson.plugins.pmd.parser.PmdMessages;
  * Tests the extraction of PMD analysis results.
  */
 class PmdParserTest {
+    @Test
+    void shouldCorrectlyMapLinesAndColumns() {
+        Issues<Issue> issues = parseFile("lines-columns.xml");
+
+        assertThat(issues).hasSize(1);
+
+        assertThat(issues.get(0))
+                .hasFileName("/Users/hafner/Development/jenkins/workspace/Pipeline/src/main/java/edu/hm/hafner/analysis/parser/AjcParser.java")
+                .hasLineStart(30).hasLineEnd(74)
+                .hasColumnStart(12).hasColumnEnd(5)
+                .hasType("CyclomaticComplexity")
+                .hasCategory("Code Size")
+                .hasPriority(Priority.NORMAL)
+                .hasMessage("The method 'parse' has a Cyclomatic Complexity of 10.");
+    }
+
     /**
      * Parses a warning log with 15 warnings.
      *
@@ -32,7 +48,6 @@ class PmdParserTest {
         Issues<Issue> issues = parseFile("issue12801.xml");
 
         assertThat(issues).hasSize(2);
-
     }
 
     /**
