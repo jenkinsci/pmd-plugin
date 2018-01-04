@@ -6,11 +6,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.commons.digester3.Digester;
 import org.apache.commons.lang.StringUtils;
 import org.xml.sax.SAXException;
 
 import hudson.plugins.analysis.core.AbstractAnnotationParser;
+import hudson.plugins.analysis.util.SecureDigester;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
 
@@ -48,9 +48,7 @@ public class PmdParser extends AbstractAnnotationParser {
     @Override
     public Collection<FileAnnotation> parse(final InputStream file, final String moduleName) throws InvocationTargetException {
         try {
-            Digester digester = new Digester();
-            digester.setValidating(false);
-            digester.setClassLoader(PmdParser.class.getClassLoader());
+            SecureDigester digester = new SecureDigester(PmdParser.class);
 
             String rootXPath = "pmd";
             digester.addObjectCreate(rootXPath, Pmd.class);
