@@ -23,6 +23,8 @@ import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.pmd.parser.PmdParser;
 
+import javax.annotation.CheckForNull;
+
 /**
  * Publishes the results of the PMD analysis  (freestyle project type).
  *
@@ -70,6 +72,26 @@ public class PmdPublisher extends HealthAwarePublisher {
 
     public PmdCutoff getPmdCutoff() {
         return pmdCutoff;
+    }
+
+    @CheckForNull
+    public String getCutoffHighPriority() {
+        return pmdCutoff.cutoffHighPriority;
+    }
+
+    @DataBoundSetter
+    public void setCutoffHighPriority(String cutoffHighPriority) {
+        pmdCutoff.cutoffHighPriority = cutoffHighPriority;
+    }
+
+    @CheckForNull
+    public String getCutoffNormalPriority() {
+        return pmdCutoff.cutoffNormalPriority;
+    }
+
+    @DataBoundSetter
+    public void setCutoffNormalPriority(String cutoffNormalPriority) {
+        pmdCutoff.cutoffNormalPriority = cutoffNormalPriority;
     }
 
     @Override
