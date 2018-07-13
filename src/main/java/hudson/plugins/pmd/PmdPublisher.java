@@ -38,6 +38,8 @@ public class PmdPublisher extends HealthAwarePublisher {
     /** Ant file-set pattern of files to work with. */
     private String pattern;
 
+    private PmdCutoff pmdCutoff = new PmdCutoff();
+
     /**
      * Constructor used from methods like {@link StaplerRequest#bindJSON(Class, JSONObject)} (Class, JSONObject)} and
      * {@link StaplerRequest#bindParameters(Class, String)}.
@@ -66,13 +68,17 @@ public class PmdPublisher extends HealthAwarePublisher {
         this.pattern = pattern;
     }
 
+    public PmdCutoff getPmdCutoff() {
+        return pmdCutoff;
+    }
+
     @Override
     public BuildResult perform(final Run<?, ?> build, final FilePath workspace, final PluginLogger logger) throws
             InterruptedException, IOException {
         logger.log("Collecting PMD analysis files...");
         FilesParser parser = new FilesParser(PLUGIN_NAME,
                 StringUtils.defaultIfEmpty(expandFilePattern(getPattern(), build.getEnvironment(TaskListener.NULL)), DEFAULT_PATTERN),
-                new PmdParser(getDefaultEncoding()), shouldDetectModules(), isMavenBuild(build));
+                new PmdParser(getDefaultEncoding(), pmdCutoff.cutoffHighPriority, pmdCutoff.cutoffNormalPriority), shouldDetectModules(), isMavenBuild(build));
         ParserResult project = workspace.act(parser);
         logger.logLines(project.getLogMessages());
 

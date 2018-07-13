@@ -1,0 +1,27 @@
+<?jelly escape-by-default='true'?>
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+  xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:u="/util">
+  <f:entry title="${%title.pmd.cutoff}" description="${%description.pmd.cutoff}">
+    <table>
+      <tbody>
+        <tr>
+          <td style="vertical-align: middle;">
+            <img src="${resURL}/images/16x16/red.gif" alt="100%" title="${%description.high.value}" /> ${%field.high.value}
+          </td>
+          <td>
+            <f:textbox name="cutoffHighPriority" value="${instance.pmdCutoff.cutoffHighPriority}" />
+          </td>
+          <td width="20"/>
+          <td style="vertical-align: middle;">
+            <img src="${resURL}/images/16x16/yellow.gif" alt="0%" title="${%description.normal.value}" /> ${%field.normal.value}
+          </td>
+          <td>
+            <f:textbox name="cutoffNormalPriority" value="${instance.pmdCutoff.cutoffNormalPriority}" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </f:entry>
+
+</j:jelly>
