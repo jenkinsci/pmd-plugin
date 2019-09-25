@@ -26,11 +26,13 @@ import hudson.plugins.pmd.parser.PmdParser;
  * @author Ulli Hafner
  */
 public class PmdReporter extends HealthAwareReporter<PmdResult> {
-    private static final long serialVersionUID = 2272875032054063496L;
+    private static final long serialVersionUID = 2272875032054063497L;
     private static final String PLUGIN_NAME = "PMD";
 
     /** Default PMD pattern. */
     private static final String PMD_XML_FILE = "pmd.xml";
+
+    private PmdCutoff pmdCutoff = new PmdCutoff();
 
     /**
      * Creates a new instance of <code>PmdReporter</code>.
@@ -99,15 +101,24 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
             final String failedTotalAll, final String failedTotalHigh, final String failedTotalNormal, final String failedTotalLow,
             final String failedNewAll, final String failedNewHigh, final String failedNewNormal, final String failedNewLow,
             final boolean canRunOnFailed, final boolean usePreviousBuildAsReference,
-            final boolean useStableBuildAsReference, final boolean canComputeNew) {
+            final boolean useStableBuildAsReference, final boolean canComputeNew,
+            final String cutoffHighPriority, final String cutoffNormalPriority) {
         super(healthy, unHealthy, thresholdLimit, useDeltaValues,
                 unstableTotalAll, unstableTotalHigh, unstableTotalNormal, unstableTotalLow,
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
                 canRunOnFailed, usePreviousBuildAsReference, useStableBuildAsReference, canComputeNew, PLUGIN_NAME);
+
+        pmdCutoff.cutoffHighPriority = cutoffHighPriority;
+        pmdCutoff.cutoffNormalPriority = cutoffNormalPriority;
     }
+
     // CHECKSTYLE:ON
+
+    public PmdCutoff getPmdCutoff() {
+        return pmdCutoff;
+    }
 
     @Override
     protected boolean acceptGoal(final String goal) {
@@ -117,7 +128,7 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
     @Override
     public ParserResult perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PluginLogger logger) throws InterruptedException, IOException {
         FilesParser pmdCollector = new FilesParser(PLUGIN_NAME, PMD_XML_FILE,
-                new PmdParser(getDefaultEncoding()), getModuleName(pom));
+                new PmdParser(getDefaultEncoding(), pmdCutoff.cutoffHighPriority, pmdCutoff.cutoffNormalPriority), getModuleName(pom));
 
         return getTargetPath(pom).act(pmdCollector);
     }
@@ -147,5 +158,18 @@ public class PmdReporter extends HealthAwareReporter<PmdResult> {
     @SuppressWarnings("PMD")
     @SuppressFBWarnings("")
     private transient String pattern; // obsolete since release 2.5
+
+    /**
+     * Initializes new fields that are not serialized yet.
+     *
+     * @return the object
+     */
+    protected Object readResolve() {
+        if (pmdCutoff == null) {
+            pmdCutoff = new PmdCutoff();
+        }
+
+        return this;
+    }
 }
 

@@ -1,11 +1,12 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
-	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:u="/util">
+       xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:u="/util" xmlns:pmd="/pmd">
   <f:entry title="${%PMD results}" field="pattern"
            description="${%description.pattern('http://ant.apache.org/manual/Types/fileset.html')}">
 	<f:textbox />
   </f:entry>
   <f:advanced>
-    <u:advanced id="pmd"/>
+    <pmd:cutoff />
+    <u:advanced id="pmd" />
   </f:advanced>
 </j:jelly>

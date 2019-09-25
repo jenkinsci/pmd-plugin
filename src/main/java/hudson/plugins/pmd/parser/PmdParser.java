@@ -23,16 +23,19 @@ public class PmdParser extends AbstractAnnotationParser {
     /** Unique ID of this class. */
     private static final long serialVersionUID = 6507147028628714706L;
 
-    /** PMD priorities smaller than this value are mapped to {@link Priority#HIGH}. */
-    private static final int PMD_PRIORITY_MAPPED_TO_HIGH_PRIORITY = 3;
-    /** PMD priorities greater than this value are mapped to {@link Priority#LOW}. */
-    private static final int PMD_PRIORITY_MAPPED_TO_LOW_PRIORITY = 4;
+    /** PMD priorities smaller or equal to this value are mapped to {@link Priority#HIGH}. */
+    private static final int PMD_DEFAULT_CUTOFF_HIGH_PRIORITY = 2;
+    /** PMD priorities smaller or equal to this value are mapped to {@link Priority#NORMAL}. */
+    private static final int PMD_DEFAULT_CUTOFF_NORMAL_PRIORITY = 4;
+
+    private final int cutoffHighPriority;
+    private final int cutoffNormalPriority;
 
     /**
      * Creates a new instance of {@link PmdParser}.
      */
     public PmdParser() {
-        super(StringUtils.EMPTY);
+        this(StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY);
     }
 
     /**
@@ -40,9 +43,19 @@ public class PmdParser extends AbstractAnnotationParser {
      *
      * @param defaultEncoding
      *            the default encoding to be used when reading and parsing files
+     *
+     * @param cutoffHighPriority Cutoff for mapping to high priority.
+     * @param cutoffNormalPriority Cutoff for mapping to normal priority.
      */
-    public PmdParser(final String defaultEncoding) {
+    public PmdParser(final String defaultEncoding, String cutoffHighPriority, String cutoffNormalPriority) {
         super(defaultEncoding);
+
+        this.cutoffHighPriority = parseString(cutoffHighPriority, PMD_DEFAULT_CUTOFF_HIGH_PRIORITY);
+        this.cutoffNormalPriority = parseString(cutoffHighPriority, PMD_DEFAULT_CUTOFF_NORMAL_PRIORITY);
+    }
+
+    private static final int parseString(String value, int defaultValue) {
+        return StringUtils.isNotEmpty(value) ? Integer.valueOf(value) : defaultValue;
     }
 
     @Override
@@ -95,14 +108,14 @@ public class PmdParser extends AbstractAnnotationParser {
         for (hudson.plugins.pmd.parser.File file : collection.getFiles()) {
             for (Violation warning : file.getViolations()) {
                 Priority priority;
-                if (warning.getPriority() < PMD_PRIORITY_MAPPED_TO_HIGH_PRIORITY) {
+                if (warning.getPriority() <= cutoffHighPriority) {
                     priority = Priority.HIGH;
                 }
-                else if (warning.getPriority() >  PMD_PRIORITY_MAPPED_TO_LOW_PRIORITY) {
-                    priority = Priority.LOW;
+                else if (warning.getPriority() <= cutoffNormalPriority) {
+                    priority = Priority.NORMAL;
                 }
                 else {
-                    priority = Priority.NORMAL;
+                    priority = Priority.LOW;
                 }
                 Bug bug = new Bug(priority, createMessage(warning), warning.getRuleset(), warning.getRule(),
                             warning.getBeginline(), warning.getEndline());
